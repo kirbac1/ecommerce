@@ -19,10 +19,9 @@ use App\TicketThread;
 use App\Manufacturer;
 use App\CustomerGroup;
 use Illuminate\Support\Facades\Log;
-use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Config;
-use Arcanedev\Settings\Facades\Setting;
+use App\Support\Settings as Setting;
 use Symfony\Component\HttpFoundation\Request;
 
 class AdminController extends Controller
@@ -83,7 +82,7 @@ class AdminController extends Controller
         // ->totalProfits
 
         $days = 30;
-        $query = DB::select(DB::raw("SELECT SUM(totalUntaxedPrice) as totalUntaxedPrice, SUM(totalTaxedPrice) as totalTaxedPrice, SUM(totalProfits) as totalProfits FROM (SELECT SUM(proforma_product.priceEach * proforma_product.quantity) AS totalUntaxedPrice,  SUM(proforma_product.priceEach * proforma_product.quantity * ( 100 + proforma_product.taxPercent ) /100 ) AS totalTaxedPrice,  SUM((proforma_product.priceEach - products.basePrice) * proforma_product.quantity) AS totalProfits FROM proforma_product JOIN products ON proforma_product.product_id = products.id WHERE proforma_product.created_at > '" . Carbon::now()->subDays($days)->format('Y-m-d') . "' GROUP BY proforma_product.proforma_id) as sums"))[0];
+        $query = DB::select("SELECT SUM(totalUntaxedPrice) as totalUntaxedPrice, SUM(totalTaxedPrice) as totalTaxedPrice, SUM(totalProfits) as totalProfits FROM (SELECT SUM(proforma_product.priceEach * proforma_product.quantity) AS totalUntaxedPrice,  SUM(proforma_product.priceEach * proforma_product.quantity * ( 100 + proforma_product.taxPercent ) /100 ) AS totalTaxedPrice,  SUM((proforma_product.priceEach - products.basePrice) * proforma_product.quantity) AS totalProfits FROM proforma_product JOIN products ON proforma_product.product_id = products.id WHERE proforma_product.created_at > '" . Carbon::now()->subDays($days)->format('Y-m-d') . "' GROUP BY proforma_product.proforma_id) as sums")[0];
         $grossRevenues = 24456799;
         $netRevenues = 47896536;
          */
@@ -93,7 +92,7 @@ class AdminController extends Controller
         $netRevenues = $grossRevenues - $costs;
 
         // Best sellers
-        $res = DB::select(DB::raw("SELECT SUM(quantity) AS quantity, product_id AS id FROM invoice_product WHERE created_at > '" . Carbon::now()->subDays(30)->format('Y-m-d') . "' GROUP BY product_id ORDER BY quantity DESC LIMIT 5"));
+        $res = DB::select("SELECT SUM(quantity) AS quantity, product_id AS id FROM invoice_product WHERE created_at > '" . Carbon::now()->subDays(30)->format('Y-m-d') . "' GROUP BY product_id ORDER BY quantity DESC LIMIT 5");
         $bestSellers = [];
         foreach ($res as $bs) {
             $bestSeller = Product::with('manufacturer')->find($bs->id);
@@ -104,7 +103,7 @@ class AdminController extends Controller
         }
 
         // Worst sellers
-        $res = DB::select(DB::raw("SELECT SUM(quantity) AS quantity, product_id AS id FROM invoice_product WHERE created_at > '" . Carbon::now()->subDays(30)->format('Y-m-d') . "' GROUP BY product_id ORDER BY quantity ASC LIMIT 5"));
+        $res = DB::select("SELECT SUM(quantity) AS quantity, product_id AS id FROM invoice_product WHERE created_at > '" . Carbon::now()->subDays(30)->format('Y-m-d') . "' GROUP BY product_id ORDER BY quantity ASC LIMIT 5");
         $worstSellers = [];
         foreach ($res as $ws) {
             $worstSeller = Product::with('manufacturer')->find($ws->id);
@@ -116,7 +115,7 @@ class AdminController extends Controller
 
         // Last 30 days sales: one bucket per day, oldest first.
         $since = Carbon::now()->subDays(30)->format('Y-m-d');
-        $res = DB::select(DB::raw("SELECT COUNT(*) AS count, SUM(untaxed_total) AS revenue, DATEDIFF(NOW(), created_at) AS day FROM invoices WHERE created_at > '" . $since . "' AND deleted_at IS NULL GROUP BY day"));
+        $res = DB::select("SELECT COUNT(*) AS count, SUM(untaxed_total) AS revenue, DATEDIFF(NOW(), created_at) AS day FROM invoices WHERE created_at > '" . $since . "' AND deleted_at IS NULL GROUP BY day");
         $salesPerDay = array_fill(0, 31, 0);
         $revenuePerDay = array_fill(0, 31, 0);
         foreach ($res as $val) {
@@ -553,11 +552,73 @@ class AdminController extends Controller
         $products = Product::all()->each(function($row) {
             $row->setHidden(['id', 'manufacturer_id', 'category_id', 'measureunit_id', 'created_at', 'updated_at', 'deleted_at', 'taxAmount', 'taxedPrice', 'signature', 'manufacturer_id']);
         });
-        Excel::create('products', function($excel) use($products) {
-            $excel->sheet('Products', function($sheet) use($products) {
-                $sheet->fromArray($products);
-            });
-        })->export('csv');
+        // maatwebsite/excel 2.1 has no PHP 8 release, and this only ever produced
+        // a flat CSV, so it is written directly.
+        $rows = $products->map(function ($product) {
+            return $product->toArray();
+        })->all();
+
+        $handle = fopen('php://temp', 'r+');
+
+        if ($rows) {
+            fputcsv($handle, array_keys(reset($rows)));
+            foreach ($rows as $row) {
+                fputcsv($handle, $row);
+            }
+        }
+
+        rewind($handle);
+        $csv = stream_get_contents($handle);
+        fclose($handle);
+
+        return response($csv, 200, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="products.csv"',
+        ]);
+    }
+
+    /**
+     * Read a CSV into Fluent rows keyed by lower-cased header.
+     *
+     * Fluent supports both ->property and ['key'] access, which is what the
+     * importer below expects from the rows maatwebsite/excel used to hand it.
+     *
+     * @return \Illuminate\Support\Fluent[]
+     */
+    private static function readCsv($filename)
+    {
+        $handle = fopen($filename, 'r');
+
+        if ($handle === false) {
+            return [];
+        }
+
+        $headers = fgetcsv($handle);
+
+        if ($headers === false) {
+            fclose($handle);
+            return [];
+        }
+
+        $headers = array_map(function ($header) {
+            return strtolower(trim($header));
+        }, $headers);
+
+        $rows = [];
+
+        while (($line = fgetcsv($handle)) !== false) {
+            // Skip blank trailing lines rather than importing empty products.
+            if ($line === [null] || $line === ['']) {
+                continue;
+            }
+
+            $line = array_pad(array_slice($line, 0, count($headers)), count($headers), null);
+            $rows[] = new Fluent(array_combine($headers, $line));
+        }
+
+        fclose($handle);
+
+        return $rows;
     }
 
     public function productmigrationImport(Request $request)
@@ -566,7 +627,7 @@ class AdminController extends Controller
         $filename = storage_path('/import-' . time() . '.csv');
         file_put_contents($filename, $request->get('file_content'));
 
-        $import = Excel::load($filename)->get();
+        $import = self::readCsv($filename);
         foreach($import as $product) {
             if (($product->manufacturer !== '') && ($product->manufacturer !== null)) {
                 $manufacturer_id = Manufacturer::firstOrCreate([ 'name' => $product->manufacturer])->id;

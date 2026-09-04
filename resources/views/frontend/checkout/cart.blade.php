@@ -40,7 +40,7 @@
                                     <td class="text-left quantity">
                 @{{calculateQty(product.quantity,product.product.qtyPerPack)}}
                                     </td>
-                                     @if (Auth::user()->isCustomer)
+                                     @if (Auth::check() && Auth::user()->isCustomer)
                                     <td class="text-right price">@{{product.product.priceEach}}</td>
                                     <td class="text-right total">@{{calculatePrice(product.quantity,product.product.priceEach,product.product.qtyPerPack) }}</td>
                                     @endif
@@ -52,7 +52,7 @@
                 <div  v-show="!isCartEmpty" class="row">
                     <div class="col-sm-4 col-sm-offset-8 cart-total">
                         <table class="table table-bordered" id="total">
-                          @if (Auth::user()->isCustomer)
+                          @if (Auth::check() && Auth::user()->isCustomer)
                                                                    <tbody>
                                             <tr>
                                                 <td class="text-right right"><strong>Without Tax-Total</strong></td>

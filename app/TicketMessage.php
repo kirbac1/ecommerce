@@ -2,11 +2,14 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 use App\Models\Model;
 use app\Traits\BelongsToUser;
 
 class TicketMessage extends Model
 {
+    use HasFactory;
     use BelongsToUser;
 
     /**

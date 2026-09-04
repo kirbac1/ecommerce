@@ -1013,7 +1013,7 @@
                                     <td class="text-left quantity">
                 @{{calculateQty(product.quantity,product.product.qtyPerPack)}}
                                     </td>
-                                      @if (Auth::user()->isCustomer)
+                                      @if (Auth::check() && Auth::user()->isCustomer)
                                     <td class="text-right price">@{{ unitPrice(product.product.priceEach) }}</td>
                                     <td class="text-right total">@{{calculatePrice(product.quantity,product.product.priceEach,product.product.qtyPerPack) }}</td>
                                     @endif

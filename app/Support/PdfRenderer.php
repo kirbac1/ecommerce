@@ -68,9 +68,25 @@ class PdfRenderer
             'curlFollowLocation' => false,
         ]);
 
-        $mpdf->WriteHTML(static::localiseAssets($html));
+        // mPDF is not warning-clean (it reads a missing array key while closing
+        // a table tag, among others). Laravel escalates any reported error into
+        // an exception, which turned every PDF into a 500. Silence warnings
+        // raised inside mPDF's own files only -- anything from our code still
+        // surfaces normally.
+        set_error_handler(
+            static function ($severity, $message, $file = '', $line = 0) {
+                return str_contains($file, DIRECTORY_SEPARATOR . 'mpdf' . DIRECTORY_SEPARATOR);
+            },
+            E_WARNING | E_NOTICE | E_DEPRECATED | E_USER_DEPRECATED
+        );
 
-        return $mpdf->Output('', Destination::STRING_RETURN);
+        try {
+            $mpdf->WriteHTML(static::localiseAssets($html));
+
+            return $mpdf->Output('', Destination::STRING_RETURN);
+        } finally {
+            restore_error_handler();
+        }
     }
 
     /**

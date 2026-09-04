@@ -14,7 +14,8 @@ class CreateCategoriesTable extends Migration
     public function up()
     {
         Schema::create('categories', function (Blueprint $table) {
-            // These columns are needed for Baum's Nested Set implementation to work.
+            // Nested-set columns. Named lft/rgt rather than kalnoy/nestedset's default
+            // _lft/_rgt; the model overrides the getters to match.
             // Column names may be changed, but they *must* all exist and be modified
             // in the model.
             // Take a look at the model scaffold comments for details.

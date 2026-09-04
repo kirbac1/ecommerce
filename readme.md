@@ -1,6 +1,7 @@
 ## Invoicing & webshop platform
 
-A Laravel 5.2 + Vue 1.x invoicing and e-commerce platform, originally built in 2016.
+A Laravel 13 + Vue 1.x invoicing and e-commerce platform, originally built in
+2016 on Laravel 5.2 and since ported to PHP 8.
 It has an admin back office (products, orders, invoices, proformas, returns, customers,
 tickets), a cashier register, a customer-facing storefront, and a JSON API under `/api/v3`.
 
@@ -18,28 +19,23 @@ systems; nothing below is macOS-specific apart from the install commands.
 
 | Component | Version | Why |
 |---|---|---|
-| PHP | **7.0 – 7.4** | Laravel 5.2 predates PHP 8; it will not run on 8.x |
+| PHP | **8.3+** | Laravel 13's floor |
 | MySQL or MariaDB | 5.7+ | Migrations use MySQL-flavoured schema |
 | Composer | 2.x | Installs the PHP dependencies |
 
-PHP 8 is **not** supported: Laravel 5.2 uses `each()` and other constructs removed in 8.0.
-PHP 7.4 is the newest version that works, and is what these instructions use.
-
 ### 2. Install PHP and MySQL
 
-PHP 7.4 is end-of-life and no longer in homebrew-core, so it comes from a tap:
-
 ```bash
-brew tap shivammathur/php && brew install shivammathur/php/php@7.4 mysql
+brew install php@8.3 mysql
 ```
 
-`php@7.4` is keg-only, meaning it is deliberately **not** put on your `PATH`. Its binary
-lives at `/opt/homebrew/opt/php@7.4/bin/php` (Apple Silicon) or
-`/usr/local/opt/php@7.4/bin/php` (Intel). Use that full path, or add it to your `PATH` for
-the session:
+`php@8.3` is keg-only, meaning it is deliberately **not** put on your `PATH`. Its binary
+lives at `/opt/homebrew/opt/php@8.3/bin/php` (Apple Silicon) or
+`/usr/local/opt/php@8.3/bin/php` (Intel). Use that full path, or add it to your `PATH`
+for the session:
 
 ```bash
-export PATH="/opt/homebrew/opt/php@7.4/bin:$PATH"
+export PATH="/opt/homebrew/opt/php@8.3/bin:$PATH"
 ```
 
 ### 3. Start MySQL and create the database
@@ -142,14 +138,34 @@ Then open:
 
 ### Demo logins
 
-All seeded accounts use the password `test`. **Change or remove them before deploying
-anywhere.**
+All seeded accounts use the password `test`.
 
 | Email | Role |
 |---|---|
 | `admin@example.com` | Super admin (English) |
 | `manager@example.com` | Super admin (Finnish) |
 | `cashier@example.com` | Cashier |
+
+These are safe to publish: they are flagged `demo` in the database, which makes
+every one of their sessions **read-only** — see [Demo mode](#demo-mode). Clear
+the flag on an account that needs to write.
+
+### Demo mode
+
+`App\Http\Middleware\PreventDemoWrites` refuses anything that would change the
+database, so the credentials above can be shared without the site being
+vandalised. Reads, navigation and the whole admin UI work normally; writes come
+back as a 403.
+
+It switches on in two ways:
+
+- **`DEMO_MODE=true`** in `.env` makes the entire site read-only for everyone.
+- **a `demo` flag on a user or customer row** applies the same to just that
+  login, leaving the rest of the site writable.
+
+Blocking on the HTTP verb alone would not be enough: signing in is a POST (so
+the auth routes are allowed through), and several routes mutate on a GET
+(`convertToInvoice` and friends), so those are named explicitly.
 
 ### Branding
 
@@ -214,37 +230,42 @@ Server setup, the required secrets, rollback and troubleshooting are in
 
 ---
 
-## Notes on running 2016 code today
+## The PHP 8 port
 
-A few things were changed to make this run on a modern machine. They are worth knowing
-about if you dig into the code:
+This started as Laravel 5.2 on PHP 5.5/7.0 and was ported to Laravel 13 on PHP
+8.3, because the target server offers only PHP 8.x. Laravel 5.2 cannot run
+there at all: it and its Symfony 3.0 components call `each()`, removed in PHP
+8.0, and 44 of the 51 locked packages predated 8.x.
 
-- **`AppServiceProvider::boot()` lowers `error_reporting`.** PHP 7.2 turned `count(null)`
-  into a warning and 7.4 added new deprecations. Laravel 5.2 escalates anything in
-  `error_reporting()` into an exception, and Eloquent's own `Builder::applyScopes()` calls
-  `count()` on a null — so on stock PHP 7.4 *every* query throws a 500. The provider
-  restores the error levels this codebase was written against. If you move to PHP 7.0/7.1,
-  it becomes a no-op.
-- **Faker was bumped** from 1.6.0 to 1.9.2. The 2016 release calls `join()` with its
-  arguments in the order PHP 7.4 deprecated. Nothing else in `composer.lock` needed to
-  move — all 66 packages still resolve from Packagist.
-- **Dead remote assets were made local.** The theme loaded images from `digital-cdn.net`
-  and fell back to `placeholdit.imgix.net` for missing product images; neither host
-  resolves any more. They now point at `/assets/img/no-image.png`.
-- **Product images** live in `public/catalog/` and the `products.image` column holds just
-  the filename. `app/Support/PlaceholderImage.php` draws the demo ones with GD at seed
-  time, so a fresh install has working images with no network access.
-- **PDF export no longer uses PhantomJS.** `danielboendergaard/phantom-pdf` shells out to
-  a bundled PhantomJS binary that is a 64-bit *Linux* ELF, so invoice/receipt/return PDFs
-  died with "cannot execute binary file" on macOS -- and PhantomJS itself was abandoned in
-  2018. `app/Support/PdfRenderer.php` renders the same Blade templates with mPDF, which is
-  pure PHP. It also rewrites the templates' root-relative asset URLs to filesystem paths,
-  because mPDF would otherwise try to fetch them over HTTP and block.
-- **Dead remote hosts were removed from the CSS too**, not just the templates. Background
-  images and the loading spinner pointed at `digital-cdn.net`; those requests never
-  completed, which is why pages felt like they never finished loading.
+What that involved, in case something looks unfamiliar:
 
----
+- **Abandoned packages replaced.** `baum/baum` (category tree) →
+  `kalnoy/nestedset`, keeping the existing `lft`/`rgt` columns via the model's
+  name getters. `arcanedev/settings` → `App\Support\Settings`, a small
+  key/value class over the same table. `maatwebsite/excel` 2.1 → native
+  `fputcsv`/`fgetcsv`, since it was only ever producing a flat CSV.
+  `danielboendergaard/phantom-pdf` → mPDF (its PhantomJS binary was Linux-only
+  and the project was abandoned in 2018).
+- **Real schema bugs surfaced.** Laravel 5.2 ran MySQL with `strict => false`,
+  which hid two genuine faults: `categories.slug` was NOT NULL and never
+  populated (stored as `''`), and five tables declared `deleted_at` NOT NULL,
+  which is incoherent for a soft-delete column. Strict mode is on now and both
+  are fixed properly rather than by loosening the database.
+- **The error_reporting shim is gone.** Laravel 5.2's Eloquent called
+  `count()` on a null, so the app needed PHP 5.6-era error levels to boot at
+  all. That code no longer exists; warnings are switched on, and the handful of
+  places relying on the old leniency — reading `Auth::user()->isCustomer` as a
+  guest, for one — were fixed. mPDF is the one exception: it is not
+  warning-clean, so warnings from inside its own files are suppressed for the
+  duration of a render and nothing else.
+- **Structural moves** that come with modern Laravel: routes to `routes/web.php`
+  with controllers referenced by class, `database/seeds` → `database/seeders`
+  under `Database\Seeders`, `$factory->define()` → factory classes,
+  `resources/lang` → `lang/`, and the HTTP/Console kernels replaced by
+  `bootstrap/app.php`.
+
+The Vue 1.x front end and every Blade template were carried over unchanged apart
+from those fixes.
 
 ## Usage
 

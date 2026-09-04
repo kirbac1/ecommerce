@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Start the cart app locally on the 2016 stack.
+# Start the app locally.
 #
-# Laravel 5.2 needs PHP 7.x. Set PHP to override the binary; otherwise this
+# Laravel 13 needs PHP 8.3+. Set PHP to override the binary; otherwise this
 # tries the Homebrew keg-only install (which is deliberately off PATH) and
 # falls back to whatever `php` is available, so the same script works on a
 # dev machine and on a CI runner.
@@ -11,8 +11,8 @@ cd "$(dirname "$0")"
 
 if [ -z "${PHP:-}" ]; then
     for candidate in \
-        /opt/homebrew/opt/php@7.4/bin/php \
-        /usr/local/opt/php@7.4/bin/php \
+        /opt/homebrew/opt/php@8.3/bin/php \
+        /usr/local/opt/php@8.3/bin/php \
         "$(command -v php || true)"
     do
         if [ -n "$candidate" ] && [ -x "$candidate" ]; then
@@ -23,7 +23,7 @@ if [ -z "${PHP:-}" ]; then
 fi
 
 if [ -z "${PHP:-}" ]; then
-    echo "No PHP binary found. Install PHP 7.4 (see readme.md) or set PHP=/path/to/php." >&2
+    echo "No PHP binary found. Install PHP 8.3 (see readme.md) or set PHP=/path/to/php." >&2
     exit 1
 fi
 

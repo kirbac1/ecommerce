@@ -54,7 +54,7 @@
                                 <div class="caption">
                                     <h4 class="name" style="height: 34px;"><a href="/product?id=@{{product.id}}">@{{product.name}}</a></h4>
                                     <p class="description" style="height: 76px;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500..</p>
-                                      @if (Auth::user()->isCustomer)
+                                      @if (Auth::check() && Auth::user()->isCustomer)
                                     <p class="price">
                                         626 <span class="price-tax">Ex Tax: @{{product.priceEach}}</span>
                                     </p>

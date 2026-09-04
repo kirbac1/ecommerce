@@ -151,3 +151,68 @@ test.describe('admin pages load', () => {
         expect(body).not.toMatch(/\bmessages\.[A-Za-z_]/);
     });
 });
+
+test.describe('read-only demo accounts', () => {
+    // The seeded logins are published in the readme, so they must not be able
+    // to change anything. See App\Http\Middleware\PreventDemoWrites.
+    test.beforeEach(async ({ page }) => {
+        await login(page);
+    });
+
+    test('reading still works', async ({ page }) => {
+        const response = await page.goto('/admin/products', { waitUntil: 'domcontentloaded' });
+
+        expect(response.status()).toBe(200);
+    });
+
+    test('creating is refused', async ({ page }) => {
+        const result = await page.evaluate(async () => {
+            const token = document.querySelector("meta[name='_token']")?.getAttribute('content');
+            const res = await fetch('/api/v3/manufacturers', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': token,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: 'Should Not Exist' }),
+            });
+            return { status: res.status, body: await res.text() };
+        });
+
+        expect(result.status).toBe(403);
+        expect(result.body).toContain('demo_read_only');
+    });
+
+    test('deleting is refused', async ({ page }) => {
+        const status = await page.evaluate(async () => {
+            const token = document.querySelector("meta[name='_token']")?.getAttribute('content');
+            const res = await fetch('/api/v3/products/1', {
+                method: 'DELETE',
+                headers: { 'X-CSRF-TOKEN': token, 'Accept': 'application/json' },
+            });
+            return res.status;
+        });
+
+        expect(status).toBe(403);
+    });
+
+    // Several routes mutate on a GET, so blocking by HTTP verb alone is not
+    // enough and these have to be named explicitly in the middleware.
+    test('routes that mutate on a GET are refused too', async ({ page }) => {
+        const status = await page.evaluate(async () => {
+            const res = await fetch('/api/v3/orders/1/convertToInvoice', {
+                headers: { 'Accept': 'application/json' },
+            });
+            return res.status;
+        });
+
+        expect(status).toBe(403);
+    });
+
+    test('the product it tried to delete is still there', async ({ request }) => {
+        const response = await request.get('/api/v3/products/1');
+
+        expect(response.status()).toBe(200);
+    });
+});

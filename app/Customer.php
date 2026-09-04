@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 // use App\Models\Model;
 use App\Traits\GivesAuthorization;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -9,6 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Customer extends Authenticatable
 {
+    use HasFactory;
     use SoftDeletes, GivesAuthorization;
 
     protected $guard = 'customers';

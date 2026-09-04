@@ -6,27 +6,17 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
+    public function boot(): void
     {
-        // This app targets PHP 5.5/7.0, where count(null) returned 0 and reading a
-        // property off null was silent. PHP 7.2+ made those a warning/notice, and
-        // Laravel 5.2 escalates anything in error_reporting() into an exception --
-        // which breaks Eloquent itself (Builder::applyScopes does count($query->wheres)).
-        // Restore the error levels this codebase was written against.
-        error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED & ~E_STRICT);
+        // The PHP 5.6/7.0 error_reporting shim that used to live here is gone.
+        // It existed because Laravel 5.2's Eloquent called count() on a null,
+        // which PHP 7.2 made a warning that the framework escalated into an
+        // exception. On Laravel 12 that code is gone, so warnings are left
+        // switched on and the few places that relied on the old leniency were
+        // fixed instead.
     }
 
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
+    public function register(): void
     {
         //
     }

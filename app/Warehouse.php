@@ -2,10 +2,13 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 use App\Models\Model;
 
 class Warehouse extends Model
 {
+    use HasFactory;
     /**
      * The attributes that are mass assignable.
      *

@@ -38,9 +38,9 @@ test.describe('home page', () => {
 
     test('shows tax-inclusive prices, not raw decimal strings', async ({ page }) => {
         await page.goto('/', { waitUntil: 'domcontentloaded' });
-        await page.locator('.product-grid-item .price').first().waitFor();
+        await page.locator('.main-products .product-grid-item .price').first().waitFor();
 
-        const price = await page.locator('.product-grid-item .price').first().innerText();
+        const price = await page.locator('.main-products .product-grid-item .price').first().innerText();
 
         // Formatted as €3.36 -- not "2.9500", and not the 295.41 that the
         // string-concatenation bug used to produce.

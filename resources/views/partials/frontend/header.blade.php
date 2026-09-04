@@ -32,7 +32,7 @@
             <div class="journal-secondary j-min xs-100 sm-100 md-45 lg-45 xl-45">
                 <div class="links j-min">
                     <span class="no-link">{{ trans('header.Welcome Message') }} </span>
-                    @if (Auth::user()->isCustomer)
+                    @if (Auth::check() && Auth::user()->isCustomer)
 
                     <a href="/account"><i style="margin-right: 5px; color: rgb(105, 185, 207); font-size: 16px" data-icon=""></i><span class="top-menu-link">{{ trans('header.register') }}</span></a> </div>
                     @else
