@@ -444,4 +444,5 @@ return [
     'Late Payment Percent' => 'Late Payment Percent',
     '_invoices_subtitle' => 'Manage your invoices',
     'no_offers' => 'There are no active offers right now.',
+    'no_returns_to_preview' => 'There are no returns to preview yet.',
 ];

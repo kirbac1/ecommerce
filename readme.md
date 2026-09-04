@@ -202,7 +202,8 @@ so every one of these values has to be coerced before use.
 |---|---|
 | `api.spec.js` | every `/api/v3` collection, search by name and by brand, the category tree, PDF export |
 | `storefront.spec.js` | product grid, prices, images, gallery, offers, brands filter, translation keys |
-| `admin.spec.js` | login, dashboard charts and totals, every admin page, settings |
+| `admin.spec.js` | login, dashboard charts and totals, every admin page, settings, the read-only demo lockdown |
+| `cashier.spec.js` | the register, its document pages, and the return print preview |
 
 The Playwright config starts the app itself (`webServer` → `./run-local.sh`) and
 reuses one that is already running. It needs the seeded demo data, so run

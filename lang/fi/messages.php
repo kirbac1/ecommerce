@@ -567,4 +567,5 @@ return [
     'answer_command' => 'Vastaa...',
     'Bill Number' => 'Laskun numero',
     'no_offers' => 'Ei voimassa olevia tarjouksia juuri nyt.',
+    'no_returns_to_preview' => 'Ei palautuksia esikatseltavaksi.',
 ];

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Category;
 use App\Http\Requests;
+use App\Returned;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
@@ -174,8 +175,41 @@ class CashierController extends Controller
         return view('/cashier/return');
     }
 
-    public function returnPreview()
+    /**
+     * Print preview for a return.
+     *
+     * The view has always required a $return, but nothing was ever passed to
+     * it, so the page rendered blank on Laravel 5.2 (undefined-variable
+     * notices were suppressed) and 500s once warnings are switched on.
+     *
+     * Takes the id the same way the rest of this app does, `?id=`, and falls
+     * back to the most recent return so the preview is useful on its own.
+     */
+    public function returnPreview(Request $request)
     {
-        return view('/cashier/returnPreview');
+        $query = Returned::with(['customer', 'products']);
+
+        $return = $request->filled('id')
+            ? $query->findOrFail($request->get('id'))
+            : $query->latest('id')->first();
+
+        // Same tax-inclusive total the return PDF prints, so the preview and
+        // the printed document agree.
+        $total = 0;
+
+        if ($return) {
+            foreach ($return->products as $product) {
+                $taxedPriceEach = round(
+                    $product->pivot->priceEach * (100 + $product->pivot->taxPercent) / 100,
+                    4
+                );
+                $total += $taxedPriceEach * $product->pivot->quantity;
+            }
+        }
+
+        return view('/cashier/returnPreview', [
+            'return' => $return,
+            'total' => number_format($total, 2, ',', ''),
+        ]);
     }
 }
