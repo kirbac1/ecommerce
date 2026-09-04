@@ -9,8 +9,9 @@ symlink swap, prune to the last 5, health check), adapted for PHP/Laravel
 instead of Node/Passenger.
 
 > **Before the first deploy will work**, the server side has to exist: a Plesk
-> subdomain, PHP 7.4, a database, and four GitHub secrets. Those steps are
-> below and have to be done by hand — they need panel access.
+> subdomain, PHP 7.4, a database, an authorised deploy key, and the GitHub
+> secrets. Those steps are below and have to be done by hand — they need panel
+> or password access.
 
 ---
 
@@ -70,7 +71,7 @@ In Plesk: **Websites & Domains → Add Subdomain**
 
 | Field | Value |
 |---|---|
-| Subdomain | `invoicing` of `kirbac.fi` |
+| Subdomain | `invoicing` of `kirbac.fi` — note the spelling, `invoicing` not `invocing`; that is the name DNS already resolves |
 | Document root | `httpdocs/current/public` |
 
 Plesk will warn that the document root does not exist yet. That is expected —
@@ -108,21 +109,32 @@ before the site is reachable by anyone else.
 
 ### 4. Authorise the deploy key
 
-The workflow authenticates with its own SSH key. Reuse the paljonkose deploy key
-or generate a dedicated one — a separate key per repo is better, since revoking
-one then does not break the other:
+A dedicated key has been generated at `~/.ssh/invoicing_deploy` — separate from
+the paljonkose one, so revoking either does not break the other. Its private
+half is already in the `DEPLOY_SSH_KEY` secret.
+
+The public half still has to be added to the server. It needs the account
+password, so run this yourself. Export the address and username first, from the
+same values that are in the GitHub secrets:
 
 ```bash
-ssh-keygen -t ed25519 -f ~/.ssh/invoicing_deploy -N "" -C "github-actions-invoicing"
-```
-
-> The private key must never be committed. Generate it outside the working tree.
-
-Add the public half to the server:
-
-```bash
+export DEPLOY_HOST=... DEPLOY_USER=...
 ssh-copy-id -i ~/.ssh/invoicing_deploy.pub "$DEPLOY_USER@$DEPLOY_HOST"
 ```
+
+Then confirm it worked — this must print `CONNECTED` without prompting:
+
+```bash
+ssh -i ~/.ssh/invoicing_deploy -o BatchMode=yes "$DEPLOY_USER@$DEPLOY_HOST" 'echo CONNECTED'
+```
+
+> The private key must never be committed. It lives in `~/.ssh/`, outside the
+> working tree, which is why `.gitignore` does not need to mention it.
+
+**`DEPLOY_HOST` must be the server's IP, not `invoicing.kirbac.fi`.** The
+hostname resolves to Cloudflare, which proxies HTTP only — port 22 there is
+closed. The IP is the same machine the paljonkose deploy already uses, and its
+host key matches the one already in `~/.ssh/known_hosts`.
 
 ### 5. Add the GitHub secrets
 
@@ -130,24 +142,36 @@ ssh-copy-id -i ~/.ssh/invoicing_deploy.pub "$DEPLOY_USER@$DEPLOY_HOST"
 
 The host and username are deliberately not written down in this public repo.
 
+Already set:
+
+| Secret | Status |
+|---|---|
+| `DEPLOY_HOST` | ✅ set — the server IP |
+| `DEPLOY_USER` | ✅ set |
+| `DEPLOY_SSH_KEY` | ✅ set — private half of `~/.ssh/invoicing_deploy` |
+| `DEPLOY_KNOWN_HOSTS` | ✅ set — pinned from `ssh-keyscan` |
+| `APP_KEY` | ✅ set — freshly generated, 32 chars |
+
+Still needed, because they depend on the database from step 3:
+
 | Secret | What it is |
 |---|---|
-| `DEPLOY_HOST` | server address |
-| `DEPLOY_USER` | SSH username |
-| `DEPLOY_SSH_KEY` | contents of `~/.ssh/invoicing_deploy` (the private half) |
-| `DEPLOY_KNOWN_HOSTS` | output of `ssh-keyscan -H "$DEPLOY_HOST"` |
-| `APP_KEY` | `php artisan key:generate --show` — 32 chars, used for session and cookie encryption |
-| `DB_DATABASE` | from step 3 |
-| `DB_USERNAME` | from step 3 |
-| `DB_PASSWORD` | from step 3 |
+| `DB_DATABASE` | database name |
+| `DB_USERNAME` | database user |
+| `DB_PASSWORD` | that user's password |
+
+```bash
+gh secret set DB_DATABASE -R kirbac1/invoicingSystem
+gh secret set DB_USERNAME -R kirbac1/invoicingSystem
+gh secret set DB_PASSWORD -R kirbac1/invoicingSystem
+```
 
 `DEPLOY_KNOWN_HOSTS` pins the server's host key. Without it the deploy falls
 back to trust-on-first-use and logs a warning — it works, but a DNS or routing
 surprise could then redirect the deploy somewhere else.
 
-`APP_KEY` must be a *different* value from the one in local development, and
-must not change afterwards: changing it invalidates every session and every
-encrypted cookie.
+`APP_KEY` is a different value from local development, and must not change
+afterwards: changing it invalidates every session and every encrypted cookie.
 
 ### Optional repository variables
 
