@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+
+<head>
+    
+    <meta charset="utf-8">
+    <title>PALAUTUS</title>
+    <link rel="stylesheet" href="/assets/css/invoice.css">
+    <link rel="license" href="http://www.opensource.org/licenses/mit-license/">
+</head>
+
+<body>
+    <header>
+        <h1 class="headline">Ugur Bakkal</h1>
+        <h5 class="subHeadline">Aina tuoretta, aina edullista</h5>
+        <address class="seller">
+            <p>Ugur Bakkal</p>
+            <p>Itäkeskus
+                <br> Kastelholmantie 2
+                <br> 00900 Helsinki
+                <br> Puh. 09-753 1022 
+                <br> Ytunnus:FI32993-6
+               
+            </p>
+        </address>
+        <h1 style="float: left;  letter-spacing: 0em; ">PALAUTUS</h1>
+    </header>
+    <article>
+        <div>
+            <h1>Recipient</h1>
+            <address>
+                <p>Asian Food Oy
+                    <br> Tullikamarinaukio 12
+                    <br> 33100
+                    <br> 04023232343
+                    <br> Ytunnus:FI193832-1
+                </p>
+            </address>
+
+            <table class="info receiver" style="border-style:solid; border-color: black; border-width: 1px; float: right; width: 40%">
+                <tbody>
+                    <tr>
+                        <td>Kuitti numero: <span>433</span></td>
+                        <td>Maksettu: <span>5521€</span></td>
+                    </tr>
+                    <tr>
+                        <td>Asiakasnumero: <span>1322</span></td>
+                        <td>Päivämäärä:<span>17.05.2016</span></td>
+                    </tr>
+                    <tr>
+                  
+                        <td>Kotipaikka: Helsinki</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <table class="inventory">
+                <thead>
+                    <tr>
+                       <th style="width: 4%"><span>Nr</span></th>
+                        <th style="width: 14%"><span>Tuotte</span></th>
+                        <th><span>Kolli</span></th>
+                        <th><span>KPL</span></th>
+                        <th><span>Tpl Adt</span></th>
+                        <th><span>A-hinta Veroton</span></th>
+                        <th><span>A-hinta Verollinen</span></th>
+                        <th><span>ALV-%</span></th>
+                        <th><span>Veroton Yhteensä</span></th>
+                        <th><span>ALV Yhteensä</span></th>
+                        <th><span>Verollinen Yhteensä</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><span>Gulcan Sucuk</span></td>
+                        <td><span>12</span></td>
+                        <td><span>1,00</span></td>
+                        <td><span>12,00</span></td>
+                        <td><span>24,59</span></td>
+                        <td><span>30,00</span></td>
+                        <td><span>22%</span></td>
+                        <td><span>24,59</span></td>
+                        <td><span>5,41</span></td>
+                        <td><span>30,00</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <table class="balance">
+            <tr>
+                <th><span>Yhteensä</span></th>
+                <td><span data-prefix>$</span><span>600.00</span></td>
+            </tr>
+            <tr>
+                <th><span>Maksettu</span></th>
+                <td><span data-prefix>$</span><span contenteditable>0.00</span></td>
+            </tr>
+            <tr>
+                <th><span>Takaisin</span></th>
+                <td><span data-prefix>$</span><span contenteditable>600.00</span></td>
+            </tr>
+        </table>
+    </article>
+    <table class="receiver" style="border-width: 1px;border-top-style: solid;border-top-color: black">
+        <tbody>
+            <tr>
+                <td>Cemet Oy</td>
+                <td>Ytunnus:2265244-8</td>
+                <td>Sähköposti: info@halime.fi</td>
+                <td>Tilinumero:</td>
+                <td>Viitenumero:</td>
+            </tr>
+            <tr>
+                <td>Kastelholmantie 2</td>
+                <td>Kotipaikka: Helsinki</td>
+                <td>Puhelin:097531022 </td>
+                <td>IBAN:</td>
+                <td>VAT:FI22652448</td>
+            </tr>
+            <tr>
+                <td>00900 HELSINKI</td>
+                <td>http://halime.fi</td>
+                <td>Puhelin:0504319997</td>
+                <td>BIC:</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

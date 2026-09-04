@@ -1,0 +1,523 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <!-- Import materialize.css -->
+    <link type="text/css" rel="stylesheet" href="/assets/css/materialize.css" media="screen,projection" />
+    <!-- Import Material Design Iconic Font -->
+    <!-- Import Material Design Iconic Font -->
+    <link rel="stylesheet" href="/assets/css/material-design-iconic-font.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- Import Application CSS -->
+    <link rel="stylesheet" href="assets/css/app.css" />
+    <!-- Import Application CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+    <link rel="stylesheet" href="/assets/css/classic.css" />
+    <!-- Let browser know website is optimized for mobile -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <div id="app">
+        <section id="header">
+            <div class="header row">
+                <div class="brand col s6">
+                    <div class="header row">
+                        <div class="brand col s6">
+                            <h4>
+                        <a href="/templates/main.html"> Halime Oy</a>
+                    </h4>
+                        </div>
+                        <div class="currentCustomer brand col s6">
+                            <div style=" margin-bottom: 0px;" class="row">
+                                <div class="col s10">
+                                    <h5 class="name blink_me"> Valitse asiakas</h5>
+                                    <p style="margin-bottom: 0px;" class="companyId"></p>
+                                </div>
+                                <div class="addCustomer col s2" style="float:right"><i class="material-icons left">add_box</i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--                 <div class="order-selector col s6" style="display: none">
+                    <ul class="tabs">
+                        <li id="order-1" class="order-tab tab col s3">
+                            <a class="active">
+                                1
+                            </a>
+                        </li>
+                        <li id="order-2" class="order-tab tab col s3">
+                            <a class="">
+                                2
+                            </a>
+                        </li>
+                        <div id="order-add" class="order-button">
+                            <i @click="add" id="add_tab" class="material-icons">
+                                add
+                            </i>
+                        </div>
+                        <div class="order-button">
+                            <i @click="remove" id="remove_tab" class="material-icons">
+                                indeterminate_check_box
+                            </i>
+                        </div>
+                    </ul>
+                </div> -->
+            </div>
+        </section>
+        <div class="row">
+            <div class="col s3">
+                <div id="orderSearchBoxes" style="width: 100%">
+                    <div class="sw row">
+                        <input class="col s12" id="orderSearch" v-on:keyup.13="fetchOrders" v-model="orderQuery" type="search" name="barcode" class="search" placeholder="Search orders..." />
+                    </div>
+                </div>
+                <div class="row">
+                    <section>
+                        <div id="customers" class="row">
+                        </div>
+                    </section>
+                    <section id="customerDetails" style="display: none">
+                        <div class="row">
+                            <a style="background-color: #9edad5 !important;" class=" claswaves-effect btn-large btn-flat col grey lighten-5 black-text s3 backToCustomerList">
+                                <i class="fa fa-arrow-left"></i>
+                            </a>
+                        </div>
+                        <div class="row">
+                            <div class="col s6">
+                                <div class="customerDetails">
+                                    <span class="name"> Test Oriental Market</span>
+                                    <br>
+                                    <span class="street"> Kastelholmantie 31</span>
+                                    <br>
+                                    <span class="postal"> 00100</span>
+                                    <span class="city"> Helsinki</span>
+                                    <br>
+                                    <span class="country"> Finland</span>
+                                </div>
+                            </div>
+                            <div class="customerDetails col s6">
+                                <label>GroupId: </label><span class="groupId">TOP1</span>
+                                <br>
+                                <label>Date: </label><span class="date">  20.08.2010</span>
+                                <br>
+                                <label>Total: </label><span class="totalAmount">712378,99€</span>
+                            </div>
+                        </div>
+                        <div id="orderTable" class="row">
+                        </div>
+                    </section>
+                </div>
+                <section id="orderDetails" v-show="showOrderDetails">
+                    <div class="row">
+                        <div class="col s6">
+                            <div class="customerDetails">
+                                <span class="name"> {{order.company}}</span>
+                                <br>
+                                <span class="street"> {{order.street1}}</span>
+                                <br>
+                                <span class="postal"> {{order.zipcode}}</span>
+                                <span class="city"> {{order.city}}</span>
+                                <br>
+                                <span class="country"> {{order.country}}</span>
+                            </div>
+                        </div>
+                        <div class="customerDetails col s6">
+                            <label>GroupId: </label><span class="groupId">TOP1</span>
+                            <br>
+                            <label>Date: </label><span class="date">  {{order.created_at}}</span>
+                            <br>
+                            <label>Total: </label><span class="totalAmount">{{order.taxed_total}}</span>
+                        </div>
+                    </div>
+                    <div id="productsTable" class="row">
+                        <!-- demo root element -->
+                        <div id="demo">
+                            <form id="search">
+                                Search
+                                <input name="query" v-model="searchQuery">
+                            </form>
+                            <demo-grid :data="gridData" :columns="gridColumns" :filter-key="searchQuery">
+                            </demo-grid>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="col s9">
+                <div id="searchBoxes" style="width: 100%">
+                    <div class="sw">
+                        <input id="productSearch" type="search" name="barcode" class="search" placeholder="Etsi tuote..." />
+                    </div>
+                </div>
+                <div>
+                    <div id="result1" class="result" style="width:100% ;padding:5px; cursor: pointer;"> </div>
+                    <div id="result2" class="result" style="width:100% ;padding:5px; cursor: pointer;"> </div>
+                    <div id="result3" class="result" style="width:100% ;padding:5px; cursor: pointer;"> </div>
+                </div>
+                <section>
+                    <div class=" row" style="margin-bottom:0px">
+                        <div class="orders-header row" style="position:relative">
+                            <div class="col s1">
+                                Code
+                            </div>
+                            <div class="col s1">
+                                Nimi
+                            </div>
+                            <div class="col s1">
+                                A-hinta
+                                <br>veroton
+                            </div>
+                            <div class="col s1">
+                                A-hinta
+                                <br>verollinen
+                            </div>
+                            <div class="col s1">
+                                Ltk Määrä
+                            </div>
+                            <div class="col s1">
+                                KPL
+                            </div>
+                            <div class="col s1">
+                                KPL Yhteensä
+                            </div>
+                            <div class="col s1">
+                                Alv%
+                            </div>
+                            <div class="col s1">
+                                Veroton
+                                <br>yhteensä
+                            </div>
+                            <div class="col s1">
+                                ALV
+                                <br>yhteensä
+                            </div>
+                            <div class="col s1">
+                                Verollinen
+                                <br> yhteensä
+                            </div>
+                            <div style="    padding-left: 30px;" class="col s1">
+                                Sil
+                            </div>
+                        </div>
+                        <div id="orders" class="orders row">
+                            <ul id="productList">
+                                <li v-for="product in cart.products" id="{{product.id}} + _cart" v-on:click="add2Cart(product.product.id)" class="orderline active">
+                                    <div class="row">
+                                        <div class="col sku s1"> {{product.product.sku}}</div>
+                                        <div class="edit name col s1"> {{product.product.name}} </div>
+                                        <div class="priceEach edit col s1"> {{product.product.priceEach}} </div>
+                                        <div class="taxedPrice col s1"> {{product.product.taxedPrice}} </div>
+                                        <div class="koli col s1"> {{product.product.qtyPerPack}} </div>
+                                        <div class="quantity edit col s1">1 </div>
+                                        <div class="totalQty edit col s1"> {{product.quantity}}  </div>
+                                        <div class="taxPercent col s1"> {{product.product.taxPercent}}  </div>
+                                        <div class="nonTaxedSum edit col s1"> {{totalNonTaxedSum(product.quantity,product.product.qtyPerPack,product.product.priceEach)}} </div>
+                                        <div class="taxSum col s1">{{totalTaxAmount(product.quantity,product.product.qtyPerPack,product.product.priceEach,product.product.taxPercent)}} </div>
+                                        <div style="" class="taxedPriceSum col s1"> {{totalTaxedSum(product.quantity,product.product.qtyPerPack,product.product.priceEach,product.product.taxPercent)}} </div>
+                                        <div class="col s1"><a style="margin-left:30px;font-size:15px" class="removeProduct" href="">X</a></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="total-price row">
+                            <div class="total-price col s12 product-name">
+                                <span class="totalNonTaxed"> </span>
+                                <span>VEROTON YHTEENSÄ: {{cart.totalNonTaxedAmount}} </span>
+                            </div>
+                            <div class="col s12">
+                                <span class="totalTax"></span>
+                                <span style="float:right;">VERO YHTEENSÄ:  {{cart.totalTaxAmount}}</span>
+                            </div>
+                            <div class="col s12">
+                                <span class="totalTaxed"></span>
+                                <span>VEROLLINEN YHTEENSÄ: {{cart.totalTaxedAmount}}  </span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Structure -->
+    <div id="confirmRemove" class="modal">
+        <div class="modal-content">
+            <h4>Are you sure?</h4>
+            <p>The prouct will be deleted from cart.</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class=" removeConfirmed modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+        </div>
+    </div>
+    <!-- Modal Structure -->
+    <div id="customerSearchTable" class="modal bottom-sheet">
+        <div class="modal-content">
+            <div class="container">
+                <div id="top" class="row">
+                    <div class="col s11 right-align">
+                        <input id="searchCustomer" placeholder="Etsi asiakas...">
+                    </div>
+                    <div class="addCustomer col s1 right-align" style="cursor:pointer;height: 50px; background-color: gray;">
+                        <i style="font-size:35px" class="material-icons">add</i>
+                    </div>
+                </div>
+                <!-- customer details end-->
+                <!-- Customer list section -->
+                <section>
+                    <div class="row">
+                        <table id="customerTable" class="striped bordered responsive-table">
+                            <thead>
+                                <tr>
+                                    <th data-field="id">Name</th>
+                                    <th data-field="name">Address</th>
+                                    <th data-field="price">Phone</th>
+                                    <th data-field="price">Ytunnus</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customerList">
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <!-- Customer list section end-->
+            </div>
+            <!-- Container end -->
+        </div>
+        <div class="modal-footer">
+        </div>
+    </div>
+    <script type="text/javascript" src="assets/lib/vue.js"></script>
+    <script src="/assets/js/vue-resource-0.7.0.js"></script>
+    <script type="text/javascript" src="types/cart.js">
+    </script>
+    <script type="text/javascript" src="types/customer.js">
+    </script>
+    <script type="text/javascript" src="types/product.js">
+    </script>
+    <script type="text/javascript" src="types/invoice.js">
+    </script>
+    <script type="text/javascript" src="types/order.js">
+    </script>
+    <script type="text/javascript" src="types/proforma.js">
+    </script>
+    <script type="text/javascript" src="assets/js/jquery-2.1.1.min.js">
+    </script>
+    <script type="text/javascript" src="assets/js/materialize.js">
+    </script>
+    <script src="assets/lib/jquery.columns.min.js"></script>
+    <script src="assets/lib/ajaxpaging.js"></script>
+    <script src="assets/lib/gotopage.js"></script>
+    <script type="text/javascript" src="utility/RESOURCE.js"></script>
+    <!-- <script type="text/javascript" src="return.js">
+</script>
+ -->
+    <script type="text/javascript" src="assets/lib/jquery.jeditable.mini.js">
+    </script>
+    <!-- component template -->
+    <script type="text/x-template" id="grid-template">
+        <table>
+            <thead>
+                <tr>
+                    <th v-for="key in columns" @click="sortBy(key)" :class="{active: sortKey == key}">
+                        {{key | capitalize}}
+                        <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
+          </span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="
+        entry in data
+        | filterBy filterKey
+        | orderBy sortKey sortOrders[sortKey]">
+                    <td v-for="key in columns">
+                        {{entry[key]}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </script>
+    <script>
+    // register the grid component
+    Vue.component('demo-grid', {
+        template: '#grid-template',
+        props: {
+            data: Array,
+            columns: Array,
+            filterKey: String
+        },
+        data: function() {
+            var sortOrders = {}
+            this.columns.forEach(function(key) {
+                sortOrders[key] = 1
+            })
+            return {
+                sortKey: '',
+                sortOrders: sortOrders
+            }
+        },
+        methods: {
+            sortBy: function(key) {
+                this.sortKey = key
+                this.sortOrders[key] = this.sortOrders[key] * -1
+            }
+        }
+    })
+
+    new Vue({
+        el: 'body',
+        data: {
+            message: 'Hello Vue.js!',
+            orderQuery: "",
+            customerQuery: "",
+            order: {},
+            cart: {
+                totalTaxAmount: 0,
+                totalTaxedAmount: 0,
+                totalNonTaxedAmount: 0,
+                products: []
+            },
+            searchQuery: '',
+            gridColumns: ['sku', 'name', 'qty', 'total'],
+            gridData: [{
+                sku: '123213',
+                name: 'Chuck Norris',
+                qty: 122,
+                total: 12333
+            }, {
+                sku: '33',
+                name: 'Bruce Lee',
+                qty: 122,
+                total: 12333
+            }, {
+                sku: '333',
+                name: 'Jackie Chan',
+                qty: 122,
+                total: 12333
+
+            }, {
+                sku: '3332',
+                name: 'Jet Li',
+                qty: 122,
+                total: 12333
+            }]
+
+        },
+        watch:{
+            order:function (argument) {
+                
+            }
+
+        },
+        computed:{
+            totalNonTaxedSum:function (qty,qtyPerPack,priceEach) {
+               
+               val = parseFloat(qty)*parseFloat(qtyPerPack)*parseFloat(priceEach);
+               return val.toFixed(4);
+            },
+            totalTaxAmount:function (qty,qtyPerPack,priceEach,taxPercent) {
+
+                val = (parseFloat(qty)*parseFloat(qtyPerPack)*parseFloat(priceEach)*parseFloat(taxPercent))/100;
+                return val.toFixed(4);
+
+            },
+            totalTaxedSum:function (qty,qtyPerPack,priceEach,taxPercent) {
+                
+                val = parseFloat(qty)*parseFloat(qtyPerPack)*parseFloat(priceEach)
+                val = val + (val*parseFloat(taxPercent))/100;
+                return val.toFixed(4);
+
+            },
+            showOrderDetails:function (argument) {
+              return (this.order != undefined && this.order != null &&  Object.keys(this.order).length != 0) ? true : false;
+            }
+           
+
+        },
+
+        methods: {
+            fetchOrders: function() {
+
+                var that = this;
+                Vue.http.get('/api/v3/proformas/' + this.orderQuery).then(function success(response) {
+                    this.order = response.data;
+
+                    this.initProducts();
+
+                }.bind(this), function error(response) {
+                     that.order = {};
+                    console.log('FAILURE', response);
+                   
+                });
+
+            },
+            initProducts:function (argument) {
+                 var products =[];
+                for (var i = 0; i < this.order.products.length; i++) {
+                   var product ={};
+                   product.name =  this.order.products[i].name;
+                    product.sku =  this.order.products[i].sku;
+                     product.qty =  this.order.products[i].details.quantity;
+                      product.total =  this.order.products[i].details.taxedPriceTotal;
+                      products.push(product);
+                }               
+
+                this.$set("gridData",products);
+            },
+            add2Cart: function(argument) {
+
+                if (this.addQuantity2Existing(id)) {
+
+                    return;
+                } else {
+
+                    Vue.http.get('/api/v3/products/' + id).then(function success(response) {
+                        product = response.data;
+
+
+                        var item = {
+                            "quantity": 1,
+                            "product": product
+                        };
+
+                        this.cart.products.push(item);
+
+                        localStorage.setItem("returnCart", JSON.stringify(this.cart));
+
+                    }.bind(this), function error(response) {
+                        console.log('FAILURE', response);
+                    });
+
+                }
+            },
+            addQuantity2Existing: function(id) {
+
+
+                var length = this.cart.products.length;
+
+                for (var i = 0; i < length; i++) {
+
+                    // if inside the cart
+                    if (this.cart.products[i].product.id === id) {
+
+                        this.cart.total += parseFloat(this.cart.products[i].product.priceEach);
+
+                        this.cart.products[i].quantity += 1;
+                        localStorage.setItem("returnCart", JSON.stringify(this.cart));
+
+                        return true;
+                    }
+
+                }
+                return false;
+            }
+
+
+
+        },
+        ready: function(argument) {
+            // body...
+        }
+
+    })
+    </script>
+    </body>
+
+</html>

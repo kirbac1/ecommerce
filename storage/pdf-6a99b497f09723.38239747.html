@@ -1,0 +1,342 @@
+<!doctype html>
+<html>
+
+<head><base href="http://127.0.0.1:8000">
+    <meta charset="utf-8">
+    <title>Invoice</title>
+    <link rel="stylesheet" href="/templates/assets/css/invoice.css">
+    <link rel="license" href="http://www.opensource.org/licenses/mit-license/">
+</head>
+
+
+<body>
+<button class="print" style="display:none"></button>
+    <header>
+        <h1 class="headline"></h1>
+        <h5 class="subHeadline"></h5>
+        <address class="seller">
+            <p></p>
+            <p>
+                <br> 
+                <br>  
+                <br> Puh. 09-753 1022
+                <br> Ytunnus: 
+            </p>
+        </address>
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKsAAAAUAQMAAADIul/6AAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAAAlwSFlzAAAOxAAADsQBlSsOGwAAACRJREFUGJVj+FNgwVDHDiTlP9jLf/zxgP+A/MfjDxhGhYeeMAA/dOa14ko0qAAAAABJRU5ErkJggg==" alt="barcode" style="float:right; overflow: hidden; clear: both;" />
+        <h1 style="float: left;  letter-spacing: 0em; font-size:20px;">LASKU</h1>
+    </header>
+    <article>
+        <div>
+            <h1>Recipient</h1>
+            <address>
+                <p>
+                    <br> 
+                    <br> 6866 Kailey Spur
+                    <br>53728 Kunze Cliffs
+                    <br>66413 Willowburgh
+                    <br>Rasheedstad Bahrain
+                    <br> Ytunnus:VAT30876
+                </p>
+            </address>
+            <!--             <table class="meta">
+            <tr>
+                <th><span >Invoice #</span></th>
+                <td><span >101138</span></td>
+            </tr>
+            <tr>
+                <th><span >Date</span></th>
+                <td><span contenteditable>January 1, 2012</span></td>
+            </tr>
+            <tr>
+                <th><span >Amount Due</span></th>
+                <td><span contenteditable>600.00</span></td>
+            </tr>
+        </table> -->
+
+         
+            <table class="info receiver" style="border-style:solid; border-color: black; border-width: 1px; float: right; width: 40%">
+                <tbody>
+                    <tr>
+                        <td>Laskunumero: <span>61</span></td>
+                         
+                        <td>Maksettava: <span>83.39</span></td>
+                                            </tr>
+                    <tr>
+                        <td>Asiakas numero: <span>5</span></td>
+                        <td>Huomautusaika: <span>3 vrk</span></td>
+                    </tr>
+                    <tr>
+                        <td>P&auml;iv&auml;m&auml;&auml;r&auml;:<span>03-09-2026</span></td>
+                        <td style="font-weight: bold">Viiv&auml;styskorko: <span> %</span></td>
+                    </tr>
+                    <tr>
+                        <td>Maksuehdot:<span> </span></td>
+                        <td style="font-weight: bold">Muistutusmaksu:<span> €</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold">Er&auml;p&auml;iv&auml;: <span >17-09-2026</span></td>
+                        <td>Kotipaikka: Helsinki</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+                         <table class="inventory">
+            
+                <thead>
+                    <tr>
+                        <th style="width: 4%">SKU</th>
+                        <th style="width: 30%">Tuote</th>
+                        
+                        <th>KPL</th>
+                        <th>Ltk M&auml;&auml;r&auml;</th>
+                        <th>Kpl Yht.</th>
+                        <th>A-hinta Veroton</th>
+                        
+                         
+                        <th>A-hinta Verollinen</th>
+                        <th>ALV-%</th>
+                                                <th>Veroton Yhteens&auml;</th>
+                       
+                         
+                        <th>ALV Yhteens&auml;</th>
+                        <th>Verollinen Yhteens&auml;</th>
+                                            </tr>
+                </thead>
+                <tbody>
+
+                          
+                            <tr>
+                        <td>2</td>
+                        <td><span style="float:left">Red lentils 1kg</span></td>                
+                        <td><span>1</span></td>
+                        <td><span>1.00</span></td>
+                        <td><span>1.00 </span></td>
+                        <td><span>3.45 </span></td>
+                         
+                        <td><span>3.93 </span></td>                      
+                        <td><span>14.00%</span></td>
+                                                <td><span>3.45</span></td>
+                          
+                        <td><span>0.48</span></td>
+                        <td><span>3.93</span></td>
+                                            </tr>
+                        
+                            <tr>
+                        <td>6</td>
+                        <td><span style="float:left">Chickpeas, canned 400g</span></td>                
+                        <td><span>1</span></td>
+                        <td><span>12.00</span></td>
+                        <td><span>6.00 </span></td>
+                        <td><span>1.35 </span></td>
+                         
+                        <td><span>1.54 </span></td>                      
+                        <td><span>14.00%</span></td>
+                                                <td><span>8.10</span></td>
+                          
+                        <td><span>1.13</span></td>
+                        <td><span>9.23</span></td>
+                                            </tr>
+                        
+                            <tr>
+                        <td>10</td>
+                        <td><span style="float:left">Dried apricots 500g</span></td>                
+                        <td><span>2</span></td>
+                        <td><span>6.00</span></td>
+                        <td><span>11.00 </span></td>
+                        <td><span>5.60 </span></td>
+                         
+                        <td><span>6.38 </span></td>                      
+                        <td><span>14.00%</span></td>
+                                                <td><span>61.60</span></td>
+                          
+                        <td><span>8.62</span></td>
+                        <td><span>70.22</span></td>
+                                            </tr>
+                        
+                        </tbody>
+        </table>
+
+            </div>
+
+
+        <table class="balance" style="float:right">
+            <tr>
+                <th><span>Veroton:</span></th>
+                <td><span data-prefix></span><span>&euro; 73.15 </span></td>
+            </tr>
+               
+            <tr>
+                <th><span>Vero: </span></th>
+                <td><span data-prefix>&euro;</span><span>10.24</span></td>
+            </tr>
+            <tr>
+                <th><span>Yhteens&auml; : </span></th>
+                <td><span data-prefix>&euro;</span><span contenteditable>83.39</span></td>
+            </tr>
+                    </table>
+    </article>
+    <table class="receiver" style="border-width: 1px;border-top-style: solid;border-top-color: black">
+        <tbody>
+            <tr>
+                <td></td>
+                <td>Ytunnus: </td>
+                <td>Sähköposti: </td>
+                <td>Viitenumero: 6156</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>IBAN: </td>
+                <td>TAX:  </td>
+            </tr>
+            <tr>
+                <td> </td>
+                <td></td>
+                <td>Puhelin:</td>
+                <td>BIC:</td>
+            </tr>
+        </tbody>
+    </table>
+    </table>
+    <!-- <div class="page">
+    <div class="content">
+    </div>
+    <div class="invoice">
+        <label class="invoice--label">
+            TILISIIRTO
+        </label>
+            <span class="invoice--terms">
+                The payment will be cleared for the recipient in accordance with the
+                General terms for payment transmission and only on the basis of the
+                account number given by the payer.
+            </span>
+        <div class="recipient-bank">
+            <label class="recipient-bank--label">
+                <span>Saajan tilinumero</span>
+            </label>
+            <label class="recipient-bank--iban--label">
+                IBAN
+            </label>
+            <span class="recipient-bank--iban">
+                <ul class="recipient-bank--iban--list">
+                    <li>
+                        <span class="recipient-bank--iban--list--bank">
+                            SAMPO PANKKI
+                        </span>
+                        <span class="recipient-bank--iban--list--number">
+                            FI16 8000 1400 0502 67
+                        </span>
+                    </li>
+                    <li>
+                        <span class="recipient-bank--iban--list--bank">
+                            NORDEA
+                        </span>
+                        <span class="recipient-bank--iban--list--number">
+                            FI00 2001 3000 0012 34
+                        </span>
+                    </li>
+                    <li>
+                        <span class="recipient-bank--iban--list--bank">
+                            OP
+                        </span>
+                        <span class="recipient-bank--iban--list--number">
+                            FI21 5234 5600 0007 85
+                        </span>
+                    </li>
+                    <li>
+                        <span class="recipient-bank--iban--list--bank">
+                            AKTIA
+                        </span>
+                        <span class="recipient-bank--iban--list--number">
+                            FI16 8000 1400 0502 67
+                        </span>
+                    </li>
+                </ul>
+            </span>
+            <label class="recipient-bank--bic--label">
+                BIC
+            </label>
+            <span class="recipient-bank--bic">
+                <ul class="recipient-bank--bic--list">
+                    <li>DABAFIHH</li>
+                    <li>NDEAFIHH</li>
+                    <li>OKOYFIHH</li>
+                    <li>HELSFIHH</li>
+                </ul>
+            </span>
+        </div>
+        <div class="recipient">
+            <label class="recipient--label">
+                <span>Saaja</span>
+            </label>
+            <span class="recipient--name">
+                OY YRITYS AB<br>
+                YRITYSKUJA 12, 4. KRS<br>
+                12345 KAUPUNKI<br>
+            </span>
+        </div>
+        <div class="payer">
+            <label class="payer--personal--label">
+                <span>Maksajan nimi ja osoite</span>
+            </label>
+            <span class="payer--personal">
+                Neil Stoltenberg, <br>
+                6866 Kailey Spur 53728 Kunze Cliffs<br>
+                66413 Willowburgh<br>
+                Rasheedstad Bahrain
+            </span>
+            <label class="payer--signature--label">
+                <span>
+                    Allekirjoitus
+                </span>
+            </label>
+            <span class="payer--signature"></span>
+            <label class="payer--from-account--label">
+                <span>Tililtä nro</span>
+            </label>
+            <span class="payer--from-account">123456-7890</span>
+        </div>
+        <div class="payment">
+            <span class="payment--info">
+                Osuuteni itsenäisyyspäivän lounaasta. t. Maijа
+            </span>
+            <label class="payment--reference--label">
+                <span>Viitenro </span>
+            </label>
+            <span class="payment--reference">
+                61
+            </span>
+            <label class="payment--due--label">
+                Eräpäivä
+            </label>
+            <span class="payment--due">
+                30.11.2010
+            </span>
+            <label class="payment--amount--label">
+                Euro
+            </label>
+            <span class="payment--amount">
+                &euro;83.39
+            </span>
+        </div>
+        <div class="barcode">
+        </div>
+    </div>
+</div> -->
+</body>
+<script type="text/javascript" src="/assets/js/jquery-2.1.1.min.js">
+</script>
+<script type="text/javascript">
+
+$("body").click(function() {
+
+
+    var invoiceID = localStorage.getItem("invoiceID");
+
+    window.location = "/api/v3/invoices/" + invoiceID + "/generatePDF";
+
+})
+</script>
+
+</html>

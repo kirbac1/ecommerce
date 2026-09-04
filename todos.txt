@@ -1,0 +1,15 @@
+1. Products table inline editable
+2. Customer page has all his order history.
+3. Main page widget
+4. Logout
+5. /admin/orders/create box quantity and how many boxes
+6. Discount field
+7. Pagination for products
+8. Delete Customer
+9. Security, Authentication, Authorisation
+10. Two different basePrice on /orders, one in product details
+11. Think about basePrice-ProfitMArgin-salePrice
+12. New Sale part, if you want to create and sell a custom product
+13. Proforma, receipt yaptigin zaman categoriler bir araya gelsin, Hediyelik, deterjan en altta, 24% olanlar
+14. Cemet Oy
+

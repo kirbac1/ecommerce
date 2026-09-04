@@ -1,0 +1,225 @@
+[{
+    "id": 1,
+    "image": "https:\/\/oberbrunner.biz\/enim-dolorem-similique-ex-atque-optio-cupiditate.html",
+    "category_id": "1",
+    "name": "aliquid",
+    "visible": "1",
+    "sku": "9785007358682",
+    "barcode": "8538131670325",
+    "packQty": "98.00",
+    "created_at": "2016-03-28 22:40:49",
+    "updated_at": "2016-03-28 22:40:49",
+    "manufacturer": {
+        "id": 2,
+        "name": "Larson Inc",
+        "visible": "1"
+    },
+    "category": {
+        "id": 1,
+        "parent_id": null,
+        "depth": "0",
+        "name": "Food",
+        "slug": ""
+    },
+    "qtyUnit": "lt",
+    "packEntryPrice": "32.00",
+    "taxPercent": "0.00",
+    "profitPercent": "24.00",
+    "priceEach": "0.40"
+}, {
+    "id": 2,
+    "image": "http:\/\/www.bartoletti.com\/",
+    "category_id": "1",
+    "name": "vel",
+    "visible": "1",
+    "sku": "9788722768149",
+    "barcode": "6114373608108",
+    "packQty": "77.00",
+    "created_at": "2016-03-28 22:40:49",
+    "updated_at": "2016-03-28 22:40:49",
+    "manufacturer": {
+        "id": 7,
+        "name": "Shanahan-Mraz",
+        "visible": "1"
+    },
+    "category": {
+        "id": 1,
+        "parent_id": null,
+        "depth": "0",
+        "name": "Food",
+        "slug": ""
+    },
+    "qtyUnit": "kg",
+    "packEntryPrice": "37.00",
+    "taxPercent": "16.00",
+    "profitPercent": "37.00",
+    "priceEach": "0.76"
+}, {
+    "id": 3,
+    "image": "http:\/\/www.gulgowski.net\/magni-iusto-debitis-veritatis-ipsum-nihil-temporibus-eum-consectetur",
+    "category_id": "1",
+    "name": "odit",
+    "visible": "1",
+    "sku": "9781588989246",
+    "barcode": "5653118608764",
+    "packQty": "68.00",
+    "created_at": "2016-03-28 22:40:49",
+    "updated_at": "2016-03-28 22:40:49",
+    "manufacturer": {
+        "id": 6,
+        "name": "McKenzie Ltd",
+        "visible": "1"
+    },
+    "category": {
+        "id": 1,
+        "parent_id": null,
+        "depth": "0",
+        "name": "Food",
+        "slug": ""
+    },
+    "qtyUnit": "cm",
+    "packEntryPrice": "33.00",
+    "taxPercent": "28.00",
+    "profitPercent": "21.00",
+    "priceEach": "0.75"
+}, {
+    "id": 4,
+    "image": "http:\/\/smitham.info\/totam-ea-voluptates-consequatur-consequuntur",
+    "category_id": "1",
+    "name": "et",
+    "visible": "1",
+    "sku": "9787273110704",
+    "barcode": "4290991295257",
+    "packQty": "53.00",
+    "created_at": "2016-03-28 22:40:49",
+    "updated_at": "2016-03-28 22:40:49",
+    "manufacturer": {
+        "id": 4,
+        "name": "Mosciski and Sons",
+        "visible": "1"
+    },
+    "category": {
+        "id": 1,
+        "parent_id": null,
+        "depth": "0",
+        "name": "Food",
+        "slug": ""
+    },
+    "qtyUnit": "lt",
+    "packEntryPrice": "93.00",
+    "taxPercent": "26.00",
+    "profitPercent": "28.00",
+    "priceEach": "2.83"
+}, {
+    "id": 5,
+    "image": "http:\/\/adams.info\/numquam-eaque-occaecati-natus-aut",
+    "category_id": "2",
+    "name": "occaecati",
+    "visible": "1",
+    "sku": "9792865890322",
+    "barcode": "6834585544390",
+    "packQty": "79.00",
+    "created_at": "2016-03-28 22:40:49",
+    "updated_at": "2016-03-28 22:40:49",
+    "manufacturer": {
+        "id": 6,
+        "name": "McKenzie Ltd",
+        "visible": "1"
+    },
+    "category": {
+        "id": 2,
+        "parent_id": null,
+        "depth": "0",
+        "name": "Beverages",
+        "slug": ""
+    },
+    "qtyUnit": "lt",
+    "packEntryPrice": "32.00",
+    "taxPercent": "9.00",
+    "profitPercent": "19.00",
+    "priceEach": "0.53"
+}, {
+    "id": 6,
+    "image": "http:\/\/www.oconnell.com\/",
+    "category_id": "2",
+    "name": "voluptas",
+    "visible": "1",
+    "sku": "9787860147908",
+    "barcode": "2818839904592",
+    "packQty": 22,
+    "created_at": "2016-03-28 22:40:49",
+    "updated_at": "2016-03-28 22:40:49",
+    "manufacturer": {
+        "id": 4,
+        "name": "Mosciski and Sons",
+        "visible": "1"
+    },
+    "category": {
+        "id": 2,
+        "parent_id": null,
+        "depth": "0",
+        "name": "Beverages",
+        "slug": ""
+    },
+    "qtyUnit": "pcs",
+    "packEntryPrice": "99.00",
+    "taxPercent": "8.00",
+    "profitPercent": "20.00",
+    "priceEach": "5.83"
+}, {
+    "id": 7,
+    "image": "https:\/\/www.swaniawski.com\/aut-molestias-voluptates-suscipit-cumque-est-necessitatibus-animi",
+    "category_id": "1",
+    "name": "aut",
+    "visible": "1",
+    "sku": "9780849044755",
+    "barcode": "6337506883108",
+    "packQty": "20.00",
+    "created_at": "2016-03-28 22:40:49",
+    "updated_at": "2016-03-28 22:40:49",
+    "manufacturer": {
+        "id": 5,
+        "name": "Fay, Hamill and Treutel",
+        "visible": "1"
+    },
+    "category": {
+        "id": 1,
+        "parent_id": null,
+        "depth": "0",
+        "name": "Food",
+        "slug": ""
+    },
+    "qtyUnit": "lt",
+    "packEntryPrice": "48.00",
+    "taxPercent": "1.00",
+    "profitPercent": "9.00",
+    "priceEach": "2.64"
+}, {
+    "id": 8,
+    "image": "http:\/\/ferry.com\/possimus-et-et-dolore-iste-commodi-harum",
+    "category_id": "2",
+    "name": "quod",
+    "visible": "1",
+    "sku": "9794741036732",
+    "barcode": "9185218769343",
+    "packQty": "82.00",
+    "created_at": "2016-03-28 22:40:49",
+    "updated_at": "2016-03-28 22:40:49",
+    "manufacturer": {
+        "id": 5,
+        "name": "Fay, Hamill and Treutel",
+        "visible": "1"
+    },
+    "category": {
+        "id": 2,
+        "parent_id": null,
+        "depth": "0",
+        "name": "Beverages",
+        "slug": ""
+    },
+    "qtyUnit": "g",
+    "packEntryPrice": "100.00",
+    "taxPercent": "13.00",
+    "profitPercent": "14.00",
+    "priceEach": "1.57"
+}]

@@ -1,0 +1,103 @@
+
+.number{
+
+     font-weight: 900 !important;
+    font-size: 25px !important;
+}
+
+#sidebar {
+    width: 220px;
+}
+
+#sidebar .sidebar-inner {
+    width: 100%;
+}
+
+#sidebar .sidebar-inner .si-inner {
+    width: 100%;
+}
+
+#sidebar .profile-menu > a .profile-info {
+    margin-top: 0;
+}
+
+#sidebar .main-menu > li.sub-menu > ul {
+    background: none;
+    display: none;
+    padding: 0;
+}
+
+body {
+    padding-top: 0;
+}
+
+#main {
+    position: relative;
+    padding-bottom: 20px;
+    padding-top: 50px;
+}
+
+.select-nomargin {
+    margin-bottom: 0 !important;
+}
+
+.clickableRow {
+    cursor: pointer;
+}
+
+.auto-size {
+    min-height: 150px;
+}
+
+.input-group:not(.input-group-lg):not(.input-group-sm) .input-group-addon:not(.last) {
+    padding-right: 0px;
+}
+.input-group .input-group-addon {
+    vertical-align: middle;
+    padding: 0;
+}
+
+body select.form-control {
+    color: black;
+}
+
+.modal-dialog {
+    width: 900px;
+    margin: 30px auto;
+}
+
+span.md.icon.input-group-addon {
+    padding: 6px 12px !important;
+    font-size: 20px;
+}
+
+.fg-line.has-error .form-control:not(:disabled) {
+    color: red;
+    font-weight: bold;
+}
+
+.image-container-filled {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    max-height: 200px !important;
+}
+
+.image-container-filled img {
+    flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%;
+    max-height: 200px !important;
+}
+
+#change-image-preloader {
+    position: absolute;
+    left: 70px;
+    top: 50px;
+    display: none;
+}
+
+.blog-post.noshadow { box-shadow: none; }
+
+.table-responsive table th.selector { width: 50px; }

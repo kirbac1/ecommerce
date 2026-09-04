@@ -1,0 +1,41 @@
+/vendor
+/public/vendor
+node_modules
+Homestead.yaml
+Homestead.json
+
+# Environment. These hold the app key and database credentials -- never commit
+# them. ".env.example" is the template to copy.
+# (The old "./.env" pattern here did not work: gitignore rejects a leading "./".)
+.env
+.env.*
+!.env.example
+
+composer.phar
+.DS_Store
+Thumbs.db
+/.idea
+node_debug.log
+#/bootstrap/compiled.php
+
+# --- some additional files that don't need to eventually end up in prod. Generate them locally
+app/storage
+/config/debugbar.php
+
+#/atlassian-ide-plugin.xml
+#.phpstorm.meta.php
+#_ide_helper.php
+#app/config/ide-helper.php
+#/config/ide-helper.php
+
+# Uploaded product images. The seeded demo images are committed; anything added
+# through the admin is not.
+/public/catalog/products/
+
+# Editor / tooling local config
+/.claude
+
+# Test output
+/test-results
+/playwright-report
+/.playwright
