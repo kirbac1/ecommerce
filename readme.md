@@ -202,6 +202,18 @@ There is also the original PHPUnit suite in `tests/`, runnable with
 
 ---
 
+## Deployment
+
+Pushes to `main` deploy to <https://invoicing.kirbac.fi> via GitHub Actions:
+the test suite runs, `vendor/` is built on PHP 7.4, a timestamped release is
+rsynced to the Plesk server, migrations run, and a symlink is flipped
+atomically. `/healthz` must return 200 or the run fails.
+
+Server setup, the required secrets, rollback and troubleshooting are in
+[DEPLOYMENT.md](DEPLOYMENT.md).
+
+---
+
 ## Notes on running 2016 code today
 
 A few things were changed to make this run on a modern machine. They are worth knowing

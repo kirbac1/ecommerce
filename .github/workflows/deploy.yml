@@ -1,0 +1,257 @@
+name: Deploy to production
+
+# Ships the app to the Plesk server on every push to main, as a timestamped
+# release with an atomic symlink swap — the same shape as the paljonkose
+# deploy, adapted for PHP/Laravel instead of Node/Passenger.
+#
+# Layout on the server ($HOME-relative, nothing needs sudo):
+#
+#   <DEPLOY_PATH>/releases/<stamp>-<sha>/   one full copy of the app
+#   <DEPLOY_PATH>/shared/.env               credentials, survives deploys
+#   <DEPLOY_PATH>/shared/storage/           logs, sessions, cache, app files
+#   <DEPLOY_PATH>/shared/catalog/           product images uploaded in admin
+#   <DOCROOT>/current -> releases/<stamp>   flipped atomically at the end
+#
+# The subdomain's document root in Plesk must point at <DOCROOT>/current/public
+# — Laravel serves from public/, and pointing it at the app root instead
+# exposes .env and the whole source tree.
+#
+# storage/ and public/catalog/ are symlinked into shared/ because they hold
+# state that must outlive a release: uploaded product images live in
+# public/catalog, and losing them on deploy would be silent and permanent.
+#
+# Unverified server facts, marked because nobody has SSHed in to confirm them
+# for THIS subdomain yet. If the first deploy fails, check these first:
+#   - PHP_BIN defaults to Plesk's standard 7.4 path. Laravel 5.2 cannot run on
+#     PHP 8, so if 7.4 is not installed the deploy will fail — that is
+#     deliberate, better than a half-working site.
+#   - DOCROOT defaults to httpdocs, the Plesk default for a subdomain.
+#   - vendor/ is built here on PHP 7.4 and shipped, so the server needs no
+#     Composer. Every dependency is pure PHP, so the runner's architecture
+#     does not matter.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# The deploy authenticates to the server with its own SSH key, so the
+# GITHUB_TOKEN only ever needs to read the repo.
+permissions:
+  contents: read
+
+# Never let two deploys race — cancelling mid-rsync would leave a
+# half-written release, and two migrations at once would be worse.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  test:
+    uses: ./.github/workflows/test.yml
+
+  deploy:
+    name: Ship a release and flip the symlink
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    env:
+      SITE_URL: ${{ vars.SITE_URL || 'https://invoicing.kirbac.fi' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP 7.4
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "7.4"
+          extensions: mbstring, pdo_mysql, gd, zip, dom, xml, bcmath
+          coverage: none
+
+      - name: Build vendor/ for production
+        # --no-dev drops Faker, PHPUnit and the debugbar's dev extras.
+        run: |
+          composer install --no-interaction --no-progress --no-scripts \
+            --no-dev --optimize-autoloader
+
+      - name: Set up SSH
+        env:
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          SSH_HOST: ${{ secrets.DEPLOY_HOST }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          # Pin the host key instead of accepting whatever answers, so a
+          # DNS or routing surprise cannot silently redirect the deploy.
+          if [ -n "${{ secrets.DEPLOY_KNOWN_HOSTS }}" ]; then
+            printf '%s\n' "${{ secrets.DEPLOY_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          else
+            echo "::warning::DEPLOY_KNOWN_HOSTS not set — falling back to ssh-keyscan (trust on first use)."
+            ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          fi
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Ship the release
+        env:
+          SSH_HOST: ${{ secrets.DEPLOY_HOST }}
+          SSH_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_PATH: ${{ vars.DEPLOY_PATH || 'invoicing' }}
+          DOCROOT: ${{ vars.DOCROOT || 'httpdocs' }}
+          PHP_BIN: ${{ vars.PHP_BIN || '/opt/plesk/php/7.4/bin/php' }}
+          APP_KEY: ${{ secrets.APP_KEY }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: |
+          set -euo pipefail
+          RELEASE="$DEPLOY_PATH/releases/$(date -u +%Y%m%d-%H%M%S)-${GITHUB_SHA::7}"
+
+          ssh -o BatchMode=yes "$SSH_USER@$SSH_HOST" \
+            "mkdir -p '$RELEASE' '$DEPLOY_PATH/shared/storage' '$DEPLOY_PATH/shared/catalog'"
+
+          # Ship the app including vendor/. Excludes are everything that is
+          # either local state, test tooling, or replaced by a shared symlink
+          # on the far side.
+          rsync -az --no-perms --no-owner --no-group --chmod=D755,F644 \
+            -e "ssh -o BatchMode=yes" \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude 'node_modules' \
+            --exclude 'tests' \
+            --exclude 'playwright-report' \
+            --exclude 'test-results' \
+            --exclude '.env' \
+            --exclude '.env.*' \
+            --exclude 'composer.phar' \
+            --exclude 'storage' \
+            --exclude 'public/catalog' \
+            ./ "$SSH_USER@$SSH_HOST:$RELEASE/"
+
+          # Values passed as remote env vars rather than interpolated into a
+          # nested quoted string — quoting through ssh is where this kind of
+          # script usually breaks.
+          ssh -o BatchMode=yes "$SSH_USER@$SSH_HOST" \
+            RELEASE="$RELEASE" DEPLOY_PATH="$DEPLOY_PATH" DOCROOT="$DOCROOT" \
+            PHP_BIN="$PHP_BIN" KEEP=5 SITE_URL="$SITE_URL" \
+            APP_KEY="$APP_KEY" DB_DATABASE="$DB_DATABASE" \
+            DB_USERNAME="$DB_USERNAME" DB_PASSWORD="$DB_PASSWORD" \
+            bash -s <<'REMOTE'
+          set -euo pipefail
+          REL="$HOME/$RELEASE"
+          SHARED="$HOME/$DEPLOY_PATH/shared"
+          APP="$HOME/$DOCROOT"
+
+          if [ ! -x "$PHP_BIN" ]; then
+            echo "PHP 7.4 not found at $PHP_BIN." >&2
+            echo "Laravel 5.2 cannot run on PHP 8. Install 7.4 or set the PHP_BIN variable." >&2
+            ls /opt/plesk/php/ 2>/dev/null && echo "(versions above are what Plesk has)" >&2
+            exit 1
+          fi
+
+          # First deploy has no .env to carry forward. Write one from the
+          # secrets; every later deploy leaves the file alone, so anything
+          # changed on the server by hand survives.
+          if [ ! -f "$SHARED/.env" ]; then
+            echo "no shared .env — writing one from the workflow secrets"
+            cat > "$SHARED/.env" <<ENV
+          APP_ENV=production
+          APP_DEBUG=false
+          APP_KEY=$APP_KEY
+          APP_URL=$SITE_URL
+
+          DB_CONNECTION=mysql
+          DB_HOST=127.0.0.1
+          DB_PORT=3306
+          DB_DATABASE=$DB_DATABASE
+          DB_USERNAME=$DB_USERNAME
+          DB_PASSWORD=$DB_PASSWORD
+
+          CACHE_DRIVER=file
+          SESSION_DRIVER=file
+          QUEUE_DRIVER=sync
+
+          MAIL_DRIVER=log
+
+          PRODUCT_TEMP_IMAGE_LIFETIME=60
+          CATALOG_PATH=/catalog
+          ENV
+          fi
+          chmod 600 "$SHARED/.env"
+
+          # Seed the shared storage tree from the release the first time, so
+          # Laravel finds the directory layout it expects.
+          if [ ! -d "$SHARED/storage/framework" ]; then
+            echo "initialising shared storage"
+            cp -a "$REL/storage/." "$SHARED/storage/" 2>/dev/null || true
+            mkdir -p "$SHARED/storage/framework/cache" \
+                     "$SHARED/storage/framework/sessions" \
+                     "$SHARED/storage/framework/views" \
+                     "$SHARED/storage/logs" \
+                     "$SHARED/storage/app"
+          fi
+
+          # State that must outlive the release: uploaded product images and
+          # everything Laravel writes at runtime.
+          rm -rf "$REL/storage" "$REL/public/catalog"
+          ln -sfn "$SHARED/storage" "$REL/storage"
+          ln -sfn "$SHARED/catalog" "$REL/public/catalog"
+          ln -sfn "$SHARED/.env"    "$REL/.env"
+
+          # A release whose directories are not traversable by the web server
+          # produces a 403 while the app itself is healthy — a genuinely
+          # confusing failure, so set the modes explicitly. -H so the symlinked
+          # shared dirs are not chmod'ed through.
+          find "$REL" -type d -not -path "$REL/storage/*" -exec chmod 755 {} +
+          find "$REL" -type f -not -path "$REL/storage/*" -exec chmod 644 {} +
+          chmod -R 775 "$SHARED/storage" "$SHARED/catalog"
+
+          cd "$REL"
+
+          # Laravel 5.2 caches a compiled class file and a merged config; a
+          # release that inherits a stale one from the previous deploy fails in
+          # ways that look like the code did not update.
+          "$PHP_BIN" artisan clear-compiled  || true
+          "$PHP_BIN" artisan config:clear    || true
+          "$PHP_BIN" artisan view:clear      || true
+          "$PHP_BIN" artisan route:clear     || true
+
+          # Schema only. Seeding is a first-run decision, not something a
+          # deploy should do to a live database.
+          "$PHP_BIN" artisan migrate --force
+
+          # Atomic swap: build the new link beside the old one, then rename
+          # over it. mv -T on a symlink is a single rename(2), so no request
+          # ever sees a half-swapped directory.
+          mkdir -p "$APP"
+          ln -sfn "$REL" "$APP/current.tmp"
+          mv -Tf "$APP/current.tmp" "$APP/current"
+
+          # Prune by name, not mtime: release dirs are YYYYmmdd-HHMMSS-sha,
+          # so reverse lexicographic order is reverse chronological, and two
+          # releases in the same second still sort correctly.
+          cd "$HOME/$DEPLOY_PATH/releases"
+          live="$(readlink -f "$APP/current")"
+          ls -1d -- */ | sort -r | tail -n +$((KEEP + 1)) | while read -r d; do
+            # Never delete whatever is currently serving, whatever the sort says.
+            [ "$(readlink -f "$d")" = "$live" ] && continue
+            rm -rf -- "$d"
+          done
+
+          echo "live release: $(readlink "$APP/current")"
+          REMOTE
+
+          echo "Deployed ${GITHUB_SHA::7} to $RELEASE"
+
+      - name: Verify the site responds
+        run: |
+          # A deploy that "succeeded" but serves an error page is not a
+          # success. /healthz reports 200 only when the app booted AND can
+          # reach its database.
+          for i in 1 2 3 4 5; do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 10 "$SITE_URL/healthz" || echo 000)
+            [ "$code" = "200" ] && { echo "✓ $SITE_URL/healthz returned 200"; exit 0; }
+            echo "attempt $i: got $code, retrying…"
+            sleep 6
+          done
+          echo "::error::$SITE_URL/healthz did not return 200 after the deploy."
+          exit 1

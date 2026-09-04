@@ -94,6 +94,26 @@ Route::group([
 |
 */
 
+/**
+ * Health check for the deploy pipeline and uptime monitoring.
+ *
+ * Reports 200 only when the app can boot AND reach its database -- a deploy
+ * that serves a styled error page is not a successful deploy.
+ */
+Route::get('/healthz', function () {
+    try {
+        DB::connection()->getPdo();
+    } catch (\Exception $e) {
+        return response()->json(['status' => 'error', 'database' => 'unreachable'], 503);
+    }
+
+    return response()->json([
+        'status' => 'ok',
+        'database' => 'ok',
+        'app' => config('app.env'),
+    ]);
+});
+
 Route::group(['middleware' => ['web']], function() {
     // E-Commerce side (no authentication required yet)
     Route::get('/', 'FrontendController@index');

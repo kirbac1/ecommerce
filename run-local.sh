@@ -1,13 +1,40 @@
 #!/usr/bin/env bash
 # Start the cart app locally on the 2016 stack.
-# PHP 7.4 is keg-only (Homebrew), so it is not on the default PATH.
-set -e
+#
+# Laravel 5.2 needs PHP 7.x. Set PHP to override the binary; otherwise this
+# tries the Homebrew keg-only install (which is deliberately off PATH) and
+# falls back to whatever `php` is available, so the same script works on a
+# dev machine and on a CI runner.
+set -euo pipefail
 
-PHP=/opt/homebrew/opt/php@7.4/bin/php
 cd "$(dirname "$0")"
 
+if [ -z "${PHP:-}" ]; then
+    for candidate in \
+        /opt/homebrew/opt/php@7.4/bin/php \
+        /usr/local/opt/php@7.4/bin/php \
+        "$(command -v php || true)"
+    do
+        if [ -n "$candidate" ] && [ -x "$candidate" ]; then
+            PHP="$candidate"
+            break
+        fi
+    done
+fi
+
+if [ -z "${PHP:-}" ]; then
+    echo "No PHP binary found. Install PHP 7.4 (see readme.md) or set PHP=/path/to/php." >&2
+    exit 1
+fi
+
+HOST="${HOST:-127.0.0.1}"
+PORT="${PORT:-8000}"
+
 # MySQL must be running: brew services start mysql
+#
 # PHP_CLI_SERVER_WORKERS lets the built-in server handle the page's parallel
 # asset requests. Each browser connection holds a worker for as long as it is
 # kept alive, so this needs plenty of headroom or whole page loads stall.
-PHP_CLI_SERVER_WORKERS=32 "$PHP" artisan serve --host=127.0.0.1 --port=8000
+export PHP_CLI_SERVER_WORKERS="${PHP_CLI_SERVER_WORKERS:-32}"
+
+exec "$PHP" artisan serve --host="$HOST" --port="$PORT"
