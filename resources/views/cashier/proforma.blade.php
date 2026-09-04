@@ -14,6 +14,7 @@
 </head>
 
 <body>
+@include('partials.cashier.logout')
 <button class="print" style="cursor: pointer;">Lataa</button>
 <button class="proforma" style="cursor: pointer;">LUO</button>
 <div id="proforma">

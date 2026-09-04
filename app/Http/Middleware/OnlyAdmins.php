@@ -21,8 +21,11 @@ class OnlyAdmins
             if ($user->isAdmin) {
                 return $next($request);
             }  else {
-                App::abort(401, 'Unauthorized (not Admin).');
-                return false;
+                // Signed in, but not an admin. Aborting here left the user stuck:
+                // no link out, and the wrong session still active. Send them to the
+                // admin login so they can sign in as someone who is.
+                return redirect('/admin/login')
+                    ->with('error', 'That account is not an administrator.');
             }
         } else {
             return redirect('/admin/login');

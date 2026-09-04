@@ -21,8 +21,8 @@ class OnlySuperAdmins
             if ($user->isSuperAdmin) {
                 return $next($request);
             }  else {
-                App::abort(401, 'Unauthorized (not SuperAdmin).');
-                return false;
+                return redirect('/admin/login')
+                    ->with('error', 'That account is not a super administrator.');
             }
         } else {
             //App::abort(401, 'Unauthorized (not logged in).');

@@ -247,7 +247,7 @@
                 update: function(event) {
                       this.object.vatid = this.object.taxid;
 
-                    Vue.http.put('/api/v3/customers/{{ $customer->id or '' }}', this.object).then(function success(response) {
+                    Vue.http.put('/api/v3/customers/{{ $customer->id ?? '' }}', this.object).then(function success(response) {
                         this.$set('object', response.data);
                         @include('partials.admin.swalDataSavedSuccess')
                     }.bind(this), function error(response) {
@@ -313,7 +313,7 @@
             },
             ready: function ready() {
                 @if($customer !== null)
-                    Vue.http.get('/api/v3/customers/{{ $customer->id or '' }}').then(function success(response) {
+                    Vue.http.get('/api/v3/customers/{{ $customer->id ?? '' }}').then(function success(response) {
                         response.data.enabled = response.data.enabled === "1";
                         this.object = Object.assign({}, this.object, response.data);
                     }.bind(this), function error(response) {

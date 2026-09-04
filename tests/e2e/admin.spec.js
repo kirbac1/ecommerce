@@ -104,14 +104,37 @@ test.describe('admin pages load', () => {
         await login(page);
     });
 
+    // The create pages were 500ing on every one of these. They share their
+    // views with the edit pages and are rendered with a null model, which the
+    // Blade `{{ $x or '' }}` syntax used to absorb -- that syntax was removed
+    // in Laravel 9, so the expression started dereferencing the null instead.
     for (const [name, path] of Object.entries({
         products: '/admin/products',
+        'products/create': '/admin/products/create',
+        'products/edit': '/admin/products/1/edit',
         customers: '/admin/customers',
+        'customers/create': '/admin/customers/create',
+        'customers/edit': '/admin/customers/1/edit',
         categories: '/admin/categories',
         orders: '/admin/orders',
+        'orders/create': '/admin/orders/create',
         invoices: '/admin/invoices',
+        'invoices/create': '/admin/invoices/create',
+        receipts: '/admin/receipts',
+        'receipts/create': '/admin/receipts/create',
         returns: '/admin/returns',
+        'returns/create': '/admin/returns/create',
+        proformas: '/admin/proformas',
+        'proformas/create': '/admin/proformas/create',
+        manufacturers: '/admin/manufacturers',
+        'manufacturers/create': '/admin/manufacturers/create',
+        customergroups: '/admin/customergroups',
+        'customergroups/create': '/admin/customergroups/create',
         users: '/admin/users',
+        'users/create': '/admin/users/create',
+        support: '/admin/support',
+        'support/create': '/admin/support/create',
+        productmigration: '/admin/productmigration',
         settings: '/admin/settings',
     })) {
         test(`${name} renders without a server error`, async ({ page }) => {
@@ -214,5 +237,38 @@ test.describe('read-only demo accounts', () => {
         const response = await request.get('/api/v3/products/1');
 
         expect(response.status()).toBe(200);
+    });
+});
+
+test.describe('signing out', () => {
+    // Regression: a cashier session made /admin answer a bare 401 with no way
+    // out, and cashier logout 500'd without ending the session -- so the
+    // browser was stuck until its cookies were cleared by hand.
+    test('the admin header carries a logout link', async ({ page }) => {
+        await login(page);
+        await page.goto('/admin/dashboard', { waitUntil: 'domcontentloaded' });
+
+        await expect(page.locator('#header a[href="/admin/logout"]')).toHaveCount(1);
+    });
+
+    test('logging out ends the session', async ({ page }) => {
+        await login(page);
+        await page.goto('/admin/logout', { waitUntil: 'domcontentloaded' });
+
+        const response = await page.goto('/admin/products', { waitUntil: 'domcontentloaded' });
+        expect(response.url()).toContain('/admin/login');
+    });
+
+    test('a cashier visiting /admin is redirected, not dead-ended on a 401', async ({ page }) => {
+        await page.goto('/cashier/login', { waitUntil: 'domcontentloaded' });
+        await page.fill('input[name="email"], input[type="text"]', 'cashier@example.com');
+        await page.fill('input[type="password"]', 'test');
+        await page.click('a[href="#"], button[type="submit"], input[type="submit"]');
+        await page.waitForTimeout(1500);
+
+        const response = await page.goto('/admin', { waitUntil: 'domcontentloaded' });
+
+        expect(response.status()).toBeLessThan(400);
+        expect(response.url()).toContain('/admin/login');
     });
 });

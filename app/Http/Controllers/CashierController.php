@@ -90,9 +90,24 @@ class CashierController extends Controller
         }
     }
 
-    public function logout()
+    /**
+     * Sign the cashier out.
+     *
+     * This used to just render 'cashier/account/logout', a view that does not
+     * exist, and never called Auth::logout(). So logging out 500'd, the session
+     * survived, and the stale cashier session then made /admin answer 401 with
+     * no way back -- you could not sign out and could not sign in as anyone else.
+     */
+    public function logout(Request $request)
     {
-        return view('cashier/account/logout');
+        Auth::logout();
+
+        // Drop the session outright and reissue the CSRF token, so the next
+        // login starts clean and the old session id cannot be replayed.
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/cashier/login');
     }
 
     public function search()

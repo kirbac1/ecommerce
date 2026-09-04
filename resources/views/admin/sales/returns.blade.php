@@ -84,7 +84,7 @@
                 start: 1,
                 limit: 20,
                 total: 0,
-                order_id: {{ $order_id or 'null' }},
+                order_id: {{ $order_id ?? 'null' }},
             },
             computed: {
                 totalPages: function totalPages() {

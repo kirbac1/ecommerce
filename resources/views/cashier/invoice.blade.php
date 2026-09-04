@@ -10,6 +10,7 @@
 </head>
 
 <body>
+@include('partials.cashier.logout')
 <button class="print" style="cursor: pointer;">Lataa</button>
 <button class="invoice" style="cursor: pointer;">LUO</button>
 

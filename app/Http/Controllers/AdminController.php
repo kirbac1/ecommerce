@@ -35,13 +35,20 @@ class AdminController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if ($user) {
-            if ($user->isAdmin) return redirect('/admin/dashboard');
-            else {
-                App::abort(401, 'Unauthorized.');
-                return false;
-            }
-        } else return redirect('/admin/login');
+
+        if (! $user) {
+            return redirect('/admin/login');
+        }
+
+        if ($user->isAdmin) {
+            return redirect('/admin/dashboard');
+        }
+
+        // Signed in as someone without admin rights -- e.g. a cashier who
+        // typed /admin. Aborting with a bare 401 left them stuck with no way
+        // to sign out or switch account.
+        return redirect('/admin/login')
+            ->with('error', 'That account is not an administrator.');
     }
 
     public function dashboard()

@@ -1,21 +1,5 @@
 @extends('layouts.cashier')
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-        <meta name="_token" content="{{ csrf_token() }}" />
-    <!-- Import materialize.css -->
-    <link type="text/css" rel="stylesheet" href="/templates/assets/css/materialize.css" media="screen,projection" />
-    <!-- Import Material Design Iconic Font -->
-    <link rel="stylesheet" href="/templates/assets/css/material-design-iconic-font.css" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-    <!-- Import Application CSS -->
-    <link rel="stylesheet" href="/templates/assets/css/app.css" />
-    <!-- Let browser know website is optimized for mobile -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-</head>
 @section('content')
 <div id="app">
     <section id="header">
@@ -24,7 +8,7 @@
                 <div style=" margin-bottom: 0px;" class="header row">
                     <div class="brand col s6">
                         <h4 class="">
-                       <a href="/cashier"> Alanya Tukku</a>
+                       <a href="/cashier">{{ Setting::get('store_name', config('app.name')) }}</a>
                          </h4>
                     </div>
                     <div class="currentCustomer brand col s6">
@@ -440,8 +424,6 @@
         <a class="modal-action modal-close waves-effect waves-green btn-flat">Perutta</a>
     </div>
 </div>
-@stop
-  
   <div class="loadingModal">
     <!-- Place at bottom of page -->
 </div>
@@ -516,3 +498,4 @@ var getXsrfToken = function() {
 }
 
 </script>
+@stop

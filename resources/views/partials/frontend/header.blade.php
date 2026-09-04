@@ -34,7 +34,8 @@
                     <span class="no-link">{{ trans('header.Welcome Message') }} </span>
                     @if (Auth::check() && Auth::user()->isCustomer)
 
-                    <a href="/account"><i style="margin-right: 5px; color: rgb(105, 185, 207); font-size: 16px" data-icon=""></i><span class="top-menu-link">{{ trans('header.register') }}</span></a> </div>
+                    <a href="/account"><i style="margin-right: 5px; color: rgb(105, 185, 207); font-size: 16px" data-icon=""></i><span class="top-menu-link">{{ trans('header.my account') }}</span></a>
+                    <a href="/account/logout"><i style="margin-right: 5px; color: rgb(221, 106, 106); font-size: 16px" data-icon=""></i><span class="top-menu-link">{{ trans('header.logout') }}</span></a> </div>
                     @else
                     <a href="/account/login" class="icon-only secondary-menu-item-1"><i style="margin-right: 5px; color: rgb(51, 153, 101); font-size: 15px" data-icon=""></i><span class="top-menu-link">{{ trans('header.login') }}</span></a>
                     <a href="/account/register"><i style="margin-right: 5px; color: rgb(105, 185, 207); font-size: 16px" data-icon=""></i><span class="top-menu-link">{{ trans('header.register') }}</span></a> </div>

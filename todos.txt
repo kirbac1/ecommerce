@@ -11,5 +11,5 @@
 11. Think about basePrice-ProfitMArgin-salePrice
 12. New Sale part, if you want to create and sell a custom product
 13. Proforma, receipt yaptigin zaman categoriler bir araya gelsin, Hediyelik, deterjan en altta, 24% olanlar
-14. Cemet Oy
+14. Ugur Bakkal
 

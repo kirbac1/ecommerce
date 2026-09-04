@@ -7,6 +7,8 @@
 </head>
 
 <body>
+    @include('partials.cashier.logout')
+
      @yield('content')
 
 </body>

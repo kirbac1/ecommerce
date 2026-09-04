@@ -738,3 +738,32 @@ input[type=text],input[type=search] {
 
 
 
+
+/* Sign-out control, rendered by layouts/cashier.blade.php on every register
+   page. Fixed to the top-right so it stays reachable on the POS screens,
+   which are otherwise full-bleed. */
+.cashier-logout {
+    position: fixed;
+    top: 8px;
+    right: 12px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.35);
+    color: #fff;
+    font-size: 13px;
+    line-height: 1;
+    text-decoration: none;
+}
+
+.cashier-logout:hover {
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+}
+
+.cashier-logout .material-icons {
+    font-size: 18px;
+}

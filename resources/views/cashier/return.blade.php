@@ -1,3 +1,4 @@
+<!doctype html>
 <html>
 
 <head>
@@ -18,6 +19,13 @@
     <!-- Let browser know website is optimized for mobile -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+{{-- <head> was never closed and <body> never opened here; the markup went
+     straight from the meta tags into the content, and the closing </body> at
+     the end had no opener. --}}
+<body>
+@include('partials.cashier.logout')
     <div id="app">
         <section id="header">
             <div class="header row">

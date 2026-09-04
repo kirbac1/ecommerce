@@ -13,6 +13,15 @@
                 <a href="/admin">{{ trans('messages.Admin Section') }}</a>
             </li>
 
+            {{-- Always reachable: without this the only way out was the
+                 sidebar, which is hidden on small screens. --}}
+            <li class="pull-right">
+                <a href="/admin/logout" class="tm-logout" title="{{ trans('messages.Logout') }}">
+                    <i class="md md-settings-power"></i>
+                    <span class="hidden-xs">{{ trans('messages.Logout') }}</span>
+                </a>
+            </li>
+
         </ul>
 
 

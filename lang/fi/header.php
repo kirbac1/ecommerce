@@ -130,4 +130,6 @@ return [
     'i_am_returning_customer'=>'Kirjaudu tilillesi',
     'forgotten' =>  'Salasana unohtunut',
    
+    'logout' => 'Kirjaudu ulos',
+    'my account' => 'Oma tili',
 ];

@@ -36,7 +36,7 @@
         </div>
         <div class="row columns " style="background-attachment: scroll">
             <div class="column  menu xs-100 sm-50 md-33 lg-20 xl-20 " style="height: 225px;">
-                <h3>ALANYA TUKKU</h3>
+                <h3>{{ Str::upper(Setting::get('store_name', config('app.name'))) }}</h3>
                 <div class="column-menu-wrap">
                     <ul>
                         <li><a href="tel:18005558989"><i style="margin-right: 5px; color: rgb(43, 176, 227); font-size: 16px" data-icon=""></i>{{ Setting::get('store_telephone') }}</a></li>
@@ -222,7 +222,7 @@
     </div>
     <div class="bottom-footer boxed-bar">
         <div class="">
-            <div class="copyright">Copyright © 2016, Alanya Tukku, All Rights Reserved. Webmaster <a href="http://prowebdesign.fi" target="_blank">Prowebdesign.fi</a></div>
+            <div class="copyright">Copyright © {{ date('Y') }}, {{ Setting::get('store_name', config('app.name')) }}, All Rights Reserved. Webmaster <a href="http://prowebdesign.fi" target="_blank">Prowebdesign.fi</a></div>
             <div class="payments">
                 <img src="/assets/img/no-image.png" class="lazy" data-src="/assets/img/no-image.png" alt="Visa" width="51" height="32">
                 <img src="/assets/img/no-image.png" class="lazy" data-src="/assets/img/no-image.png" alt="MasterCard" width="51" height="32">
