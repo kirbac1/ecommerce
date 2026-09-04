@@ -72,13 +72,21 @@ test.describe('search', () => {
     // clauses were left ungrouped, so searching by brand always returned zero.
     test('finds products by their manufacturer name', async ({ request }) => {
         const manufacturers = await (await request.get('/api/v3/manufacturers')).json();
-        const brand = manufacturers[0].name;
+        const products = (await (await request.get('/api/v3/products')).json()).result;
 
-        const body = await (await request.get(`/api/v3/search/products/${encodeURIComponent(brand)}`)).json();
+        // Pick a brand that actually stocks something: the seeder assigns
+        // manufacturers at random, so any given one may have no products.
+        const stocked = products.find((product) => product.manufacturer_id);
+        expect(stocked, 'no seeded product has a manufacturer').toBeTruthy();
+
+        const brand = manufacturers.find((m) => m.id === stocked.manufacturer_id);
+        expect(brand, 'product references an unknown manufacturer').toBeTruthy();
+
+        const body = await (await request.get(`/api/v3/search/products/${encodeURIComponent(brand.name)}`)).json();
 
         expect(body.count).toBeGreaterThan(0);
         for (const product of body.result) {
-            expect(product.manufacturer_id).toBe(manufacturers[0].id);
+            expect(product.manufacturer_id).toBe(brand.id);
         }
     });
 
