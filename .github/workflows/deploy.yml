@@ -249,6 +249,22 @@ jobs:
           ln -sfn "$REL" "$APP/current.tmp"
           mv -Tf "$APP/current.tmp" "$APP/current"
 
+          # The subdomain's document root in Plesk is <docroot>/public, not
+          # <docroot>/current/public, so point public/ at the live release.
+          # Doing it here rather than asking for a panel change keeps the
+          # release swap atomic: `current` moves, and public/ follows it.
+          #
+          # Anything already sitting at public/ is a real directory from
+          # whatever was deployed before; it is moved aside once, never
+          # deleted, so the previous site can be restored by moving it back.
+          if [ -e "$APP/public" ] && [ ! -L "$APP/public" ]; then
+            mv "$APP/public" "$APP/public.pre-deploy-$(date -u +%Y%m%d-%H%M%S)"
+            echo "moved the previous public/ aside"
+          fi
+
+          ln -sfn "$APP/current/public" "$APP/public.tmp"
+          mv -Tf "$APP/public.tmp" "$APP/public"
+
           # Prune by name, not mtime: release dirs are YYYYmmdd-HHMMSS-sha,
           # so reverse lexicographic order is reverse chronological, and two
           # releases in the same second still sort correctly.
