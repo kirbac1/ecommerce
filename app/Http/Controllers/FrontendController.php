@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+
 use App\Category;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -21,6 +23,21 @@ class FrontendController extends Controller
     public function aboutus()
     {
         return view('frontend/information/about-us');
+    }
+
+    /**
+     * Contact page. The view has always existed and the footer links to it,
+     * but there was no route, so the link 404'd.
+     */
+    public function contact()
+    {
+        return view('frontend/information/contact');
+    }
+
+    /** Sitemap page -- same story as contact(). */
+    public function sitemap()
+    {
+        return view('frontend/information/sitemap');
     }
 
     public function gallery()
@@ -83,9 +100,21 @@ class FrontendController extends Controller
         }
     }
 
-    public function logout()
+    /**
+     * Sign the customer out.
+     *
+     * Was returning 'frontend/account/logout', a view that does not exist, and
+     * never called logout() -- so this 500'd and the session survived.
+     * Customers authenticate on their own guard, so that is the one to clear.
+     */
+    public function logout(Request $request)
     {
-        return view('frontend/account/logout');
+        Auth::guard('customers')->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 
     public function search()

@@ -1,3 +1,17 @@
+/**
+ * URL for a product image.
+ *
+ * The catalog stores just the filename; a product may have none. Returns the
+ * shared placeholder in that case rather than requesting "/catalog/null".
+ */
+function productImageUrl(image) {
+    if (!image || image === 'null' || image === 'undefined') {
+        return '/assets/img/no-image.png';
+    }
+
+    return '/catalog/' + image;
+}
+
 //TODO AJAX SEARCH PRODUCTS  and CUSTOMERS
 
 var resource = new RESOURCE();
@@ -149,7 +163,7 @@ jQuery(document).ready(function() {
                     var koli = product.qtyPerPack;
                     var price = product.taxedPrice;
                     var image = product.image;
-                    var productTemplate = ' <div class="col s6">' + '<button id="' + id + '" class="card product-list-cards z-depth-1 waves-effect waves-green">' + '<div class="jzoom card-image">' + '<img src=/catalog/' + image + '/>' + '<span class="badge white-text green darken-4 price-badge">' + price + '&euro; </span>' + '<span class="badge white-text red darken-4 koli">' + koli + '</span>' + '</div>' + '<div class="card-content">' + '<span class="card-title item-list-title grey-text text-darken-4">' + name + '</span>' + '</div>' + '</button>' + '</div>';
+                    var productTemplate = ' <div class="col s6">' + '<button id="' + id + '" class="card product-list-cards z-depth-1 waves-effect waves-green">' + '<div class="jzoom card-image">' + '<img src="' + productImageUrl(image) + '" alt="" />' + '<span class="badge white-text green darken-4 price-badge">' + price + '&euro; </span>' + '<span class="badge white-text red darken-4 koli">' + koli + '</span>' + '</div>' + '<div class="card-content">' + '<span class="card-title item-list-title grey-text text-darken-4">' + name + '</span>' + '</div>' + '</button>' + '</div>';
 
                     jQuery('.products').append(productTemplate);
                     /*DEMO END*/
@@ -557,7 +571,7 @@ function initCustomers() {
                     var image = product.image;
                     var productTemplate = ' <div class="jzoom col s3">' + '<button id="' +
                         id + '" class="card product-list-cards z-depth-1 waves-effect waves-green">' +
-                        '<div class="jzoom card-image">' + '<img src=/catalog/' + image + '/>' +
+                        '<div class="jzoom card-image">' + '<img src="' + productImageUrl(image) + '" alt="" />' +
                         '<span class="badge white-text orange darken-4 price-badge">' + nonTaxed +
                         '<span class="badge white-text green darken-4 price-badge">' +
                         price + '&euro; </span>' + '<span class="badge white-text red darken-4 koli">' +

@@ -1,9 +1,9 @@
-<?php echo $header; ?>
+@extends('layouts.default') @section('content')
 <div class="carta-container">
     <div id="container" class="container j-container">
         <ul class="breadcrumb">
-            <li><a href="http://journal.digital-atelier.com/3/index.php?route=common/home">Home</a></li>
-            <li><a href="http://journal.digital-atelier.com/3/index.php?route=information/sitemap">Site Map</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">Site Map</a></li>
         </ul>
         <div class="row">
             <div id="content" class="col-sm-12">
@@ -11,126 +11,126 @@
                 <div class="row sitemap-info">
                     <div class="col-sm-6 left">
                         <ul>
-                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=69">Electronics</a>
+                            <li><a href="#">Electronics</a>
                                 <ul>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=69_20">Desktops</a>
+                                    <li><a href="#">Desktops</a>
                                         <ul>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=69_20_35">Subcategory</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=69_20_26">PC</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=69_20_27">Mac</a></li>
+                                            <li><a href="#">Subcategory</a></li>
+                                            <li><a href="#">PC</a></li>
+                                            <li><a href="#">Mac</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=69_18">Laptops &amp; Notebooks</a>
+                                    <li><a href="#">Laptops &amp; Notebooks</a>
                                         <ul>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=69_18_46">Macs</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=69_18_45">Windows</a></li>
+                                            <li><a href="#">Macs</a></li>
+                                            <li><a href="#">Windows</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=69_25">Components</a>
+                                    <li><a href="#">Components</a>
                                         <ul>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=69_25_28">Monitors</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=69_25_30">Printers</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=69_25_31">Scanners</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=69_25_32">Web Cameras</a></li>
+                                            <li><a href="#">Monitors</a></li>
+                                            <li><a href="#">Printers</a></li>
+                                            <li><a href="#">Scanners</a></li>
+                                            <li><a href="#">Web Cameras</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=69_24">Phones &amp; PDAs</a>
+                                    <li><a href="#">Phones &amp; PDAs</a>
                                     </li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=69_33">Cameras</a>
+                                    <li><a href="#">Cameras</a>
                                     </li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=69_34">MP3 Players</a>
+                                    <li><a href="#">MP3 Players</a>
                                     </li>
                                 </ul>
                             </li>
-                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59">Fashion</a>
+                            <li><a href="#">Fashion</a>
                                 <ul>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_105">Accesories</a>
+                                    <li><a href="#">Accesories</a>
                                         <ul>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_105_152">Belts</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_105_116">Hats</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_105_110">Jewelry</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_105_151">Scarves</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_105_153">Sunglasses</a></li>
+                                            <li><a href="#">Belts</a></li>
+                                            <li><a href="#">Hats</a></li>
+                                            <li><a href="#">Jewelry</a></li>
+                                            <li><a href="#">Scarves</a></li>
+                                            <li><a href="#">Sunglasses</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_107">Bags</a>
+                                    <li><a href="#">Bags</a>
                                         <ul>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_107_120">Clutches</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_107_118">Formal</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_107_121">Purses</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_107_119">Shoulder</a></li>
+                                            <li><a href="#">Clutches</a></li>
+                                            <li><a href="#">Formal</a></li>
+                                            <li><a href="#">Purses</a></li>
+                                            <li><a href="#">Shoulder</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_109">Beauty</a>
+                                    <li><a href="#">Beauty</a>
                                         <ul>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_109_125">Foundation</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_109_123">Lipstick</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_109_122">Makeup</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_109_124">Mascara</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_109_164">Nails</a></li>
+                                            <li><a href="#">Foundation</a></li>
+                                            <li><a href="#">Lipstick</a></li>
+                                            <li><a href="#">Makeup</a></li>
+                                            <li><a href="#">Mascara</a></li>
+                                            <li><a href="#">Nails</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_60">Dresses</a>
+                                    <li><a href="#">Dresses</a>
                                         <ul>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_60_147">Casual</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_60_149">Evening</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_60_148">Occasion</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_60_154">Skirt</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_60_150">Summer</a></li>
+                                            <li><a href="#">Casual</a></li>
+                                            <li><a href="#">Evening</a></li>
+                                            <li><a href="#">Occasion</a></li>
+                                            <li><a href="#">Skirt</a></li>
+                                            <li><a href="#">Summer</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_112">Lingerie</a>
+                                    <li><a href="#">Lingerie</a>
                                         <ul>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_112_138">Bras</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_112_141">Corsets</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_112_140">Nightgowns</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_112_139">Panties</a></li>
+                                            <li><a href="#">Bras</a></li>
+                                            <li><a href="#">Corsets</a></li>
+                                            <li><a href="#">Nightgowns</a></li>
+                                            <li><a href="#">Panties</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_113">Pants</a>
+                                    <li><a href="#">Pants</a>
                                         <ul>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_113_137">Formal</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_113_135">Jeans</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_113_136">Leggings</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_113_126">Training</a></li>
+                                            <li><a href="#">Formal</a></li>
+                                            <li><a href="#">Jeans</a></li>
+                                            <li><a href="#">Leggings</a></li>
+                                            <li><a href="#">Training</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_111">Shoes</a>
+                                    <li><a href="#">Shoes</a>
                                         <ul>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_111_131">Boots</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_111_132">Heels</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_111_134">Running</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_111_133">Sandals</a></li>
+                                            <li><a href="#">Boots</a></li>
+                                            <li><a href="#">Heels</a></li>
+                                            <li><a href="#">Running</a></li>
+                                            <li><a href="#">Sandals</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_108">Tops</a>
+                                    <li><a href="#">Tops</a>
                                         <ul>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_108_130">Blouses</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_108_106">Jackets</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_108_128">Shirts</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_108_129">Sleeveless</a></li>
-                                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59_108_127">Summer</a></li>
+                                            <li><a href="#">Blouses</a></li>
+                                            <li><a href="#">Jackets</a></li>
+                                            <li><a href="#">Shirts</a></li>
+                                            <li><a href="#">Sleeveless</a></li>
+                                            <li><a href="#">Summer</a></li>
                                         </ul>
                                     </li>
                                 </ul>
                             </li>
-                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=155">Food</a>
+                            <li><a href="#">Food</a>
                                 <ul>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=155_156">Breakfast</a>
+                                    <li><a href="#">Breakfast</a>
                                     </li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=155_157">Dessert</a>
+                                    <li><a href="#">Dessert</a>
                                     </li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=155_158">Grill</a>
+                                    <li><a href="#">Grill</a>
                                     </li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=155_159">Pasta</a>
+                                    <li><a href="#">Pasta</a>
                                     </li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=155_160">Pizza</a>
+                                    <li><a href="#">Pizza</a>
                                     </li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=155_161">Salads</a>
+                                    <li><a href="#">Salads</a>
                                     </li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=155_162">Sandwiches</a>
+                                    <li><a href="#">Sandwiches</a>
                                     </li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=155_163">Sushi</a>
+                                    <li><a href="#">Sushi</a>
                                     </li>
                                 </ul>
                             </li>
@@ -138,36 +138,36 @@
                     </div>
                     <div class="col-sm-6 right">
                         <ul>
-                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/special">Special Offers</a></li>
-                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=account/account">My Account</a>
+                            <li><a href="/promotions">Special Offers</a></li>
+                            <li><a href="/account">My Account</a>
                                 <ul>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=account/edit">Account Information</a></li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=account/password">Password</a></li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=account/address">Address Book</a></li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=account/order">Order History</a></li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=account/download">Downloads</a></li>
+                                    <li><a href="/account/edit">Account Information</a></li>
+                                    <li><a href="/account/password">Password</a></li>
+                                    <li><a href="/account/address_edit">Address Book</a></li>
+                                    <li><a href="/account/orders">Order History</a></li>
+                                    <li><a href="#">Downloads</a></li>
                                 </ul>
                             </li>
-                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=checkout/cart">Shopping Cart</a></li>
-                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=checkout/checkout">Checkout</a></li>
-                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/search">Search</a></li>
+                            <li><a href="/cart">Shopping Cart</a></li>
+                            <li><a href="/checkout">{{ trans('messages.Checkout') }}</a></li>
+                            <li><a href="/search">Search</a></li>
                             <li>Information
                                 <ul>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=information/information&amp;information_id=7">Returns Policy</a></li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=information/information&amp;information_id=8">Theme Features</a></li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=information/information&amp;information_id=4">About Us</a></li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=information/information&amp;information_id=6">Delivery Information</a></li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=information/information&amp;information_id=3">Privacy Policy</a></li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=information/information&amp;information_id=5">Terms &amp; Conditions</a></li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=information/contact">Contact Us</a></li>
+                                    <li><a href="#">Returns Policy</a></li>
+                                    <li><a href="#">Theme Features</a></li>
+                                    <li><a href="#">About Us</a></li>
+                                    <li><a href="#">Delivery Information</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Terms &amp; Conditions</a></li>
+                                    <li><a href="/contact">Contact Us</a></li>
                                 </ul>
                             </li>
-                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=journal2/blog">Journal News</a>
+                            <li><a href="#">Journal News</a>
                                 <ul>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=journal2/blog&amp;journal_blog_category_id=2">Shopping</a></li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=journal2/blog&amp;journal_blog_category_id=3">Traveling</a></li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=journal2/blog&amp;journal_blog_category_id=4">Branding</a></li>
-                                    <li><a href="http://journal.digital-atelier.com/3/index.php?route=journal2/blog&amp;journal_blog_category_id=5">New Products</a></li>
+                                    <li><a href="#">Shopping</a></li>
+                                    <li><a href="#">Traveling</a></li>
+                                    <li><a href="#">Branding</a></li>
+                                    <li><a href="#">New Products</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -177,4 +177,4 @@
         </div>
     </div>
 </div>
-<?php echo $footer; ?>
+@stop

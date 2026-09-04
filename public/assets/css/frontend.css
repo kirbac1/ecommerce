@@ -25781,3 +25781,25 @@ footer .contacts .hint--top:before {
     color: #c0392b;
     font-weight: 600;
 }
+
+/* Language switcher in the storefront header. */
+.language-switcher {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.language-switcher__item {
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+}
+
+.language-switcher__item.is-active {
+    background: rgba(255, 255, 255, 0.22);
+}

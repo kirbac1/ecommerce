@@ -54,7 +54,6 @@ class AdminController extends Controller
     public function dashboard()
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         $returned = Returned::where('created_at', '>', Carbon::now()->subDays(30))->count();
         $sold = Invoice::where('created_at', '>', Carbon::now()->subDays(30))->count();
@@ -153,7 +152,6 @@ class AdminController extends Controller
     public function customers()
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.customers', [
             'user' => $user,
@@ -163,7 +161,6 @@ class AdminController extends Controller
     public function editCustomer(Customer $customer)
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.customerEdit', [
             'user' => $user,
@@ -174,7 +171,6 @@ class AdminController extends Controller
     public function createCustomer(Customer $customer)
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.customerEdit', [
             'user' => $user,
@@ -185,7 +181,6 @@ class AdminController extends Controller
     public function customergroups()
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.customergroups', [
             'user' => $user,
@@ -195,7 +190,6 @@ class AdminController extends Controller
     public function createCustomergroup()
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.customergroupEdit', [
             'user' => $user,
@@ -205,7 +199,6 @@ class AdminController extends Controller
 
     public function editCustomergroup(CustomerGroup $customerGroup) {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.customergroupEdit', [
             'user' => $user,
@@ -216,7 +209,6 @@ class AdminController extends Controller
     public function users()
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.users', [
             'user' => $user,
@@ -226,7 +218,6 @@ class AdminController extends Controller
     public function createUser()
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.userEdit', [
             'user' => $user,
@@ -236,7 +227,6 @@ class AdminController extends Controller
 
     public function editUser(User $editUser) {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.userEdit', [
             'user' => $user,
@@ -247,7 +237,6 @@ class AdminController extends Controller
     public function products()
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.products', [
             'user' => $user,
@@ -257,7 +246,6 @@ class AdminController extends Controller
     public function createProduct()
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.productEdit', [
             'user' => $user,
@@ -268,7 +256,6 @@ class AdminController extends Controller
     public function editProduct(Product $product) {
         Log::info("product inside AdminController:editProduct: ".$product);
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.productEdit', [
             'user' => $user,
@@ -279,7 +266,6 @@ class AdminController extends Controller
     public function manufacturers()
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.manufacturers', [
             'user' => $user,
@@ -289,7 +275,6 @@ class AdminController extends Controller
     public function createManufacturer()
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.manufacturerEdit', [
             'user' => $user,
@@ -299,7 +284,6 @@ class AdminController extends Controller
 
     public function editManufacturer(Manufacturer $manufacturer) {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.manufacturerEdit', [
             'user' => $user,
@@ -310,7 +294,6 @@ class AdminController extends Controller
     public function orders()
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.sales.orders', [
             'user' => $user,
@@ -320,7 +303,6 @@ class AdminController extends Controller
     public function editOrder(Order $order)
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.sales.orderEdit', [
             'user' => $user,
@@ -331,7 +313,6 @@ class AdminController extends Controller
     public function createOrder()
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.sales.orderEdit', [
             'user' => $user,
@@ -342,7 +323,6 @@ class AdminController extends Controller
     public function returns(Request $request)
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.sales.returns', [
             'user' => $user,
@@ -354,7 +334,6 @@ class AdminController extends Controller
     {
         $user = Auth::user();
         $order_id = $request->get('order_id', null);
-        App::setLocale($user->language);
 
         return view('admin.sales.returnEdit', [
             'user' => $user,
@@ -366,7 +345,6 @@ class AdminController extends Controller
     public function createReturn(Request $request)
     {
         $user = Auth::user();
-        App::setLocale($user->language);
         $order_id = $request->get('order_id', null);
 
         return view('admin.sales.returnEdit', [
@@ -381,7 +359,6 @@ class AdminController extends Controller
         $user = Auth::user();
 
         $tickets = TicketThread::all();
-        App::setLocale($user->language);
 
         return view('admin.support', [
             'user' => $user,
@@ -392,7 +369,6 @@ class AdminController extends Controller
     public function editTicket(TicketThread $ticketThread)
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.supportEdit', [
             'user' => $user,
@@ -404,7 +380,6 @@ class AdminController extends Controller
     public function createTicket()
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.supportCreate', [
             'user' => $user,
@@ -426,7 +401,6 @@ class AdminController extends Controller
     public function invoices()
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.sales.invoices', [
             'user' => $user,
@@ -437,7 +411,6 @@ class AdminController extends Controller
     public function editInvoice(Invoice $invoice)
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.sales.invoiceEdit', [
             'user' => $user,
@@ -448,7 +421,6 @@ class AdminController extends Controller
     public function createInvoice()
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.sales.invoiceEdit', [
             'user' => $user,
@@ -459,7 +431,6 @@ class AdminController extends Controller
     public function getInvoice(Invoice $invoice)
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.sales.invoiceGet', [
             'user' => $user,
@@ -470,7 +441,6 @@ class AdminController extends Controller
     public function receipts()
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.sales.receipts', [
             'user' => $user,
@@ -481,7 +451,6 @@ class AdminController extends Controller
     public function editReceipt(Invoice $receipt)
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.sales.receiptEdit', [
             'user' => $user,
@@ -492,7 +461,6 @@ class AdminController extends Controller
     public function createReceipt()
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.sales.receiptEdit', [
             'user' => $user,
@@ -503,7 +471,6 @@ class AdminController extends Controller
     public function getReceipt(Invoice $receipt)
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.sales.receiptGet', [
             'user' => $user,
@@ -514,7 +481,6 @@ class AdminController extends Controller
     public function proformas()
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.sales.proformas', [
             'user' => $user,
@@ -524,7 +490,6 @@ class AdminController extends Controller
     public function editProforma(Proforma $proforma)
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.sales.proformaEdit', [
             'user' => $user,
@@ -535,7 +500,6 @@ class AdminController extends Controller
     public function createProforma()
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.sales.proformaEdit', [
             'user' => $user,
@@ -546,7 +510,6 @@ class AdminController extends Controller
     public function getProforma(Proforma $proforma)
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.sales.proformaGet', [
             'user' => $user,
@@ -896,7 +859,6 @@ class AdminController extends Controller
     public function settings()
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.settingsEdit', [
             'user' => Auth::user(),
@@ -906,7 +868,6 @@ class AdminController extends Controller
     public function categories()
     {
         $user = Auth::user();
-        App::setLocale($user->language);
 
         return view('admin.categoriesEdit', [
             'user' => Auth::user(),

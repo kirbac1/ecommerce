@@ -7,9 +7,9 @@
                 <div class="box-category">
                     <ul>
                         <li>
-                            <a href="/webstore/delivery" class="">Delivery Information</a></li>
+                            <a href="/account/address_edit" class="">Delivery Information</a></li>
                         <li>
-                            <a href="/webstore/return" class="">Returns Information</a></li>
+                            <a href="/account/orders" class="">Returns Information</a></li>
                         <li>
                             <a href="#" class="">Custom Menu</a></li>
                         <li>
@@ -39,13 +39,13 @@
                             <div class="product-wrapper">
                                 <div class="image">
                                     <div class="quickview-button"><a class="button hint--top" data-hint="QuickView"><i class="button-left-icon"></i><span class="button-cart-text">QuickView</span><i class="button-right-icon"></i></a></div>
-                                    <a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=60">
+                                    <a href="#">
                                         <div class="p-over p-grid-over"> </div>
                                         <img width="50" height="50" src="/assets/img/no-image.png" title="Bell Sleeve Dress" alt="Bell Sleeve Dress">
                                     </a>
                                 </div>
                                 <div class="product-details">
-                                    <div class="name"><a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=60">Bell Sleeve Dress</a></div>
+                                    <div class="name"><a href="#">Bell Sleeve Dress</a></div>
                                     <div class="price">
                                         <span class="price-old">$200.00</span> <span class="price-new">$149.00</span></div>
                                 </div>
@@ -55,13 +55,13 @@
                             <div class="product-wrapper">
                                 <div class="image">
                                     <div class="quickview-button"><a class="button hint--top" data-hint="QuickView"><i class="button-left-icon"></i><span class="button-cart-text">QuickView</span><i class="button-right-icon"></i></a></div>
-                                    <a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=61">
+                                    <a href="#">
                                         <div class="p-over p-grid-over"> </div>
                                         <img width="50" height="50" src="/assets/img/no-image.png" title="Black Fur Collar" alt="Black Fur Collar">
                                     </a>
                                 </div>
                                 <div class="product-details">
-                                    <div class="name"><a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=61">Black Fur Collar</a></div>
+                                    <div class="name"><a href="#">Black Fur Collar</a></div>
                                     <div class="price">
                                         <span class="price-old">$299.00</span> <span class="price-new">$219.00</span></div>
                                 </div>
@@ -71,13 +71,13 @@
                             <div class="product-wrapper">
                                 <div class="image">
                                     <div class="quickview-button"><a class="button hint--top" data-hint="QuickView"><i class="button-left-icon"></i><span class="button-cart-text">QuickView</span><i class="button-right-icon"></i></a></div>
-                                    <a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=254">
+                                    <a href="#">
                                         <div class="p-over p-grid-over"> </div>
                                         <img width="50" height="50" src="/assets/img/no-image.png" title="Black Nail Polish" alt="Black Nail Polish">
                                     </a>
                                 </div>
                                 <div class="product-details">
-                                    <div class="name"><a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=254">Black Nail Polish</a></div>
+                                    <div class="name"><a href="#">Black Nail Polish</a></div>
                                     <div class="price">
                                         <span class="price-old">$110.00</span> <span class="price-new">$85.00</span></div>
                                 </div>
@@ -87,13 +87,13 @@
                             <div class="product-wrapper">
                                 <div class="image">
                                     <div class="quickview-button"><a class="button hint--top" data-hint="QuickView"><i class="button-left-icon"></i><span class="button-cart-text">QuickView</span><i class="button-right-icon"></i></a></div>
-                                    <a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=238">
+                                    <a href="#">
                                         <div class="p-over p-grid-over"> </div>
                                         <img width="50" height="50" src="/assets/img/no-image.png" title="Brown Leather Purse" alt="Brown Leather Purse">
                                     </a>
                                 </div>
                                 <div class="product-details">
-                                    <div class="name"><a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=238">Brown Leather Purse</a></div>
+                                    <div class="name"><a href="#">Brown Leather Purse</a></div>
                                     <div class="price">
                                         <span class="price-old">$569.00</span> <span class="price-new">$299.00</span></div>
                                 </div>
@@ -103,13 +103,13 @@
                             <div class="product-wrapper">
                                 <div class="image">
                                     <div class="quickview-button"><a class="button hint--top" data-hint="QuickView"><i class="button-left-icon"></i><span class="button-cart-text">QuickView</span><i class="button-right-icon"></i></a></div>
-                                    <a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=237">
+                                    <a href="#">
                                         <div class="p-over p-grid-over"> </div>
                                         <img width="50" height="50" src="/assets/img/no-image.png" title="Butterfly Ring" alt="Butterfly Ring">
                                     </a>
                                 </div>
                                 <div class="product-details">
-                                    <div class="name"><a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=237">Butterfly Ring</a></div>
+                                    <div class="name"><a href="#">Butterfly Ring</a></div>
                                     <div class="price">
                                         <span class="price-old">$1,490.00</span> <span class="price-new">$990.00</span></div>
                                 </div>
@@ -223,7 +223,7 @@
                                 <div class="product-thumb product-wrapper outofstock">
                                     <div class="image">
                                         <div v-on:click="quickView(product.id)" class="quickview-button"><a class="button hint--top" data-hint="QuickView" ><i class="button-left-icon"></i><span class="button-cart-text">QuickView</span><i class="button-right-icon"></i></a></div>
-                                        <a href="/webstore/product?id=@{{relatedProduct.id}}" class="has-second-image" >
+                                        <a href="/product?id=@{{relatedProduct.id}}" class="has-second-image" >
                                             <div class="p-over p-grid-over"> </div>
                                             <img class="lazy first-image" src="/catalog/@{{relatedProduct.image}}" title="@{{relatedProduct.name}}" alt="@{{relatedProduct.name}}" style="display: block;">
                                         </a>
@@ -233,7 +233,7 @@
                                     </div>
                                     <div class="product-details">
                                         <div class="caption">
-                                            <h4 class="name" style="height: 34px;"><a href=/webstore/product?id=@{{relatedProduct.id}}>@{{relatedProduct.name}}</a></h4>
+                                            <h4 class="name" style="height: 34px;"><a href=/product?id=@{{relatedProduct.id}}>@{{relatedProduct.name}}</a></h4>
                                             <p class="description"></p>
                                             <p class="price">
                                                @{{relatedProduct.priceEach}}<span class="price-tax">Inc Tax: @{{relatedProduct.taxedPrice}}</span>

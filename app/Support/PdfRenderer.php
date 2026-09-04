@@ -57,10 +57,10 @@ class PdfRenderer
         $mpdf = new Mpdf([
             'tempDir' => $tempDir,
             'format' => 'A4',
-            'margin_top' => 12,
-            'margin_bottom' => 12,
-            'margin_left' => 12,
-            'margin_right' => 12,
+            'margin_top' => 10,
+            'margin_bottom' => 10,
+            'margin_left' => 10,
+            'margin_right' => 10,
             // The documents contain Finnish text.
             'mode' => 'utf-8',
             // Nothing should be fetched remotely; fail fast if anything tries.

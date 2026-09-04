@@ -1,6 +1,18 @@
 
 
 @extends('layouts.cashier')
+
+@section('page.head')
+    {{-- This page is styled with the admin theme (.login-content, .lc-block),
+         so it needs those stylesheets; the register's materialize theme does
+         not define them. --}}
+    <link href="/assets/vendors/animate.css/animate.min.css" rel="stylesheet">
+    <link href="/assets/vendors/material-icons/material-design-iconic-font.min.css" rel="stylesheet">
+    <link href="/assets/vendors/sweet-alert/sweet-alert.min.css" rel="stylesheet">
+    <link href="/assets/css/app.min.1.css" rel="stylesheet">
+    <link href="/assets/css/app.min.2.css" rel="stylesheet">
+    <link href="/assets/css/app.css" rel="stylesheet">
+@stop
  @section('content')
 <body class="login-content">
     <div class="lc-block toggled" id="l-login">

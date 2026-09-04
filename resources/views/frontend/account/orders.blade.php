@@ -2,9 +2,9 @@
 <div class="carta-container">
     <div id="container" class="container j-container">
         <ul class="breadcrumb">
-            <li><a href="/webstore/home">Home</a></li>
-            <li><a href="/webstore/account">Account</a></li>
-            <li><a href="/webstore/orders">Order History</a></li>
+            <li><a href="/">{{ trans('messages.Home') }}</a></li>
+            <li><a href="/account">Account</a></li>
+            <li><a href="/account/orders">Order History</a></li>
         </ul>
         <div class="row">
             <div id="content" class="col-sm-12 order-list">
@@ -18,7 +18,7 @@
                                 <td class="text-left">Date Added</td>
                                 <td class="text-right">No. of Products</td>
                                 <td class="text-left">Customer</td>
-                                <td class="text-right">Total</td>
+                                <td class="text-right">{{ trans('messages.Total') }}</td>
                                 <td></td>
                             </tr>
                         </thead>
@@ -30,14 +30,14 @@
                                 <td class="text-right">@{{order.products.length}}</td>
                                 <td class="text-left">@{{order.company}}</td>
                                 <td class="text-right">@{{order.total}}</td>
-                                <td class="text-right"><a href="/webstore/order?order=@{{order.id}}" data-toggle="tooltip" title="" class="btn btn-info btn-primary" data-original-title="View"><i class="fa fa-eye"></i></a></td>
+                                <td class="text-right"><a href="/account/order?order=@{{order.id}}" data-toggle="tooltip" title="" class="btn btn-info btn-primary" data-original-title="View"><i class="fa fa-eye"></i></a></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="text-right"></div>
                 <div class="buttons">
-                    <div class="pull-right"><a href="/webstore/account" class="btn btn-primary button">Continue</a></div>
+                    <div class="pull-right"><a href="/account" class="btn btn-primary button">Continue</a></div>
                 </div>
             </div>
         </div>

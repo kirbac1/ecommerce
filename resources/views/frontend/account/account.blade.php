@@ -3,7 +3,7 @@
     
 // if (localStorage.getItem("token_id") === null || localStorage.getItem("token_id") === undefined) {
     
-//     location.href="/webstore/login";
+//     location.href="/account/login";
 // }
 
 </script>
@@ -11,34 +11,34 @@
 <div class="carta-container">
     <div id="container" class="container j-container">
         <ul class="breadcrumb">
-            <li><a href="/webstore/home">Home</a></li>
-            <li><a href="/webstore/account">Account</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/account">Account</a></li>
         </ul>
         <div class="row">
             <div id="content" class="col-sm-12">
                 <h2 class="secondary-title">My Account</h2>
                 <div class="content my-account">
                     <ul class="list-unstyled">
-                        <li><a href="/webstore/account/edit">Edit your account information</a></li>
-                        <li><a href="/webstore/account/password">Change your password</a></li>
-                        <li><a href="/webstore/account/address_edit">Modify your address book entries</a></li>
-                        <li><a href="/webstore/wishlist">Modify your wish list</a></li>
+                        <li><a href="/account/edit">Edit your account information</a></li>
+                        <li><a href="/account/password">Change your password</a></li>
+                        <li><a href="/account/address_edit">Modify your address book entries</a></li>
+                        <li><a href="/account/wishlist">Modify your wish list</a></li>
                     </ul>
                 </div>
                 <h2 class="secondary-title">My Orders</h2>
                 <div class="content my-orders">
                     <ul class="list-unstyled">
-                        <li><a href="/webstore/account/orders">View your order history</a></li>
+                        <li><a href="/account/orders">View your order history</a></li>
 
-                        <li><a href="/webstore/account/reward">Your Reward Points</a></li>
-                        <li><a href="/webstore/account/return">View your return requests</a></li>
+                        <li><a href="/account">Your Reward Points</a></li>
+                        <li><a href="/account/orders">View your return requests</a></li>
 
                     </ul>
                 </div>
                 <h2 class="secondary-title">Newsletter</h2>
                 <div class="content my-newsletter">
                     <ul class="list-unstyled">
-                        <li><a href="http://journal.digital-atelier.com/3/index.php?route=account/newsletter">Subscribe / unsubscribe to newsletter</a></li>
+                        <li><a href="/account/newsletter">Subscribe / unsubscribe to newsletter</a></li>
                     </ul>
                 </div>
             </div>

@@ -24,6 +24,7 @@ use App\Http\Controllers\CustomerGroupController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\LogEventController;
 use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\MeasureunitController;
@@ -51,42 +52,42 @@ Route::group(['prefix' => '/api/v3'], function () {
     Route::get('/customer/logout', [AuthController::class, 'customerLogout']);
     Route::post('/customer/register', [AuthController::class, 'customerRegistration']);
 
-    Route::resource('/logevents', LogEventController::class);
-    Route::resource('/users', UserController::class);
-    Route::resource('/customers', CustomerController::class);
-    Route::resource('/customergroups', CustomerGroupController::class);
+    Route::resource('/logevents', LogEventController::class)->parameters(['logevents' => 'logevents']);
+    Route::resource('/users', UserController::class)->parameters(['users' => 'users']);
+    Route::resource('/customers', CustomerController::class)->parameters(['customers' => 'customers']);
+    Route::resource('/customergroups', CustomerGroupController::class)->parameters(['customergroups' => 'customergroups']);
     // Add security check to categories update
     Route::put('/categories/{categories}/move', [CategoryController::class, 'moveCategory']);
     Route::post('/categories/addChild', [CategoryController::class, 'addChild']);
-    Route::resource('/categories', CategoryController::class);
-    Route::resource('/discounts', DiscountController::class);
+    Route::resource('/categories', CategoryController::class)->parameters(['categories' => 'categories']);
+    Route::resource('/discounts', DiscountController::class)->parameters(['discounts' => 'discounts']);
 
     Route::get('/invoices/{invoices}/generatePDF', [InvoiceController::class, 'generatePDF']);
     Route::get('/invoices/{invoices}/renderItem', [InvoiceController::class, 'renderItem']);
-    Route::resource('/invoices', InvoiceController::class);
+    Route::resource('/invoices', InvoiceController::class)->parameters(['invoices' => 'invoices']);
     Route::get('/receipts/{receipts}/generatePDF', [ReceiptController::class, 'generatePDF']);
     Route::get('/receipts/{receipts}/renderItem', [ReceiptController::class, 'renderItem']);
-    Route::resource('/receipts', ReceiptController::class);
-    Route::resource('/measureunits', MeasureunitController::class);
+    Route::resource('/receipts', ReceiptController::class)->parameters(['receipts' => 'receipts']);
+    Route::resource('/measureunits', MeasureunitController::class)->parameters(['measureunits' => 'measureunits']);
     Route::get('orders/paid', [OrderController::class, 'getPaidOrders']);
-    Route::resource('/orders', OrderController::class);
+    Route::resource('/orders', OrderController::class)->parameters(['orders' => 'orders']);
     Route::get('/orders/{orders}/convertToInvoice', [OrderController::class, 'convertToInvoice']);
     Route::get('/orders/{orders}/convertToReceipt', [OrderController::class, 'convertToReceipt']);
-    Route::resource('/paymentmethods', PaymentMethodController::class);
-    Route::resource('/payments', PaymentController::class);
-    Route::resource('/proformas', ProformaController::class);
+    Route::resource('/paymentmethods', PaymentMethodController::class)->parameters(['paymentmethods' => 'paymentmethods']);
+    Route::resource('/payments', PaymentController::class)->parameters(['payments' => 'payments']);
+    Route::resource('/proformas', ProformaController::class)->parameters(['proformas' => 'proformas']);
     Route::get('/proformas/{proformas}/convertToOrder', [ProformaController::class, 'convertToOrder']);
     Route::get('/proformas/{proformas}/generatePDF', [ProformaController::class, 'generatePDF']);
     Route::get('/proformas/{proformas}/renderItem', [ProformaController::class, 'renderItem']);
-    Route::resource('/products', ProductController::class);
+    Route::resource('/products', ProductController::class)->parameters(['products' => 'products']);
     Route::get('/returns/{returns}/generatePDF', [ReturnedController::class, 'generatePDF']);
     Route::get('/returns/{returns}/renderItem', [ReturnedController::class, 'renderItem']);
-    Route::resource('/returns', ReturnedController::class);
-    Route::resource('/tickets', TicketController::class);
-    Route::resource('/warehouses', WarehouseController::class);
-    Route::resource('/manufacturers', ManufacturerController::class);
+    Route::resource('/returns', ReturnedController::class)->parameters(['returns' => 'returns']);
+    Route::resource('/tickets', TicketController::class)->parameters(['tickets' => 'tickets']);
+    Route::resource('/warehouses', WarehouseController::class)->parameters(['warehouses' => 'warehouses']);
+    Route::resource('/manufacturers', ManufacturerController::class)->parameters(['manufacturers' => 'manufacturers']);
     Route::post('/imageUpload', [AdminController::class, 'imageUpload']);
-    Route::resource('/settings', SettingController::class);
+    Route::resource('/settings', SettingController::class)->parameters(['settings' => 'settings']);
 
     // Search engine
     Route::get('/search/categories/{value?}', [SearchController::class, 'categories']);
@@ -148,6 +149,12 @@ Route::group([], function () {
     Route::post('/account/login', [FrontendController::class, 'postLogin']);
     Route::get('/account/logout', [FrontendController::class, 'logout']);
     Route::get('/about-us', [FrontendController::class, 'aboutus']);
+    // Language switcher. Session-only, so it works for guests and for the
+    // read-only demo accounts.
+    Route::get('/locale/{locale}', [LocaleController::class, 'switch']);
+
+    Route::get('/contact', [FrontendController::class, 'contact']);
+    Route::get('/sitemap', [FrontendController::class, 'sitemap']);
     Route::get('/gallery', [FrontendController::class, 'gallery']);
     Route::get('/promotions', [FrontendController::class, 'promotions']);
     Route::get('/account/register', [FrontendController::class, 'register']);
@@ -170,7 +177,6 @@ Route::group([], function () {
         Route::post('/login', [AdminController::class, 'postLogin']);
         Route::get('/logout', [AdminController::class, 'logout']);
         Route::get('/', [AdminController::class, 'index']);
-        Route::get('/dashboard', [AdminController::class, 'dashboard']);
     });
 
 
@@ -199,6 +205,8 @@ Route::group([], function () {
     });
 
     Route::group(['middleware' => 'admins', 'prefix' => 'admin'], function() {
+        // Was sitting in the unauthenticated admin group above.
+        Route::get('/dashboard', [AdminController::class, 'dashboard']);
         // Admin side (AUTHENTICATION REQUIRED)
         Route::get('/categories', [AdminController::class, 'categories']);
         Route::get('/products', [AdminController::class, 'products']);

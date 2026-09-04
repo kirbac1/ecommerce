@@ -1,14 +1,14 @@
 <?php echo $header; ?>
 <div class="carta-container"><div id="container" class="container j-container">
   <ul class="breadcrumb">
-        <li><a href="/webstore/home">Home</a></li>
-        <li><a href="/webstore/account">Account</a></li>
-        <li><a href="/webstore/address">Address Book</a></li>
-        <li><a href="/webstore/address/edit&amp;address_id=141">Edit Address</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/account">Account</a></li>
+        <li><a href="/account/address_edit">Address Book</a></li>
+        <li><a href="/account/address_edit&amp;address_id=141">Edit Address</a></li>
       </ul>
   <div class="row">                <div id="content" class="col-sm-12 edit-address">       <h2 class="secondary-title">Edit Address</h2>
       <div class="content">
-      <form action="http://journal.digital-atelier.com/3/index.php?route=account/address/edit&amp;address_id=141" method="post" enctype="multipart/form-data" class="form-horizontal">
+      <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
         <fieldset>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-firstname">First Name</label>
@@ -328,7 +328,7 @@
           </div>
         </fieldset>
         <div class="buttons">
-          <div class="pull-left"><a href="http://journal.digital-atelier.com/3/index.php?route=account/address" class="btn btn-default button">Back</a></div>
+          <div class="pull-left"><a href="/account/address_edit" class="btn btn-default button">Back</a></div>
           <div class="pull-right">
             <input type="submit" value="Continue" class="btn btn-primary button">
           </div>

@@ -2,14 +2,14 @@
 <div class="carta-container">
     <div id="container" class="container j-container">
         <ul class="breadcrumb">
-            <li><a href="http://journal.digital-atelier.com/3/index.php?route=common/home">Home</a></li>
-            <li><a href="http://journal.digital-atelier.com/3/index.php?route=account/account">Account</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/account">Account</a></li>
             <li><a href="/register">Register</a></li>
         </ul>
         <div class="row">
             <div id="content" class="col-sm-12">
                 <h1 class="heading-title">Register Account</h1>
-                <p class="account-text">If you already have an account with us, please login at the <a href="/webstore/login">login page</a>.</p>
+                <p class="account-text">If you already have an account with us, please login at the <a href="/account/login">login page</a>.</p>
                 <div class="content">
                     <form class="form-horizontal">
                         <fieldset id="account">

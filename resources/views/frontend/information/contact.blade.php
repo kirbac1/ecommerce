@@ -1,9 +1,9 @@
-<?php echo $header; ?>
+@extends('layouts.default') @section('content')
 <div class="carta-container">
     <div id="container" class="container j-container">
         <ul class="breadcrumb">
-            <li><a href="http://journal.digital-atelier.com/3/index.php?route=common/home">Home</a></li>
-            <li><a href="http://journal.digital-atelier.com/3/index.php?route=information/contact">Contact Us</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/contact">Contact Us</a></li>
         </ul>
         <div class="row">
             <div id="content" class="col-sm-12 contact-page">
@@ -39,7 +39,7 @@
                         </div>
                     </div>
                 </div>
-                <form action="http://journal.digital-atelier.com/3/index.php?route=information/contact" method="post" enctype="multipart/form-data" class="form-horizontal">
+                <form action="/contact" method="post" enctype="multipart/form-data" class="form-horizontal">
                     <fieldset>
                         <h2 class="secondary-title">Contact Form</h2>
                         <div class="form-group required">
@@ -71,4 +71,4 @@
         </div>
     </div>
 </div>
-<?php echo $footer; ?>
+@stop

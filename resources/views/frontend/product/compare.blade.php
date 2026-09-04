@@ -2,8 +2,8 @@
 <div class="carta-container">
     <div id="container" class="container j-container">
         <ul class="breadcrumb">
-            <li><a href="http://journal.digital-atelier.com/3/index.php?route=common/home">Home</a></li>
-            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/compare">Product Comparison</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">Product Comparison</a></li>
         </ul>
         <div class="row">
             <div id="content" class="col-sm-12 compare">
@@ -17,8 +17,8 @@
                     <tbody>
                         <tr>
                             <td>Product</td>
-                            <td class="name"><a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=159"><strong>White Leather Belt</strong></a></td>
-                            <td class="name"><a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=69"><strong>Big Modern Necklace</strong></a></td>
+                            <td class="name"><a href="#"><strong>White Leather Belt</strong></a></td>
+                            <td class="name"><a href="#"><strong>Big Modern Necklace</strong></a></td>
                         </tr>
                         <tr>
                             <td>Image</td>
@@ -85,13 +85,13 @@
                             <td>
                                 <div class="cart ">
                                     <a onclick="addToCart('159');" class="button hint--top compare-add-to-cart" data-hint="Add to Cart"><i class="button-left-icon"></i><span class="button-cart-text">Add to Cart</span><i class="button-right-icon"></i></a>
-                                    <a href="http://journal.digital-atelier.com/3/index.php?route=product/compare&amp;remove=159" class="btn btn-danger btn-block button compare-remove">Remove</a>
+                                    <a href="#" class="btn btn-danger btn-block button compare-remove">Remove</a>
                                 </div>
                             </td>
                             <td>
                                 <div class="cart ">
                                     <a onclick="addToCart('69');" class="button hint--top compare-add-to-cart" data-hint="Add to Cart"><i class="button-left-icon"></i><span class="button-cart-text">Add to Cart</span><i class="button-right-icon"></i></a>
-                                    <a href="http://journal.digital-atelier.com/3/index.php?route=product/compare&amp;remove=69" class="btn btn-danger btn-block button compare-remove">Remove</a>
+                                    <a href="#" class="btn btn-danger btn-block button compare-remove">Remove</a>
                                 </div>
                             </td>
                         </tr>

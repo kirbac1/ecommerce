@@ -101,3 +101,55 @@ span.md.icon.input-group-addon {
 .blog-post.noshadow { box-shadow: none; }
 
 .table-responsive table th.selector { width: 50px; }
+/* Sign-out in the admin header.
+
+   Without this it inherited the theme's link colour -- blue on a blue header,
+   at icon size only, so it was effectively invisible. The label is shown at
+   every width; "hidden-xs" left just a 13px glyph on small screens. */
+#header .tm-logout {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 8px;
+    color: #fff;
+    line-height: 60px;
+    white-space: nowrap;
+}
+
+#header .tm-logout:hover,
+#header .tm-logout:focus {
+    color: #fff;
+    opacity: 0.8;
+}
+
+#header .tm-logout .md {
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+/* Language switcher in the admin header. */
+#header .language-switcher {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 0 8px;
+    line-height: 60px;
+}
+
+#header .language-switcher__item {
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+#header .language-switcher__item:hover {
+    color: #fff;
+}
+
+#header .language-switcher__item.is-active {
+    background: rgba(255, 255, 255, 0.25);
+    color: #fff;
+}

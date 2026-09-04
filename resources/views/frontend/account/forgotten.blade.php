@@ -1,9 +1,9 @@
 @extends('layouts.default') @section('content')
 <div class="carta-container"><div id="container" class="container j-container">
   <ul class="breadcrumb">
-        <li><a href="/webstore/home">Home</a></li>
-        <li><a href="/webstore/account">Account</a></li>
-        <li><a href="/webstore/forgotten">Forgotten Password</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/account">Account</a></li>
+        <li><a href="/forgotten">Forgotten Password</a></li>
       </ul>
     <div class="row">                <div id="content" class="col-sm-12">
       <h1 class="heading-title">Forgot Your Password?</h1>
@@ -20,7 +20,7 @@
           </div>
         </fieldset>
         <div class="buttons">
-          <div class="pull-left"><a href="/webstore/login" class="btn btn-default button">Back</a></div>
+          <div class="pull-left"><a href="/account/login" class="btn btn-default button">Back</a></div>
           <div class="pull-right">
             <input type="submit" v-on:click="forgotten" value="Continue" class="btn btn-primary button">
           </div>

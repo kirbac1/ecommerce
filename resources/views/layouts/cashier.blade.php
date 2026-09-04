@@ -4,6 +4,11 @@
 <head>
     @include('partials.cashier.head')
 
+    {{-- Per-page stylesheets. Child views must add theirs here rather than in
+         a bare <head> block: anything outside a section is written before the
+         doctype, which drops the browser into quirks mode. --}}
+    @yield('page.head')
+
 </head>
 
 <body>

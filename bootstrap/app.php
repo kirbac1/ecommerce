@@ -20,6 +20,8 @@ return Application::configure(basePath: dirname(__DIR__))
         // would sail straight through. Every route in this app is in the web
         // group, so coverage is the same.
         $middleware->web(append: [
+            // Resolve the display language before anything renders.
+            \App\Http\Middleware\SetLocale::class,
             \App\Http\Middleware\PreventDemoWrites::class,
         ]);
 

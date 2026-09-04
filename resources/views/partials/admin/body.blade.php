@@ -16,9 +16,13 @@
             {{-- Always reachable: without this the only way out was the
                  sidebar, which is hidden on small screens. --}}
             <li class="pull-right">
+                @include('partials.language-switcher')
+            </li>
+
+            <li class="pull-right">
                 <a href="/admin/logout" class="tm-logout" title="{{ trans('messages.Logout') }}">
                     <i class="md md-settings-power"></i>
-                    <span class="hidden-xs">{{ trans('messages.Logout') }}</span>
+                    <span>{{ trans('messages.Logout') }}</span>
                 </a>
             </li>
 

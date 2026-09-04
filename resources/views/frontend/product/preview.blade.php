@@ -4,7 +4,7 @@
         <div class="product-info">
             <div class="left">
                 <div class="image">
-                    <a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=74" target="_top" title="Beige Ruffle Dress"><img src="/assets/img/no-image.png" title="Beige Ruffle Dress" alt="Beige Ruffle Dress" id="image" data-largeimg="//digital-cdn.net/3/image/cache/data/yellow-700x700.jpg"></a>
+                    <a href="#" target="_top" title="Beige Ruffle Dress"><img src="/assets/img/no-image.png" title="Beige Ruffle Dress" alt="Beige Ruffle Dress" id="image" data-largeimg="//digital-cdn.net/3/image/cache/data/yellow-700x700.jpg"></a>
                 </div>
                 <div id="product-gallery" class="image-additional journal-carousel owl-carousel owl-theme" style="opacity: 1; display: block;">
                     <div class="owl-wrapper-outer">
@@ -75,7 +75,7 @@
                 <div id="product" class="product-options">
                     <ul class="list-unstyled description">
                         <li class="product-views-count">Views: 6863</li>
-                        <li class="p-brand">Brand: <a href="http://journal.digital-atelier.com/3/index.php?route=product/manufacturer/info&amp;manufacturer_id=11" target="_top">SuperBrand</a></li>
+                        <li class="p-brand">Brand: <a href="#" target="_top">SuperBrand</a></li>
                         <li class="p-model">Product Code: <span class="p-model" itemprop="model">Model 68</span></li>
                         <li class="p-stock">Availability: <span class="journal-stock ">In Stock</span></li>
                     </ul>
@@ -133,7 +133,7 @@
       <input type="hidden" name="product_id" value="74">
         </span>
                             <button type="button" id="button-cart" data-loading-text="Loading..." class="button"><span class="button-cart-text">Add to Cart</span></button>
-                            <a id="more-details" class="button hint--top" data-hint="More Details" target="_top" href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=74"><i></i></a>
+                            <a id="more-details" class="button hint--top" data-hint="More Details" target="_top" href="#"><i></i></a>
                             <script>
                             /* quantity buttons */
                             var $input = $('.cart input[name="quantity"]');

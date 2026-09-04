@@ -2,9 +2,9 @@
 
 <div class="carta-container"><div id="container" class="container j-container">
   <ul class="breadcrumb">
-        <li><a href="/webstore">Home</a></li>
-        <li><a href="/webstore/account">Account</a></li>
-        <li><a href="/webstore/login">Login</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/account">Account</a></li>
+        <li><a href="/account/login">Login</a></li>
       </ul>
       <div class="row">                <div id="content" class="col-sm-12">
             <div class="row login-content">
@@ -16,7 +16,7 @@
             <p>By creating an account you will be able to shop faster, be up to date on an order's status, and keep track of the orders you have previously made.</p>
             </div>
             <hr>
-            <a href="/webstore/register" class="btn btn-primary button">Continue</a></div>
+            <a href="/account/register" class="btn btn-primary button">Continue</a></div>
         </div>
         <div class="col-sm-6 right">
           <div class="well">
@@ -31,7 +31,7 @@
               <div class="form-group">
                 <label class="control-label" for="input-password">Password</label>
                 <input type="password" v-model="customer.password" name="password" value="" placeholder="Password" id="input-password" class="form-control">
-                <a href="/webstore/forgotten">Forgotten Password</a></div>
+                <a href="/forgotten">Forgotten Password</a></div>
                 </div>
               <hr>
               <input readonly v-on:click="login" type="submit" value="Login" class="btn btn-primary button">

@@ -40,7 +40,7 @@ class Customer extends Authenticatable
     protected $fillable = [
         'type', 'name', 'surname', 'email1', 'email2', 'website', 'phone', 'mobile', 'vatid', 'taxid', 'street1',
         'street2', 'city', 'state', 'zipcode', 'country', 'notes', 'discount', 'enabled', 'customer_group_id', 'company',
-        'newsletter', 'reward_points',
+        'newsletter', 'reward_points', 'password', 'demo',
     ];
 
     /**

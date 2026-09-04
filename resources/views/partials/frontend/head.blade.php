@@ -13,7 +13,7 @@
     <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/><![endif]-->
     <!--[if lt IE 9]><script src="//ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script><![endif]-->
     <title>Carta Webstore</title>
-    <!-- <base href="localhost:8888/webstore"> </base> -->
+    <!-- <base href="localhost:8888/"> </base> -->
     <meta name="description" content="Journal | The Ultimate Opencart Theme">
     <meta property="og:title" content="Journal">
     <meta property="og:site_name" content="Journal">

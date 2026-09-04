@@ -11,26 +11,12 @@
                     <a href="/cart" class="icon-only top-menu-item-3"><i style="margin-right: 5px; color: rgb(241, 196, 15); font-size: 18px" data-icon=""></i><span class="top-menu-link">{{ trans('header.Cart') }} </span></a>
                     <a href="/checkout" class="icon-only top-menu-item-4"><i style="margin-right: 5px; color: rgb(51, 153, 101); font-size: 16px" data-icon=""></i><span class="top-menu-link">{{ trans('header.Checkout') }} </span></a> </div>
             </div>
-            <div class="journal-currency j-min xs-5 sm-5 md-10 lg-10 xl-10">
-                <form action="http://journal.digital-atelier.com/3/index.php?route=common/currency/currency" method="post" enctype="multipart/form-data">
-                    <div id="currency">
-                        <div class="btn-group">
-                            <button class="dropdown-toggle" type="button" data-hover="dropdown">
-                                <span class="currency-symbol">$</span> <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" style="left: 50%; margin-left: -20px;">
-                                <li><a onclick="$(this).closest('form').find('input[name=\'code\']').val('EUR'); $(this).closest('form').submit();">€</a></li>
-                                <li><a onclick="$(this).closest('form').find('input[name=\'code\']').val('GBP'); $(this).closest('form').submit();">£</a></li>
-                                <li><a onclick="$(this).closest('form').find('input[name=\'code\']').val('USD'); $(this).closest('form').submit();">$</a></li>
-                            </ul>
-                        </div>
-                        <input type="hidden" name="code" value="">
-                        <input type="hidden" name="redirect" value="http://journal.digital-atelier.com/3/index.php?route=common/home">
-                    </div>
-                </form>
-            </div>
+            {{-- Currency switcher removed: the shop prices everything in euro,
+                 and the control posted to journal.digital-atelier.com, the 2016
+                 theme demo site, so it navigated off the shop entirely. --}}
             <div class="journal-secondary j-min xs-100 sm-100 md-45 lg-45 xl-45">
                 <div class="links j-min">
+                    @include('partials.language-switcher')
                     <span class="no-link">{{ trans('header.Welcome Message') }} </span>
                     @if (Auth::check() && Auth::user()->isCustomer)
 
@@ -59,11 +45,11 @@
             </div>
             <div class="journal-cart row j-min xs-100 sm-50 md-25 lg-25 xl-25">
                 <div id="cart" class="btn-group btn-block">
-                    <button type="button" data-toggle="dropdown" class="btn btn-inverse btn-block btn-lg dropdown-toggle heading"><a><span id="cart-total" data-loading-text="Loading...&nbsp;&nbsp;"> @{{cartLength}} item(s) - @{{cart.products | total 'quantity' 'priceEach' 'qtyPerPack'}} €</span> <i></i></a></button>
+                    <div class="btn btn-inverse btn-block btn-lg heading"><a href="/cart"><span id="cart-total" data-loading-text="Loading...&nbsp;&nbsp;"> @{{cartLength}} item(s) - @{{cart.products | total 'quantity' 'priceEach' 'qtyPerPack'}} €</span> <i></i></a></div>
                     <div class="content">
                         <ul class="cart-wrapper">
                         <li  v-show="isCartEmpty">
-                         <p class="text-center empty">Your shopping cart is empty!</p>
+                         <p class="text-center empty">{{ trans('messages.Your shopping cart is empty!') }}</p>
                              </li>
                             <li  v-show="!isCartEmpty" class="mini-cart-info">
                                 <table class="table table-striped">
@@ -73,7 +59,7 @@
                                                 <a href="/product?id=@{{product.product.id}}"><img src="/catalog/@{{product.product.image}}" alt="@{{product.name}}" title="@{{product.name}}" class="img-thumbnail"></a>
                                             </td>
                                             <td class="text-right quantity">@{{product.quantity}} x </td>
-                                            <td class="text-left name"><a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=57">@{{product.product.name}}</a>
+                                            <td class="text-left name"><a href="#">@{{product.product.name}}</a>
                                                 <div>
                                                 </div>
                                             </td>
@@ -96,16 +82,16 @@
                                                 <td class="text-right right">@{{cart.products | total 'quantity' 'priceEach' 'qtyPerPack'}}</td>
                                             </tr>
                                              <tr>
-                                                <td class="text-right right"><strong>Tax Amount</strong></td>
+                                                <td class="text-right right"><strong>{{ trans('messages.Tax Amount') }}</strong></td>
                                                 <td class="text-right right">@{{cart.products | total 'quantity' 'taxAmount' 'qtyPerPack'}}</td>
                                             </tr>
                                             <tr>
-                                                <td class="text-right right"><strong>Total</strong></td>
+                                                <td class="text-right right"><strong>{{ trans('messages.Total') }}</strong></td>
                                                 <td class="text-right right">@{{cart.products | total 'quantity' 'taxedPrice' 'qtyPerPack'}}</td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <p class="text-right checkout"><a class="button" href="/cart">View Cart</a>&nbsp;<a class="button" href="/checkout">Checkout</a></p>
+                                    <p class="text-right checkout"><a class="button" href="/cart">{{ trans('messages.View Cart') }}</a>&nbsp;<a class="button" href="/checkout">{{ trans('messages.Checkout') }}</a></p>
                                 </div>
                             </li>
                         </ul>
@@ -113,7 +99,7 @@
                 </div>
             </div>
             <div class="journal-menu j-min xs-100 sm-100 md-100 lg-100 xl-100">
-                <div class="mobile-trigger">MENU</div>
+                <div class="mobile-trigger">{{ trans('messages.MENU') }}</div>
                 <ul class="super-menu mobile-menu menu-floated" style="table-layout: ">
                     <li class="drop-down float-left icon-only main-menu-item-1">
                         <a href="/"><i style="margin-right: 5px; font-size: 20px; top: -1px" data-icon=""></i></a>
