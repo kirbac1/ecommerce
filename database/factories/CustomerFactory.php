@@ -35,7 +35,9 @@ class CustomerFactory extends Factory
             'state' => $this->faker->city(),
             'zipcode' => $this->faker->postcode(),
             'country' => $this->faker->country(),
-            'notes' => $this->faker->paragraph(),
+            // notes is a varchar(255); paragraph() occasionally exceeds that and
+            // made seeding fail at random.
+            'notes' => $this->faker->text(200),
             'customer_group_id' => rand(1, 3),
             'enabled' => true,
         ];
