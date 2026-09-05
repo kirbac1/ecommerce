@@ -30,6 +30,7 @@ body {
 </head>
 
 <body class="blue">
+@include('partials.cashier.logout')
 
 
   <div id="login-page" class="row">

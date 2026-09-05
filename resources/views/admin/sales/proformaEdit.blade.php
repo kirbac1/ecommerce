@@ -587,24 +587,24 @@
                 },
                 getReceipt: function getReceipt() {
                     if (this.canBeSaved) {
-                        Vue.http.put('/api/v3/proformas/{{ $proforma->id or '' }}', this.compose).then(function success(response) {
+                        Vue.http.put('/api/v3/proformas/{{ $proforma->id ?? '' }}', this.compose).then(function success(response) {
                             response.data.products.forEach(function(product) {
                                 product.priceEach = product.details.priceEach;
                                 product.taxPercent = product.details.taxPercent;
                                 product.quantity = product.details.quantity;
                             });
                             this.$set('proforma', response.data);
-                            location.href="/api/v3/proformas/{{ $proforma->id or '' }}/generatePDF";
+                            location.href="/api/v3/proformas/{{ $proforma->id ?? '' }}/generatePDF";
                         }.bind(this), function error(response) {
                             @include('partials.admin.swalDataSavedFail')
                         });
                     } else {
-                        location.href="/api/v3/proformas/{{ $proforma->id or '' }}/generatePDF";
+                        location.href="/api/v3/proformas/{{ $proforma->id ?? '' }}/generatePDF";
                     }
                 },
                 goToOrder: function goToOrder() {
                     if (this.canBeSaved) {
-                        Vue.http.put('/api/v3/proformas/{{ $proforma->id or '' }}', this.compose).then(function success(response) {
+                        Vue.http.put('/api/v3/proformas/{{ $proforma->id ?? '' }}', this.compose).then(function success(response) {
                             this.$set('proforma', response.data);
                         }.bind(this), function error(response) {
                             @include('partials.admin.swalDataSavedFail')
@@ -614,9 +614,9 @@
                     }
                 },
                 convertToOrder: function convertToOrder() {
-                    Vue.http.put('/api/v3/proformas/{{ $proforma->id or '' }}', this.compose).then(function success(response) {
+                    Vue.http.put('/api/v3/proformas/{{ $proforma->id ?? '' }}', this.compose).then(function success(response) {
                         this.$set('proforma', response.data);
-                        Vue.http.get('/api/v3/proformas/{{ $proforma->id or '' }}/convertToOrder').then(function success(response) {
+                        Vue.http.get('/api/v3/proformas/{{ $proforma->id ?? '' }}/convertToOrder').then(function success(response) {
                             location.href = '/admin/orders/' + response.data.id + '/edit';
                         });
                     }.bind(this), function error(response) {
@@ -627,7 +627,7 @@
                    this.proforma.products.splice(item, 1);
                 },
                 update: function(event) {
-                    Vue.http.put('/api/v3/proformas/{{ $proforma->id or '' }}', this.compose).then(function success(response) {
+                    Vue.http.put('/api/v3/proformas/{{ $proforma->id ?? '' }}', this.compose).then(function success(response) {
                         response.data.products.forEach(function(product) {
                             product.priceEach = product.details.priceEach;
                             product.taxPercent = product.details.taxPercent;
@@ -779,7 +779,7 @@
             },
             ready: function ready() {
                 @if($proforma)
-                    Vue.http.get('/api/v3/proformas/{{ $proforma->id or '' }}').then(function success(response) {
+                    Vue.http.get('/api/v3/proformas/{{ $proforma->id ?? '' }}').then(function success(response) {
                         if (response.data.order) this.canBeSaved = false;
                         response.data.products.forEach(function(product) {
                             product.priceEach = product.details.priceEach;

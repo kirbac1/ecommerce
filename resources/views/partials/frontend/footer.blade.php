@@ -22,7 +22,7 @@
                     <div class="block-icon block-icon-left" style="background-color: rgb(176, 158, 102); width: 70px; height: 70px; line-height: 70px; border-radius: 50%"><i style="margin-right: 5px; color: rgb(255, 255, 255); font-size: 32px; top: -2px" data-icon=""></i></div>
                     <h4>&nbsp;</h4>
                     <h3>Ultra Advanced Admin</h3>
-                    <p>No other theme comes even close&nbsp;<strong><a href="https://journal.digital-atelier.com/v2/10/admin/index.php?route=module/journal2" target="_blank">See for yourself</a></strong></p>
+                    <p>No other theme comes even close&nbsp;<strong><a href="//v2/10/admin/index.php?route=module/journal2" target="_blank">See for yourself</a></strong></p>
                 </div>
             </div>
             <div class="column  text xs-100 sm-50 md-50 lg-25 xl-25 no-title" style="height: 85px;">
@@ -36,7 +36,7 @@
         </div>
         <div class="row columns " style="background-attachment: scroll">
             <div class="column  menu xs-100 sm-50 md-33 lg-20 xl-20 " style="height: 225px;">
-                <h3>ALANYA TUKKU</h3>
+                <h3>{{ Str::upper(Setting::get('store_name', config('app.name'))) }}</h3>
                 <div class="column-menu-wrap">
                     <ul>
                         <li><a href="tel:18005558989"><i style="margin-right: 5px; color: rgb(43, 176, 227); font-size: 16px" data-icon=""></i>{{ Setting::get('store_telephone') }}</a></li>
@@ -67,10 +67,10 @@
                 <h3>{{  trans('messages.customer-support') }}</h3>
                 <div class="column-menu-wrap">
                     <ul>
-                        <li><a href="http://journal.digital-atelier.com/3/index.php?route=information/contact"><i style="margin-right: 5px; color: rgb(255, 255, 255); font-size: 5px" data-icon=""></i>Contact Us</a></li>
-                        <li><a href="http://journal.digital-atelier.com/3/index.php?route=account/return/add"><i style="margin-right: 5px; color: rgb(255, 255, 255); font-size: 5px" data-icon=""></i>Returns</a></li>
-                        <li><a href="http://journal.digital-atelier.com/3/index.php?route=account/order"><i style="margin-right: 5px; color: rgb(255, 255, 255); font-size: 5px" data-icon=""></i>Order History</a></li>
-                        <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/compare" class="compare-total"><i style="margin-right: 5px; color: rgb(255, 255, 255); font-size: 5px" data-icon=""></i>Custom Link</a></li>
+                        <li><a href="/contact"><i style="margin-right: 5px; color: rgb(255, 255, 255); font-size: 5px" data-icon=""></i>Contact Us</a></li>
+                        <li><a href="#"><i style="margin-right: 5px; color: rgb(255, 255, 255); font-size: 5px" data-icon=""></i>Returns</a></li>
+                        <li><a href="/account/orders"><i style="margin-right: 5px; color: rgb(255, 255, 255); font-size: 5px" data-icon=""></i>Order History</a></li>
+                        <li><a href="#" class="compare-total"><i style="margin-right: 5px; color: rgb(255, 255, 255); font-size: 5px" data-icon=""></i>Custom Link</a></li>
                         <li><a href="#"><i style="margin-right: 5px; color: rgb(255, 255, 255); font-size: 5px" data-icon=""></i>Sample Link</a></li>
                         <li><a href="#"><i style="margin-right: 5px; color: rgb(255, 255, 255); font-size: 5px" data-icon=""></i>Another Sample Link</a></li>
                         <li><a href="#" target="_blank"><i style="margin-right: 5px; color: rgb(255, 255, 255); font-size: 5px" data-icon=""></i>One More</a></li>
@@ -83,13 +83,13 @@
                     <div class="product-wrapper">
                         <div class="image">
                             <div class="quickview-button"><a class="button hint--top" data-hint="QuickView"><i class="button-left-icon"></i><span class="button-cart-text">QuickView</span><i class="button-right-icon"></i></a></div>
-                            <a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=273">
+                            <a href="#">
                                 <div class="p-over p-grid-over"> </div>
                                 <img class="lazy" width="30" height="30" src="/assets/img/no-image.png" data-src="/assets/img/no-image.png" title="Sport Watch" alt="Sport Watch">
                             </a>
                         </div>
                         <div class="product-details">
-                            <div class="name"><a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=273">Sport Watch</a></div>
+                            <div class="name"><a href="#">Sport Watch</a></div>
                             <div class="price">
                                 <span class="price-old">$209.00</span> <span class="price-new">$109.00</span>
                             </div>
@@ -100,13 +100,13 @@
                     <div class="product-wrapper">
                         <div class="image">
                             <div class="quickview-button"><a class="button hint--top" data-hint="QuickView"><i class="button-left-icon"></i><span class="button-cart-text">QuickView</span><i class="button-right-icon"></i></a></div>
-                            <a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=272">
+                            <a href="#">
                                 <div class="p-over p-grid-over"> </div>
                                 <img class="lazy" width="30" height="30" src="/assets/img/no-image.png" data-src="/assets/img/no-image.png" title="Red Formal Watch" alt="Red Formal Watch">
                             </a>
                         </div>
                         <div class="product-details">
-                            <div class="name"><a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=272">Red Formal Watch</a></div>
+                            <div class="name"><a href="#">Red Formal Watch</a></div>
                             <div class="price">
                                 $3,010.00 </div>
                         </div>
@@ -116,13 +116,13 @@
                     <div class="product-wrapper">
                         <div class="image">
                             <div class="quickview-button"><a class="button hint--top" data-hint="QuickView"><i class="button-left-icon"></i><span class="button-cart-text">QuickView</span><i class="button-right-icon"></i></a></div>
-                            <a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=271">
+                            <a href="#">
                                 <div class="p-over p-grid-over"> </div>
                                 <img class="lazy" width="30" height="30" src="/assets/img/no-image.png" data-src="/assets/img/no-image.png" title="Oversized Sunglasses" alt="Oversized Sunglasses">
                             </a>
                         </div>
                         <div class="product-details">
-                            <div class="name"><a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=271">Oversized Sunglasses</a></div>
+                            <div class="name"><a href="#">Oversized Sunglasses</a></div>
                             <div class="price">
                                 $397.00 </div>
                         </div>
@@ -132,13 +132,13 @@
                     <div class="product-wrapper">
                         <div class="image">
                             <div class="quickview-button"><a class="button hint--top" data-hint="QuickView"><i class="button-left-icon"></i><span class="button-cart-text">QuickView</span><i class="button-right-icon"></i></a></div>
-                            <a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=270">
+                            <a href="#">
                                 <div class="p-over p-grid-over"> </div>
                                 <img class="lazy" width="30" height="30" src="/assets/img/no-image.png" data-src="/assets/img/no-image.png" title="Red Sneakers" alt="Red Sneakers">
                             </a>
                         </div>
                         <div class="product-details">
-                            <div class="name"><a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=270">Red Sneakers</a></div>
+                            <div class="name"><a href="#">Red Sneakers</a></div>
                             <div class="price">
                                 $559.00 </div>
                         </div>
@@ -148,9 +148,9 @@
             <div class="column  posts xs-100 sm-50 md-33 lg-20 xl-20 " style="height: 225px;">
                 <h3>Latest News</h3>
                 <div class="footer-post">
-                    <a class="footer-post-image" href="http://journal.digital-atelier.com/3/index.php?route=journal2/blog/post&amp;journal_blog_post_id=1"><img src="/assets/img/no-image.png" alt="Journal Blog is Here"></a>
+                    <a class="footer-post-image" href="#"><img src="/assets/img/no-image.png" alt="Journal Blog is Here"></a>
                     <div class="footer-post-details">
-                        <a class="footer-post-title" href="http://journal.digital-atelier.com/3/index.php?route=journal2/blog/post&amp;journal_blog_post_id=1">Journal Blog is Here</a>
+                        <a class="footer-post-title" href="#">Journal Blog is Here</a>
                         <div class="comment-date">
                             <span class="p-date">15/09/2014</span>
                             <span class="p-comment">4</span>
@@ -158,9 +158,9 @@
                     </div>
                 </div>
                 <div class="footer-post">
-                    <a class="footer-post-image" href="http://journal.digital-atelier.com/3/index.php?route=journal2/blog/post&amp;journal_blog_post_id=2"><img src="/assets/img/no-image.png" alt="Blog Post"></a>
+                    <a class="footer-post-image" href="#"><img src="/assets/img/no-image.png" alt="Blog Post"></a>
                     <div class="footer-post-details">
-                        <a class="footer-post-title" href="http://journal.digital-atelier.com/3/index.php?route=journal2/blog/post&amp;journal_blog_post_id=2">Blog Post</a>
+                        <a class="footer-post-title" href="#">Blog Post</a>
                         <div class="comment-date">
                             <span class="p-date">15/09/2014</span>
                             <span class="p-comment">2</span>
@@ -168,9 +168,9 @@
                     </div>
                 </div>
                 <div class="footer-post">
-                    <a class="footer-post-image" href="http://journal.digital-atelier.com/3/index.php?route=journal2/blog/post&amp;journal_blog_post_id=3"><img src="/assets/img/no-image.png" alt="We've launched our blog"></a>
+                    <a class="footer-post-image" href="#"><img src="/assets/img/no-image.png" alt="We've launched our blog"></a>
                     <div class="footer-post-details">
-                        <a class="footer-post-title" href="http://journal.digital-atelier.com/3/index.php?route=journal2/blog/post&amp;journal_blog_post_id=3">We've launched our blog</a>
+                        <a class="footer-post-title" href="#">We've launched our blog</a>
                         <div class="comment-date">
                             <span class="p-date">15/09/2014</span>
                             <span class="p-comment">3</span>
@@ -178,9 +178,9 @@
                     </div>
                 </div>
                 <div class="footer-post">
-                    <a class="footer-post-image" href="http://journal.digital-atelier.com/3/index.php?route=journal2/blog/post&amp;journal_blog_post_id=4"><img src="/assets/img/no-image.png" alt="Another Blog Post"></a>
+                    <a class="footer-post-image" href="#"><img src="/assets/img/no-image.png" alt="Another Blog Post"></a>
                     <div class="footer-post-details">
-                        <a class="footer-post-title" href="http://journal.digital-atelier.com/3/index.php?route=journal2/blog/post&amp;journal_blog_post_id=4">Another Blog Post</a>
+                        <a class="footer-post-title" href="#">Another Blog Post</a>
                         <div class="comment-date">
                             <span class="p-date">15/09/2014</span>
                             <span class="p-comment">2</span>
@@ -222,7 +222,7 @@
     </div>
     <div class="bottom-footer boxed-bar">
         <div class="">
-            <div class="copyright">Copyright © 2016, Alanya Tukku, All Rights Reserved. Webmaster <a href="http://prowebdesign.fi" target="_blank">Prowebdesign.fi</a></div>
+            <div class="copyright">Copyright © {{ date('Y') }}, {{ Setting::get('store_name', config('app.name')) }}, All Rights Reserved. Webmaster <a href="http://prowebdesign.fi" target="_blank">Prowebdesign.fi</a></div>
             <div class="payments">
                 <img src="/assets/img/no-image.png" class="lazy" data-src="/assets/img/no-image.png" alt="Visa" width="51" height="32">
                 <img src="/assets/img/no-image.png" class="lazy" data-src="/assets/img/no-image.png" alt="MasterCard" width="51" height="32">

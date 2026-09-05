@@ -7,7 +7,7 @@
         <div class="card-header">
             @if($receipt !== null)
                 <div class="btn-group btn-group pull-right">
-                    @if($receipt->order)
+                    @if($receipt && $receipt->order)
                         <button class="btn btn-primary bgm-indigo" v-on:click.prevent="goToOrder">{{ trans('messages.GO TO ORDER') }}</button>
                     @endif
                     <button class="btn btn-primary bgm-red" v-on:click.prevent="destroy">{{ trans('messages.DELETE') }}</button>
@@ -480,7 +480,7 @@
             },
             methods: {
                 getReceipt: function getReceipt() {
-                    location.href="/api/v3/receipts/{{ $receipt->id or '' }}/generatePDF";
+                    location.href="/api/v3/receipts/{{ $receipt->id ?? '' }}/generatePDF";
                 },
                 goToOrder: function goToOrder() {
                     location.href = '/admin/orders/' + this.receipt.order_id + '/edit';
@@ -489,7 +489,7 @@
                     this.receipt.products.splice(item, 1);
                 },
                 update: function(event) {
-                    Vue.http.put('/api/v3/receipts/{{ $receipt->id or '' }}', this.compose).then(function success(response) {
+                    Vue.http.put('/api/v3/receipts/{{ $receipt->id ?? '' }}', this.compose).then(function success(response) {
                         response.data.products.forEach(function(product) {
                             product.priceEach = product.details.priceEach;
                             product.taxPercent = product.details.taxPercent;
@@ -558,7 +558,7 @@
                         closeOnConfirm: false
                     }, function(choice) {
                         if (choice) {
-                            Vue.http.delete('/api/v3/receipts/{{ $receipt->id }}').then(function success(response) {
+                            Vue.http.delete('/api/v3/receipts/{{ $receipt?->id }}').then(function success(response) {
                                 swal({
                                     title: "{{ trans('messages.Success!') }}",
                                     text: "{{ trans('messages.The element was deleted.') }}",
@@ -614,7 +614,7 @@
             },
             ready: function ready() {
                 @if($receipt)
-                    Vue.http.get('/api/v3/receipts/{{ $receipt->id or '' }}').then(function success(response) {
+                    Vue.http.get('/api/v3/receipts/{{ $receipt->id ?? '' }}').then(function success(response) {
                     response.data.products.forEach(function(product) {
                         product.priceEach = product.details.priceEach;
                         product.taxPercent = product.details.taxPercent;

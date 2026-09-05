@@ -142,7 +142,7 @@
                         });
                         return false;
                     }
-                    Vue.http.put('/api/v3/users/{{ $editUser->id or '' }}', this.object).then(function success(response) {
+                    Vue.http.put('/api/v3/users/{{ $editUser->id ?? '' }}', this.object).then(function success(response) {
                         this.$set('object', response.data);
                         swal({
                             title: "{{ trans('messages.Data saved!') }}",

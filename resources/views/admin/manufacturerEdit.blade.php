@@ -65,7 +65,7 @@
             methods: {
                 update: function(event) {
                     var that = this;
-                    Vue.http.put('/api/v3/manufacturers/{{ $manufacturer->id or '' }}', this.object).then(function success(response) {
+                    Vue.http.put('/api/v3/manufacturers/{{ $manufacturer->id ?? '' }}', this.object).then(function success(response) {
                         this.$set('object', response.data);
                         swal({
                             title: "{{ trans('messages.Data saved!') }}",

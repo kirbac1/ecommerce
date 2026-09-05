@@ -2,9 +2,9 @@
 <div class="carta-container">
     <div id="container" class="container j-container">
         <ul class="breadcrumb">
-            <li><a href="/webstore/home">Home</a></li>
-            <li><a href="/webstore/account">Account</a></li>
-            <li><a href="/webstore/wishlist">My Wish List</a></li>
+            <li><a href="/">{{ trans('messages.Home') }}</a></li>
+            <li><a href="/account">Account</a></li>
+            <li><a href="/account/wishlist">My Wish List</a></li>
         </ul>
         <div class="row">
             <div id="content" class="col-sm-12">
@@ -13,11 +13,11 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <td class="text-center image">Image</td>
-                                <td class="text-left name">Product Name</td>
-                                <td class="text-left model">QtyPerPack</td>
+                                <td class="text-center image">{{ trans('messages.Image') }}</td>
+                                <td class="text-left name">{{ trans('messages.Product Name') }}</td>
+                                <td class="text-left model">{{ trans('messages.QtyPerPack') }}</td>
                                 <td class="text-right stock">Stock</td>
-                                <td class="text-right price">Unit Price</td>
+                                <td class="text-right price">{{ trans('messages.Unit Price') }}</td>
                                 <td class="text-right action">Action</td>
                             </tr>
                         </thead>
@@ -26,7 +26,7 @@
                                 <td class="text-center image">
                                     <a href="/product?id=@{{product.id}}"><img src="/catalog/@{{product.image}}" alt="@{{product.name}}" title="B@{{product.name}}"></a>
                                 </td>
-                                <td class="text-left name"><a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=57">@{{product.name}}</a></td>
+                                <td class="text-left name"><a href="#">@{{product.name}}</a></td>
                                 <td class="text-left model">@{{product.qtyPerPack}}</td>
                                 <td class="text-right stock">In Stock</td>
                                 <td class="text-right price">
@@ -41,7 +41,7 @@
                     </table>
                 </div>
                 <div class="buttons">
-                    <div class="pull-right"><a href="/webstore/account" class="btn btn-primary button">Continue</a></div>
+                    <div class="pull-right"><a href="/account" class="btn btn-primary button">Continue</a></div>
                 </div>
             </div>
         </div>

@@ -17,16 +17,16 @@ class OnlyCustomers
      */
     public function handle($request, Closure $next)
     {
-        $user = Auth::user();
+        $user = Auth::guard('customers')->user();
         if ($user !== null) {
             if ($user->isCustomer) {
                 return $next($request);
             }  else {
-                App::abort(401, 'Unauthorized (not registered).');
-                return false;
+                return redirect('/account/login')
+                    ->with('error', 'Please sign in to view your account.');
             }
         } else {
-            return redirect('/webstore');
+            return redirect('/account/login');
         }
     }
 }

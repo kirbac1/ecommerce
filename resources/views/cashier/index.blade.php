@@ -1,21 +1,5 @@
 @extends('layouts.cashier')
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-        <meta name="_token" content="{{ csrf_token() }}" />
-    <!-- Import materialize.css -->
-    <link type="text/css" rel="stylesheet" href="/templates/assets/css/materialize.css" media="screen,projection" />
-    <!-- Import Material Design Iconic Font -->
-    <link rel="stylesheet" href="/templates/assets/css/material-design-iconic-font.css" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-    <!-- Import Application CSS -->
-    <link rel="stylesheet" href="/templates/assets/css/app.css" />
-    <!-- Let browser know website is optimized for mobile -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-</head>
 @section('content')
 <div id="app">
     <section id="header">
@@ -24,7 +8,7 @@
                 <div style=" margin-bottom: 0px;" class="header row">
                     <div class="brand col s6">
                         <h4 class="">
-                       <a href="/cashier"> Alanya Tukku</a>
+                       <a href="/cashier">{{ Setting::get('store_name', config('app.name')) }}</a>
                          </h4>
                     </div>
                     <div class="currentCustomer brand col s6">
@@ -75,65 +59,10 @@
                 <div class="products row nomargin">
                 </div>
             </section>
-            <section id="actionpad">
-                <div class="calculator row " style="height:260px">
-                    <div class="nopadding col s4">
-                        <!-- v-link="{ path: '/customers' }" -->
-                        <div href="#modal1" class="customerButton customerSelect row nomargin" style="height:40%;padding-top: 30px">
-                            Customers
-                        </div>
-                        <div class="receipt paymentButton row " style="height:60%">
-                            <a class="card-title item-list-title grey-text text-darken-4"> 
-                                Maksa
-                                </a>
-                        </div>
-                    </div>
-                    <div class="actionPad col s8">
-                        <a class="waves-effect btn-large btn-flat col grey lighten-5 black-text s3 number">1</a>
-                        <a class="waves-effect btn-large btn-flat col grey lighten-5 black-text s3 number">2</a>
-                        <a class="waves-effect btn-large btn-flat col grey lighten-5 black-text s3 number">
-                        3
-                    </a>
-                        <a style="font-size: 10px" class="waves-effect btn-large btn-flat col grey lighten-5 black-text s3 number">
-                        </a>
-                        <a class="waves-effect btn-large btn-flat col grey lighten-5 black-text s3 number">
-                        4
-                    </a>
-                        <a class="waves-effect btn-large btn-flat col grey lighten-5 black-text s3 number">
-                        5
-                    </a>
-                        <a class="waves-effect btn-large btn-flat col grey lighten-5 black-text s3 number">
-                        6
-                    </a>
-                        <a style="font-size: 10px" class="waves-effect btn-large btn-flat col grey lighten-5 black-text s3 number">
-                        </a>
-                        <a class="waves-effect btn-large btn-flat col grey lighten-5 black-text s3 number">
-                        7
-                    </a>
-                        <a class="waves-effect btn-large btn-flat col grey lighten-5 black-text s3 number">
-                        8
-                    </a>
-                        <a class="waves-effect btn-large btn-flat col grey lighten-5 black-text s3 number">
-                        9
-                    </a>
-                        <a style="font-size: 10px" class="waves-effect btn-large btn-flat col grey lighten-5 black-text s3 number">
-                        </a>
-                        <a class="clearAll waves-effect btn-large btn-flat col grey lighten-5 black-text s3 number">
-                        C
-                    </a>
-                        <a class="waves-effect btn-large btn-flat col grey lighten-5 black-text s3 number">
-                        0
-                    </a>
-                        <a class="waves-effect btn-large btn-flat col grey lighten-5 black-text s3 number">
-                        .
-                    </a>
-                        <a class="waves-effect btn-large btn-flat col grey lighten-5 black-text s3 number">
-                            <i class="zmdi zmdi-tag-close">
-                        </i>
-                        </a>
-                    </div>
-                </div>
-            </section>
+            {{-- The whole left action pad (Customers, Maksa and the number
+                 keypad) was removed: none of it was wired up, and it took a
+                 fixed 260px column out of the register. Customer selection and
+                 payment are available from the action buttons above. --}}
         </div>
         <div class="right col s10">
             <section id="options">
@@ -153,7 +82,7 @@
                     </a>
                 </div>
                 <div class="options col col-small-padding">
-                    <a style="background-color: #7469CE" class="invoice waves-effect waves-light btn-large" href="invoice.html" target="_blank">
+                    <a style="background-color: #7469CE" class="invoice waves-effect waves-light btn-large" href="/cashier/invoice" target="_blank">
                         <i class="material-icons left">euro_symbol</i> Lasku
                     </a>
                 </div>
@@ -440,8 +369,6 @@
         <a class="modal-action modal-close waves-effect waves-green btn-flat">Perutta</a>
     </div>
 </div>
-@stop
-  
   <div class="loadingModal">
     <!-- Place at bottom of page -->
 </div>
@@ -516,3 +443,4 @@ var getXsrfToken = function() {
 }
 
 </script>
+@stop

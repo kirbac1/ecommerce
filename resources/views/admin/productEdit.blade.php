@@ -192,7 +192,7 @@
                 barcode: '',
                 image: null,
                 signature: null,
-                id: {{ $product->id or 'undefined' }},
+                id: {{ $product->id ?? 'undefined' }},
             },
             computed: {
                 cMakeCategoryTree: {
@@ -297,7 +297,7 @@
                 },
                 update: function(event) {
                     var that = this;
-                    Vue.http.put('/api/v3/products/{{ $product->id or '' }}', {
+                    Vue.http.put('/api/v3/products/{{ $product->id ?? '' }}', {
                         id: this.id,
                         name: this.name,
                         manufacturer_id: this.manufacturer_id,

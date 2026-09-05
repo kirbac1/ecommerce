@@ -16,7 +16,7 @@
             @endif
             <div class="pull-right" style="margin-right: 20px; font-size: 1.2em;">Status: <b>@{{ object.status }}</b></div>
             <h2>
-                {{ $ticket->subject or ''}}
+                {{ $ticket->subject ?? '' }}
                 <small>
                     {{ trans('messages._ticket_details_subtitle') }}
                 </small>
@@ -124,7 +124,7 @@
                     });
                 },
                 destroy: function destroy(event) {
-                    Vue.http.delete("/api/v3/tickets/{{ $ticket->id or ''}}").then(function success(response) {
+                    Vue.http.delete("/api/v3/tickets/{{ $ticket->id ?? '' }}").then(function success(response) {
                         location.href = '/admin/support';
                     });
                 },

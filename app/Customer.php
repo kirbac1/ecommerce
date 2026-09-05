@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 // use App\Models\Model;
 use App\Traits\GivesAuthorization;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -9,6 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Customer extends Authenticatable
 {
+    use HasFactory;
     use SoftDeletes, GivesAuthorization;
 
     protected $guard = 'customers';
@@ -37,7 +40,7 @@ class Customer extends Authenticatable
     protected $fillable = [
         'type', 'name', 'surname', 'email1', 'email2', 'website', 'phone', 'mobile', 'vatid', 'taxid', 'street1',
         'street2', 'city', 'state', 'zipcode', 'country', 'notes', 'discount', 'enabled', 'customer_group_id', 'company',
-        'newsletter', 'reward_points',
+        'newsletter', 'reward_points', 'password', 'demo',
     ];
 
     /**

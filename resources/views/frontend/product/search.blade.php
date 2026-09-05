@@ -2,8 +2,8 @@
 <div class="carta-container">
     <div id="container" class="container j-container">
         <ul class="breadcrumb">
-            <li><a href="http://journal.digital-atelier.com/3/index.php?route=common/home">Home</a></li>
-            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/search&amp;search=bag">Search</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/search">Search</a></li>
         </ul>
         <div class="row">
             <div id="content" class="col-sm-12 search-page">
@@ -27,15 +27,15 @@
                     </div>
 <!--                     <div class="sort"><b>Sort By:</b>
                         <select onchange="location = this.value;">
-                            <option value="http://journal.digital-atelier.com/3/index.php?route=product/search&amp;sort=p.sort_order&amp;order=ASC&amp;search=bag" selected="selected">Default</option>
-                            <option value="http://journal.digital-atelier.com/3/index.php?route=product/search&amp;sort=pd.name&amp;order=ASC&amp;search=bag">Name (A - Z)</option>
-                            <option value="http://journal.digital-atelier.com/3/index.php?route=product/search&amp;sort=pd.name&amp;order=DESC&amp;search=bag">Name (Z - A)</option>
-                            <option value="http://journal.digital-atelier.com/3/index.php?route=product/search&amp;sort=p.price&amp;order=ASC&amp;search=bag">Price (Low &gt; High)</option>
-                            <option value="http://journal.digital-atelier.com/3/index.php?route=product/search&amp;sort=p.price&amp;order=DESC&amp;search=bag">Price (High &gt; Low)</option>
-                            <option value="http://journal.digital-atelier.com/3/index.php?route=product/search&amp;sort=rating&amp;order=DESC&amp;search=bag">Rating (Highest)</option>
-                            <option value="http://journal.digital-atelier.com/3/index.php?route=product/search&amp;sort=rating&amp;order=ASC&amp;search=bag">Rating (Lowest)</option>
-                            <option value="http://journal.digital-atelier.com/3/index.php?route=product/search&amp;sort=p.model&amp;order=ASC&amp;search=bag">Model (A - Z)</option>
-                            <option value="http://journal.digital-atelier.com/3/index.php?route=product/search&amp;sort=p.model&amp;order=DESC&amp;search=bag">Model (Z - A)</option>
+                            <option value="/search" selected="selected">Default</option>
+                            <option value="/search">Name (A - Z)</option>
+                            <option value="/search">Name (Z - A)</option>
+                            <option value="/search">Price (Low &gt; High)</option>
+                            <option value="/search">Price (High &gt; Low)</option>
+                            <option value="/search">Rating (Highest)</option>
+                            <option value="/search">Rating (Lowest)</option>
+                            <option value="/search">Model (A - Z)</option>
+                            <option value="/search">Model (Z - A)</option>
                         </select>
                     </div> -->
                 </div>
@@ -43,18 +43,18 @@
                     <div class="product-grid-item xs-100 sm-50 md-33 lg-25 xl-25 display-icon inline-button" v-for="product in products | orderBy 'name'" >
                         <div class="product-thumb  product-wrapper">
                             <div class="image">
-                                <div v-on:click="quickView(product.sku)" class="quickview-button"><a class="button hint--top" data-hint="QuickView"><i class="button-left-icon"></i><span class="button-cart-text">QuickView</span><i class="button-right-icon"></i></a></div>
+                                <div v-on:click="quickView(product.sku)" class="quickview-button"><a class="button hint--top" data-hint="{{ trans('messages.QuickView') }}"><i class="button-left-icon"></i><span class="button-cart-text">{{ trans('messages.QuickView') }}</span><i class="button-right-icon"></i></a></div>
                                 <div class="p-over p-grid-over"> </div>
                                 <img class="lazy first-image" max-width: 200px; height="275" src="/catalog/@{{product.image}}" title="@{{product.name}}" alt="@{{product.name}}" style="display: block;">
                                 </a>
-                                <div class="wishlist"><a v-on:click="add2Wishlist(product.id)" class="hint--top" data-hint="Add to Wish List"><i class="wishlist-icon"></i><span class="button-wishlist-text">Add to Wish List</span></a></div>
-                                <div class="compare"><a v-on:click="quickBuy(product.id)" class="hint--top" data-hint="Quick Buy"><i class="compare-icon"></i><span class="button-compare-text">Quick Buy</span></a></div>
+                                <div class="wishlist"><a v-on:click="add2Wishlist(product.id)" class="hint--top" data-hint="{{ trans('messages.Add to Wish List') }}"><i class="wishlist-icon"></i><span class="button-wishlist-text">{{ trans('messages.Add to Wish List') }}</span></a></div>
+                                <div class="compare"><a v-on:click="quickBuy(product.id)" class="hint--top" data-hint="{{ trans('messages.Quick Buy') }}"><i class="compare-icon"></i><span class="button-compare-text">{{ trans('messages.Quick Buy') }}</span></a></div>
                             </div>
                             <div class="product-details">
                                 <div class="caption">
                                     <h4 class="name" style="height: 34px;"><a href="/product?id=@{{product.id}}">@{{product.name}}</a></h4>
                                     <p class="description" style="height: 76px;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500..</p>
-                                      @if (Auth::user()->isCustomer)
+                                      @if (Auth::check() && Auth::user()->isCustomer)
                                     <p class="price">
                                         626 <span class="price-tax">Ex Tax: @{{product.priceEach}}</span>
                                     </p>
@@ -62,9 +62,9 @@
                                 </div>
                                 <div class="button-group">
                                     <div class="cart ">
-                                    <label style="padding-right: 0px">QTY</label>
+                                    <label style="padding-right: 0px">{{ trans('messages.QTY') }}</label>
                                     <input id="@{{product.id}}" style="width:20px" type="" value="0">
-                                        <a v-on:click="add2Cart(product.id)" class="button hint--top" data-hint="Add to Cart"><i class="button-left-icon"></i><span class="button-cart-text">Add to Cart</span><i class="button-right-icon"></i></a>
+                                        <a v-on:click="add2Cart(product.id)" class="button hint--top" data-hint="{{ trans('messages.Add to Cart') }}"><i class="button-left-icon"></i><span class="button-cart-text">{{ trans('messages.Add to Cart') }}</span><i class="button-right-icon"></i></a>
                                     </div>
                                 </div>
                             </div>

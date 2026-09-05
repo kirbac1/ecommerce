@@ -50,7 +50,7 @@
                             <div class="checkbox m-b-15">
                                 <label>
                                     <input type="checkbox" v-model="object.enabled" name="enabled">
-                                    <i class="input-helper"></i>{{ trans('messages.Enables or disables the group') }}
+                                    <i class="input-helper"></i>{{ trans('messages.Enables ?? disables the group') }}
                                 </label>
                             </div>
                         </div>
@@ -89,7 +89,7 @@
             },
             methods: {
                 update: function(event) {
-                    Vue.http.put('/api/v3/customergroups/{{ $customergroup->id or '' }}', this.object).then(function success(response) {
+                    Vue.http.put('/api/v3/customergroups/{{ $customergroup->id ?? '' }}', this.object).then(function success(response) {
                         this.$set('object', response.data);
                         swal({
                             title: "{{ trans('messages.Data saved!') }}",

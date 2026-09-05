@@ -1,10 +1,10 @@
 @extends('layouts.default') @section('content')
 <div class="carta-container"><div id="container" class="container j-container">
   <ul class="breadcrumb">
-        <li><a href="http://journal.digital-atelier.com/3/index.php?route=common/home">Home</a></li>
-        <li><a href="http://journal.digital-atelier.com/3/index.php?route=account/account">Account</a></li>
-        <li><a href="http://journal.digital-atelier.com/3/index.php?route=account/order">Order History</a></li>
-        <li><a href="http://journal.digital-atelier.com/3/index.php?route=account/order/info&amp;order_id=1839">Order Information</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/account">Account</a></li>
+        <li><a href="/account/orders">Order History</a></li>
+        <li><a href="#">Order Information</a></li>
       </ul>
       <div class="row">                <div id="content" class="col-sm-12">
       <h1 class="heading-title">Order Information</h1>
@@ -45,7 +45,7 @@
               <td class="text-left">Model</td>
               <td class="text-right">Quantity</td>
               <td class="text-right">Price</td>
-              <td class="text-right">Total</td>
+              <td class="text-right">{{ trans('messages.Total') }}</td>
                             <td style="width: 20px;"></td>
                           </tr>
           </thead>
@@ -56,8 +56,8 @@
               <td class="text-right">1</td>
               <td class="text-right">$101.00</td>
               <td class="text-right">$101.00</td>
-              <td class="text-right" style="white-space: nowrap;">                <a href="http://journal.digital-atelier.com/3/index.php?route=account/order/reorder&amp;order_id=1839&amp;order_product_id=13549" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="Reorder"><i class="fa fa-shopping-cart"></i></a>
-                                <a href="http://journal.digital-atelier.com/3/index.php?route=account/return/add&amp;order_id=1839&amp;product_id=57" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="Return"><i class="fa fa-reply"></i></a></td>
+              <td class="text-right" style="white-space: nowrap;">                <a href="#" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="Reorder"><i class="fa fa-shopping-cart"></i></a>
+                                <a href="#" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="Return"><i class="fa fa-reply"></i></a></td>
             </tr>
                                   </tbody>
           <tfoot>
@@ -75,7 +75,7 @@
                           </tr>
                         <tr>
               <td colspan="3"></td>
-              <td class="text-right"><b>Total</b></td>
+              <td class="text-right"><b>{{ trans('messages.Total') }}</b></td>
               <td class="text-right">$101.00</td>
                             <td></td>
                           </tr>
@@ -102,7 +102,7 @@
         </table>
       </div>
             <div class="buttons">
-        <div class="pull-right"><a href="http://journal.digital-atelier.com/3/index.php?route=account/order" class="btn btn-primary button">Continue</a></div>
+        <div class="pull-right"><a href="/account/orders" class="btn btn-primary button">Continue</a></div>
       </div>
       </div>
     </div>

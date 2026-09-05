@@ -19,7 +19,7 @@ trait HasManyCustomers
      */
     public function addCustomer(Customer $customer)
     {
-        $this->users()->attach($customer);
+        $this->customers()->attach($customer);
         return $this;
     }
 
@@ -31,7 +31,7 @@ trait HasManyCustomers
      */
     public function delCustomer(Customer $customer)
     {
-        $this->users()->detach($customer);
+        $this->customers()->detach($customer);
         return $this;
     }
 }

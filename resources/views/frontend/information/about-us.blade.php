@@ -2,8 +2,8 @@
 <div class="carta-container">
     <div id="container" class="container j-container">
         <ul class="breadcrumb">
-            <li><a href="http://journal.digital-atelier.com/3/index.php?route=common/home">Home</a></li>
-            <li><a href="http://journal.digital-atelier.com/3/index.php?route=information/information&amp;information_id=4">About Us</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">About Us</a></li>
         </ul>
         <div class="row">
             <div id="content" class="col-sm-12" style="margin-bottom:50px">

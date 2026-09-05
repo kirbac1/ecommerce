@@ -2,14 +2,14 @@
 <div class="extended-container">
     <div id="container" class="container j-container">
         <ul class="breadcrumb">
-            <li><a href="/webstore/home">Home</a></li>
+            <li><a href="/">Home</a></li>
         </ul>
         <div class="row">
             <div id="column-left" class="col-sm-3 hidden-xs side-column ">
                 <div id="journal-super-filter-54" class="journal-sf" data-filters-action="index.php?route=module/journal2_super_filter/filters&amp;module_id=54" data-products-action="index.php?route=module/journal2_super_filter/products&amp;module_id=54" data-route="product/category" data-path="59" data-full_path="59" data-manufacturer="" data-search="" data-tag="" data-loading-text="Loading..." data-currency-left="$" data-currency-right="" data-currency-decimal="." data-currency-thousand="," data-st="E.R.">
-                    <a v-on:click="resetFilter" class="sf-reset hint--top sf-icon" data-hint="Reset Filters"><span class="sf-reset-text">Reset Filters</span><i class="sf-reset-icon"></i></a>
+                    <a v-on:click="resetFilter" class="sf-reset hint--top sf-icon" data-hint="{{ trans('messages.Reset Filters') }}"><span class="sf-reset-text">{{ trans('messages.Reset Filters') }}</span><i class="sf-reset-icon"></i></a>
                     <div class="box sf-category sf-list sf-single">
-                        <div class="box-heading">Category Filter</div>
+                        <div class="box-heading">{{ trans('messages.Category Filter') }}</div>
                         <div class="box-content">
                             <ul class="">
                                 <li v-for="category in categories">
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div id="content" class="col-sm-9">
-                <h1 class="heading-title">Popular Products</h1>
+                <h1 class="heading-title">{{ trans('messages.Popular Products') }}</h1>
                 <div class="category-info">
                 </div>
 
@@ -63,7 +63,7 @@
                 <div class="product-filter">
                     <div class="display">
                         <a onclick="Journal.gridView()" class="grid-view active"><i style="margin-right: 5px; color: rgb(255, 255, 255); font-size: 32px" data-icon=""></i></a>
-                        <a style="  pointer-events: none; cursor: default; margin-left: 10px; color: white" class="col-sm-6 text-right results">Showing @{{products.length}} Products</a>
+                        <a style="  pointer-events: none; cursor: default; margin-left: 10px; color: white" class="col-sm-6 text-right results">{{ trans('messages.Showing') }} @{{products.length}} {{ trans('messages.Products') }}</a>
                     </div>
                     <div class="limit"><b>Show:</b>
                         <select v-model="limit">
@@ -75,15 +75,15 @@
                     </div>
 <!--                     <div class="sort"><b>Sort By:</b>
                         <select>
-                            <option value="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59&amp;sort=p.sort_order&amp;order=ASC" selected="selected">Default</option>
-                            <option value="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59&amp;sort=pd.name&amp;order=ASC">Name (A - Z)</option>
-                            <option value="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59&amp;sort=pd.name&amp;order=DESC">Name (Z - A)</option>
-                            <option value="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59&amp;sort=p.price&amp;order=ASC">Price (Low &gt; High)</option>
-                            <option value="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59&amp;sort=p.price&amp;order=DESC">Price (High &gt; Low)</option>
-                            <option value="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59&amp;sort=rating&amp;order=DESC">Rating (Highest)</option>
-                            <option value="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59&amp;sort=rating&amp;order=ASC">Rating (Lowest)</option>
-                            <option value="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59&amp;sort=p.model&amp;order=ASC">Model (A - Z)</option>
-                            <option value="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59&amp;sort=p.model&amp;order=DESC">Model (Z - A)</option>
+                            <option value="#" selected="selected">Default</option>
+                            <option value="#">Name (A - Z)</option>
+                            <option value="#">Name (Z - A)</option>
+                            <option value="#">Price (Low &gt; High)</option>
+                            <option value="#">Price (High &gt; Low)</option>
+                            <option value="#">Rating (Highest)</option>
+                            <option value="#">Rating (Lowest)</option>
+                            <option value="#">Model (A - Z)</option>
+                            <option value="#">Model (Z - A)</option>
                         </select>
                     </div> -->
                 </div>
@@ -91,14 +91,14 @@
                     <div class="product-grid-item xs-100 sm-50 md-33 lg-25 xl-25 display-icon inline-button" v-for="product in products">
                         <div class="product-thumb  product-wrapper">
                             <div class="image">
-                                <div v-on:click="quickView(product.image)" class="quickview-button"><a class="button hint--top" data-hint="QuickView"><i class="button-left-icon"></i><span class="button-cart-text">QuickView</span><i class="button-right-icon"></i></a></div>
+                                <div v-on:click="quickView(product.image)" class="quickview-button"><a class="button hint--top" data-hint="{{ trans('messages.QuickView') }}"><i class="button-left-icon"></i><span class="button-cart-text">{{ trans('messages.QuickView') }}</span><i class="button-right-icon"></i></a></div>
                                 <div class="p-over p-grid-over"> </div>
 
                                 <img class="lazy first-image" style='max-width: 275px; max-height:275px' v-show ="product.image != null" src="/catalog/@{{product.image}}" title="@{{product.name}}" alt="@{{product.name}}" style="display: block;">
                                 <img class="lazy first-image" max-width: 200px; height="275" v-show ="product.image == null" src="/assets/img/no-image.png" title="@{{product.name}}" alt="@{{product.name}}" style="display: block;">
                                 </a>
-                                <div class="wishlist"><a v-on:click="add2Wishlist(product.id)" class="hint--top" data-hint="Add to Wish List"><i class="wishlist-icon"></i><span class="button-wishlist-text">Add to Wish List</span></a></div>
-                                <div class="compare"><a v-on:click="quickBuy(product.id)" class="hint--top" data-hint="Quick Buy"><i class="compare-icon"></i><span class="button-compare-text">Quick Buy</span></a></div>
+                                <div class="wishlist"><a v-on:click="add2Wishlist(product.id)" class="hint--top" data-hint="{{ trans('messages.Add to Wish List') }}"><i class="wishlist-icon"></i><span class="button-wishlist-text">{{ trans('messages.Add to Wish List') }}</span></a></div>
+                                <div class="compare"><a v-on:click="quickBuy(product.id)" class="hint--top" data-hint="{{ trans('messages.Quick Buy') }}"><i class="compare-icon"></i><span class="button-compare-text">{{ trans('messages.Quick Buy') }}</span></a></div>
                             </div>
                             <div class="product-details">
                                 <div class="caption">
@@ -114,9 +114,9 @@
                                 </div>
                                 <div class="button-group">
                                     <div class="cart ">
-                                     <label style="padding-right: 0px">QTY</label>
+                                     <label style="padding-right: 0px">{{ trans('messages.QTY') }}</label>
                                     <input id="@{{product.id}}" style="width:20px" type="" value="0">
-                                        <a :disabled="add2CartDisabled" v-on:click="add2Cart(product.id)" class="button hint--top" data-hint="Add to Cart"><i class="button-left-icon"></i><span class="button-cart-text">Add to Cart</span><i class="button-right-icon"></i></a>
+                                        <a :disabled="add2CartDisabled" v-on:click="add2Cart(product.id)" class="button hint--top" data-hint="{{ trans('messages.Add to Cart') }}"><i class="button-left-icon"></i><span class="button-cart-text">{{ trans('messages.Add to Cart') }}</span><i class="button-right-icon"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -130,12 +130,12 @@
                     <div class="col-sm-6 text-left links">
                         <ul class="">
                             <li class="active"><span>1</span></li>
-                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59&amp;page=2">2</a></li>
-                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59&amp;page=3">3</a></li>
-                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59&amp;page=4">4</a></li>
-                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59&amp;page=5">5</a></li>
-                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59&amp;page=2">&gt;</a></li>
-                            <li><a href="http://journal.digital-atelier.com/3/index.php?route=product/category&amp;path=59&amp;page=5">&gt;|</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li><a href="#">&gt;</a></li>
+                            <li><a href="#">&gt;|</a></li>
                         </ul>
                     </div>
                     <div class="col-sm-6 text-right results">Showing 1 to 15 of 70 (5 Pages)</div>

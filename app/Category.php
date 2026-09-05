@@ -1,12 +1,28 @@
 <?php
+
 namespace App;
 
+use App\Models\Model;
 use App\Traits\HasManyProducts;
-use Baum\Node;
+use Illuminate\Support\Str;
+use Kalnoy\Nestedset\NodeTrait;
 
-class Category extends Node
+/**
+ * A category in the shop's tree.
+ *
+ * Was baum/baum, which has no PHP 8 release. kalnoy/nestedset is the
+ * maintained equivalent and stores the same nested-set structure, so the
+ * existing `lft`/`rgt`/`parent_id` columns are kept as-is via the getters
+ * below rather than migrating every row to its `_lft`/`_rgt` defaults.
+ */
+class Category extends Model
 {
     use HasManyProducts;
+    use NodeTrait;
+
+    protected $table = 'categories';
+
+    protected $fillable = ['name', 'parent_id', 'slug', 'deletable'];
 
     /**
      * The attributes that will be hidden.
@@ -14,7 +30,7 @@ class Category extends Node
      * @var array
      */
     protected $hidden = [
-        'deleted_at', 'slug', 'deleted_at', 'rgt', 'lft', 'depth'
+        'deleted_at', 'slug', 'rgt', 'lft', 'depth',
     ];
 
     /**
@@ -25,170 +41,58 @@ class Category extends Node
     protected $accessors = ['deletable'];
 
     /**
-     * Table name.
+     * Fill in the slug from the name.
      *
-     * @var string
+     * The column is NOT NULL with no default. Under Laravel 5.2 this went
+     * unnoticed because that config ran MySQL with strict mode off, so an
+     * unset slug was quietly stored as ''. Strict mode is on now, so it is
+     * populated properly instead of loosening the database again.
      */
-    protected $table = 'categories';
-
-    //////////////////////////////////////////////////////////////////////////////
-
-    //
-    // Below come the default values for Baum's own Nested Set implementation
-    // column names.
-    //
-    // You may uncomment and modify the following fields at your own will, provided
-    // they match *exactly* those provided in the migration.
-    //
-    // If you don't plan on modifying any of these you can safely remove them.
-    //
-
-    // /**
-    //  * Column name which stores reference to parent's node.
-    //  *
-    //  * @var string
-    //  */
-    // protected $parentColumn = 'parent_id';
-
-    // /**
-    //  * Column name for the left index.
-    //  *
-    //  * @var string
-    //  */
-    // protected $leftColumn = 'lft';
-
-    // /**
-    //  * Column name for the right index.
-    //  *
-    //  * @var string
-    //  */
-    // protected $rightColumn = 'rgt';
-
-    // /**
-    //  * Column name for the depth field.
-    //  *
-    //  * @var string
-    //  */
-    // protected $depthColumn = 'depth';
-
-    // /**
-    //  * Column to perform the default sorting
-    //  *
-    //  * @var string
-    //  */
-    // protected $orderColumn = null;
-
-    // /**
-    // * With Baum, all NestedSet-related fields are guarded from mass-assignment
-    // * by default.
-    // *
-    // * @var array
-    // */
-    // protected $guarded = array('id', 'parent_id', 'lft', 'rgt', 'depth');
-
-    //
-    // This is to support "scoping" which may allow to have multiple nested
-    // set trees in the same database table.
-    //
-    // You should provide here the column names which should restrict Nested
-    // Set queries. f.ex: company_id, etc.
-    //
-
-    // /**
-    //  * Columns which restrict what we consider our Nested Set list
-    //  *
-    //  * @var array
-    //  */
-    // protected $scoped = array();
-
-    //////////////////////////////////////////////////////////////////////////////
-
-    //
-    // Baum makes available two model events to application developers:
-    //
-    // 1. `moving`: fired *before* the a node movement operation is performed.
-    //
-    // 2. `moved`: fired *after* a node movement operation has been performed.
-    //
-    // In the same way as Eloquent's model events, returning false from the
-    // `moving` event handler will halt the operation.
-    //
-    // Please refer the Laravel documentation for further instructions on how
-    // to hook your own callbacks/observers into this events:
-    // http://laravel.com/docs/5.0/eloquent#model-events
-
-    /**
-     * Add the accessors, if they're requested.
-     *
-     * @return array
-     */
-    public function toArray()
+    protected static function booted(): void
     {
-        $array = parent::toArray();
-        foreach($this->accessors as $accessor) {
-            if (!in_array($accessor, $this->hidden)) {  // If it's not hidden
-                $array[$accessor] = $this[$accessor];
+        static::saving(function (Category $category) {
+            if (empty($category->slug) && ! empty($category->name)) {
+                $category->slug = Str::slug($category->name);
             }
-        }
-        return $array;
+        });
     }
 
-    public function scopeLike($query, $fields, $value)
+    // --- Nested set column names, matching the 2016 migration ----------------
+
+    public function getLftName()
     {
-        return $this->scopeOrLike($query, $fields, $value);
+        return 'lft';
+    }
+
+    public function getRgtName()
+    {
+        return 'rgt';
+    }
+
+    public function getParentIdName()
+    {
+        return 'parent_id';
     }
 
     /**
-     * Add "OR Like" clause to the query.
-     *
-     */
-    public function scopeOrLike($query, $fields, $value)
-    {
-        $newQuery = $query;
-        if (!is_array($fields)) { $fields = [$fields]; }
-        foreach($fields as $field)
-        {
-            $newQuery = $query->orWhere($field, 'LIKE', $value);
-        }
-        return $newQuery;
-    }
-
-    /**
-     * Add an "AND Like" clause to the query.
-     *
-     */
-    public function scopeAndLike($query, $fields, $value)
-    {
-        $newQuery = $query;
-        if (!is_array($fields)) { $fields = [$fields]; }
-        foreach($fields as $field)
-        {
-            $newQuery = $query->where($field, 'LIKE', $value);
-        }
-        return $newQuery;
-    }
-
-    /**
-     * Accessor for the deletable attribute.
-     *
-     * @return bool
+     * `deletable` is a tinyint in the database; expose it as a real boolean.
      */
     public function getDeletableAttribute()
     {
-        if (isset($this->attributes['deletable']) || array_key_exists('deletable', $this->attributes)) {
+        if (array_key_exists('deletable', $this->attributes)) {
             return $this->attributes['deletable'] == '1';
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
-     * Searches for categories with given attributes.
+     * Searches categories with the given string.
      *
-     * @param $string
-     * @return mixed
+     * @param string $string
+     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public static function search($string, $start=0, $limit=40)
+    public static function search($string, $start = 0, $limit = 40)
     {
         return Category::like(['name'], "%$string%")->skip($start)->take($limit)->get();
     }

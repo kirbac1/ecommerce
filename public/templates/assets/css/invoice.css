@@ -4,8 +4,12 @@
 
 @media print {
   .page-break  { display: block; page-break-before: always; }
-  table { page-break-inside:avoid }
-  tr    { page-break-inside:avoid; page-break-after:auto }
+  /* "page-break-inside: avoid" on the table itself made the PDF renderer give
+     each of the document's five tables its own page -- a one-page invoice came
+     out as five. Rows still avoid being split, which is what was actually
+     wanted. */
+  table { page-break-inside: auto }
+  tr    { page-break-inside: avoid; page-break-after: auto }
 }
 
 
@@ -102,9 +106,11 @@ html { padding:0.1in; }
 body {  padding: 0.1in; }
 
 
+    /* "page-break-after: avoid" on a table made the PDF renderer break after
+       every one of them, so a one-page invoice came out as five -- one per
+       table. Row-level avoidance below is what was actually wanted. */
     table{
-
-    page-break-after: avoid;
+    page-break-inside: auto;
 }
 
 }
@@ -118,8 +124,7 @@ font-size: 12px;
 }
 
 .inventory table{
-
-    page-break-after: avoid;
+    page-break-inside: auto;
 }
 .inventory tbody::before
 {
@@ -131,9 +136,12 @@ font-size: 12px;
 
 /* table */
 
-table.inventory  { font-size: 75%; table-layout: fixed; width: 100%; }
+/* mPDF lays these ~10 narrow columns out taller than a browser does, which
+   pushed the line-item table onto a second page. Tightened so a normal invoice
+   prints on one sheet. */
+table.inventory  { font-size: 60%; table-layout: fixed; width: 100%; }
 table.inventory  { border-collapse: collapse; }
-.inventory  th, td {  padding-bottom: 0.5em; position: relative; text-align: left; }
+.inventory  th, td {  padding-bottom: 0.15em; position: relative; text-align: left; }
 
 .inventory th { background: #EEE; }
 

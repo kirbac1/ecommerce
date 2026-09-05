@@ -525,13 +525,13 @@
             methods: {
                 setPaid: function setPaid(val) {
                     this.cPaid = val;
-                    Vue.http.put('/api/v3/invoices/{{ $invoice->id or '' }}', this.compose).then(function success(response) {
+                    Vue.http.put('/api/v3/invoices/{{ $invoice->id ?? '' }}', this.compose).then(function success(response) {
                     }.bind(this), function error(response) {
                         @include('partials.admin.swalDataSavedFail')
                     });
                 },
                 getReceipt: function getReceipt() {
-                    location.href="/api/v3/invoices/{{ $invoice->id or '' }}/generatePDF";
+                    location.href="/api/v3/invoices/{{ $invoice->id ?? '' }}/generatePDF";
                 },
                 goToOrder: function goToOrder() {
                     location.href = '/admin/orders/' + this.invoice.order_id + '/edit';
@@ -540,7 +540,7 @@
                     this.invoice.products.splice(item, 1);
                 },
                 update: function(event) {
-                    Vue.http.put('/api/v3/invoices/{{ $invoice->id or '' }}', this.compose).then(function success(response) {
+                    Vue.http.put('/api/v3/invoices/{{ $invoice->id ?? '' }}', this.compose).then(function success(response) {
                         response.data.products.forEach(function(product) {
                             product.priceEach = product.details.priceEach;
                             product.taxPercent = product.details.taxPercent;
@@ -666,7 +666,7 @@
             },
             ready: function ready() {
                 @if($invoice)
-                    Vue.http.get('/api/v3/invoices/{{ $invoice->id or '' }}').then(function success(response) {
+                    Vue.http.get('/api/v3/invoices/{{ $invoice->id ?? '' }}').then(function success(response) {
                     this.due_at = moment(response.data.due_at, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD');
                     response.data.products.forEach(function(product) {
                         product.priceEach = product.details.priceEach;

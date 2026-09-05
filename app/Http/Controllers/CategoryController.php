@@ -18,7 +18,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Cache::remember('categories', 120, function() {
-            return Category::get()->toHierarchy();
+            return Category::get()->toTree()->keyBy('id');
         });
 
         return $categories;
@@ -35,7 +35,7 @@ class CategoryController extends Controller
         // To make it a child of another node, add parent_id to the request.
         Category::create($request->all());
         Cache::forget('categories');
-        return Category::all()->toHierarchy();
+        return Category::all()->toTree()->keyBy('id');
     }
 
     public function addChild(Request $request)
@@ -46,12 +46,12 @@ class CategoryController extends Controller
 
         if ($parent) {
             // Make it a child
-            $category->makeFirstChildOf($parent);
-            return Category::all()->toHierarchy();
+            $category->prependToNode($parent)->save();
+            return Category::all()->toTree()->keyBy('id');
         } else {
             // Root
             Category::create(['name' => $request->name]);
-            return Category::all()->toHierarchy();
+            return Category::all()->toTree()->keyBy('id');
         }
     }
 
@@ -63,7 +63,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return $category->toHierarchy();
+        return $category->descendants()->get()->toTree($category->id);
     }
 
     /**
@@ -89,13 +89,13 @@ class CategoryController extends Controller
         $depth = $request->get('depth', null);
         if ($right) {
             $rightcat = Category::findOrFail($right);
-            $category->moveToLeftOf($rightcat);
+            $category->insertBeforeNode($rightcat);
 //            \Log::info("I am " . $category->id . ", I've got $left on the left and $right on the right. My parent is $parent and my depth is $depth. Moving to the left.");
         } elseif ($left) {
             // We have a sibling on the left
             $leftcat = Category::findOrFail($left);
 //            \Log::info("I am " . $category->id . ", I've got $left on the left and $right on the right. My parent is $parent and my depth is $depth. Moving to the right.");
-            $category->moveToRightOf($leftcat);
+            $category->insertAfterNode($leftcat);
         } elseif ($parent) {
             // We don't have siblings, do we have a parent?
             $parentcat = Category::findOrFail($parent);
@@ -103,7 +103,7 @@ class CategoryController extends Controller
             $category->makeLastChildOf($parentcat);
         }
         Cache::forget('categories');
-        return Category::all()->toHierarchy();
+        return Category::all()->toTree()->keyBy('id');
     }
 
     /**
@@ -116,6 +116,6 @@ class CategoryController extends Controller
     {
         if ($category->deletable) $category->delete();
         Cache::forget('categories');
-        return Category::all()->toHierarchy();
+        return Category::all()->toTree()->keyBy('id');
     }
 }

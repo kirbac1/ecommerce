@@ -104,14 +104,37 @@ test.describe('admin pages load', () => {
         await login(page);
     });
 
+    // The create pages were 500ing on every one of these. They share their
+    // views with the edit pages and are rendered with a null model, which the
+    // Blade `{{ $x or '' }}` syntax used to absorb -- that syntax was removed
+    // in Laravel 9, so the expression started dereferencing the null instead.
     for (const [name, path] of Object.entries({
         products: '/admin/products',
+        'products/create': '/admin/products/create',
+        'products/edit': '/admin/products/1/edit',
         customers: '/admin/customers',
+        'customers/create': '/admin/customers/create',
+        'customers/edit': '/admin/customers/1/edit',
         categories: '/admin/categories',
         orders: '/admin/orders',
+        'orders/create': '/admin/orders/create',
         invoices: '/admin/invoices',
+        'invoices/create': '/admin/invoices/create',
+        receipts: '/admin/receipts',
+        'receipts/create': '/admin/receipts/create',
         returns: '/admin/returns',
+        'returns/create': '/admin/returns/create',
+        proformas: '/admin/proformas',
+        'proformas/create': '/admin/proformas/create',
+        manufacturers: '/admin/manufacturers',
+        'manufacturers/create': '/admin/manufacturers/create',
+        customergroups: '/admin/customergroups',
+        'customergroups/create': '/admin/customergroups/create',
         users: '/admin/users',
+        'users/create': '/admin/users/create',
+        support: '/admin/support',
+        'support/create': '/admin/support/create',
+        productmigration: '/admin/productmigration',
         settings: '/admin/settings',
     })) {
         test(`${name} renders without a server error`, async ({ page }) => {
@@ -149,5 +172,103 @@ test.describe('admin pages load', () => {
 
         const body = await page.locator('body').innerText();
         expect(body).not.toMatch(/\bmessages\.[A-Za-z_]/);
+    });
+});
+
+test.describe('read-only demo accounts', () => {
+    // The seeded logins are published in the readme, so they must not be able
+    // to change anything. See App\Http\Middleware\PreventDemoWrites.
+    test.beforeEach(async ({ page }) => {
+        await login(page);
+    });
+
+    test('reading still works', async ({ page }) => {
+        const response = await page.goto('/admin/products', { waitUntil: 'domcontentloaded' });
+
+        expect(response.status()).toBe(200);
+    });
+
+    test('creating is refused', async ({ page }) => {
+        const result = await page.evaluate(async () => {
+            const token = document.querySelector("meta[name='_token']")?.getAttribute('content');
+            const res = await fetch('/api/v3/manufacturers', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': token,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: 'Should Not Exist' }),
+            });
+            return { status: res.status, body: await res.text() };
+        });
+
+        expect(result.status).toBe(403);
+        expect(result.body).toContain('demo_read_only');
+    });
+
+    test('deleting is refused', async ({ page }) => {
+        const status = await page.evaluate(async () => {
+            const token = document.querySelector("meta[name='_token']")?.getAttribute('content');
+            const res = await fetch('/api/v3/products/1', {
+                method: 'DELETE',
+                headers: { 'X-CSRF-TOKEN': token, 'Accept': 'application/json' },
+            });
+            return res.status;
+        });
+
+        expect(status).toBe(403);
+    });
+
+    // Several routes mutate on a GET, so blocking by HTTP verb alone is not
+    // enough and these have to be named explicitly in the middleware.
+    test('routes that mutate on a GET are refused too', async ({ page }) => {
+        const status = await page.evaluate(async () => {
+            const res = await fetch('/api/v3/orders/1/convertToInvoice', {
+                headers: { 'Accept': 'application/json' },
+            });
+            return res.status;
+        });
+
+        expect(status).toBe(403);
+    });
+
+    test('the product it tried to delete is still there', async ({ request }) => {
+        const response = await request.get('/api/v3/products/1');
+
+        expect(response.status()).toBe(200);
+    });
+});
+
+test.describe('signing out', () => {
+    // Regression: a cashier session made /admin answer a bare 401 with no way
+    // out, and cashier logout 500'd without ending the session -- so the
+    // browser was stuck until its cookies were cleared by hand.
+    test('the admin header carries a logout link', async ({ page }) => {
+        await login(page);
+        await page.goto('/admin/dashboard', { waitUntil: 'domcontentloaded' });
+
+        await expect(page.locator('#header a[href="/admin/logout"]')).toHaveCount(1);
+    });
+
+    test('logging out ends the session', async ({ page }) => {
+        await login(page);
+        await page.goto('/admin/logout', { waitUntil: 'domcontentloaded' });
+
+        const response = await page.goto('/admin/products', { waitUntil: 'domcontentloaded' });
+        expect(response.url()).toContain('/admin/login');
+    });
+
+    test('a cashier visiting /admin is redirected, not dead-ended on a 401', async ({ page }) => {
+        await page.goto('/cashier/login', { waitUntil: 'domcontentloaded' });
+        await page.fill('input[name="email"], input[type="text"]', 'cashier@example.com');
+        await page.fill('input[type="password"]', 'test');
+        await page.click('a[href="#"], button[type="submit"], input[type="submit"]');
+        await page.waitForTimeout(1500);
+
+        const response = await page.goto('/admin', { waitUntil: 'domcontentloaded' });
+
+        expect(response.status()).toBeLessThan(400);
+        expect(response.url()).toContain('/admin/login');
     });
 });

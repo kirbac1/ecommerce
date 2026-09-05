@@ -25,6 +25,13 @@
     <h1 style="float: left;  letter-spacing: 0em; ">PALAUTUS</h1>
 </header>
 <article>
+@if (! $return)
+    {{-- Nothing to preview yet. Rendering the body without a return is what
+         produced a page of blank fields on the old stack. --}}
+    <div>
+        <p>{{ trans('messages.no_returns_to_preview') }}</p>
+    </div>
+@else
     <div>
         <h1>Recipient</h1>
         <address>
@@ -118,6 +125,7 @@
             <td><span data-prefix>€</span><span contenteditable>{{ $total }}</span></td>
         </tr>
     </table>
+@endif
 </article>
 <table class="receiver" style="border-width: 1px;border-top-style: solid;border-top-color: black">
     <tbody>

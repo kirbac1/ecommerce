@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
-use Arcanedev\Settings\Facades\Setting;
+use App\Support\Settings as Setting;
 
 class SettingController extends Controller
 {

@@ -2,9 +2,9 @@
 <div class="carta-container">
     <div id="container" class="container j-container">
         <ul class="breadcrumb">
-            <li><a href="/webstore/home">Home</a></li>
-            <li><a href="/webstore/account">Account</a></li>
-            <li><a href="/webstore/password">Change Password</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/account">Account</a></li>
+            <li><a href="/account/password">Change Password</a></li>
         </ul>
         <div class="row">
             <div id="content" class="col-sm-12">
@@ -27,7 +27,7 @@
                             </div>
                         </fieldset>
                         <div class="buttons">
-                            <div class="pull-left"><a href="/webstore/account" class="btn btn-default button">Back</a></div>
+                            <div class="pull-left"><a href="/account" class="btn btn-default button">Back</a></div>
                             <div class="pull-right">
                                 <input type="submit"  v-on:click="updateCustomer" value="Continue" class="btn btn-primary button">
                             </div>

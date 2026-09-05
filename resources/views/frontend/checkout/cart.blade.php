@@ -2,26 +2,26 @@
 <div class="carta-container">
     <div id="container" class="container j-container">
         <ul class="breadcrumb">
-            <li><a href="http://journal.digital-atelier.com/3/index.php?route=common/home">Home</a></li>
-            <li><a href="http://journal.digital-atelier.com/3/index.php?route=checkout/cart">Shopping Cart</a></li>
+            <li><a href="/">{{ trans('messages.Home') }}</a></li>
+            <li><a href="/cart">{{ trans('messages.Shopping Cart') }}</a></li>
         </ul>
         <div class="row">
             <div id="content" class="col-sm-12 sc-page">
-                <h1 class="heading-title">Shopping Cart 
+                <h1 class="heading-title">{{ trans('messages.Shopping Cart') }} 
               </h1>
-                <form action="http://journal.digital-atelier.com/3/index.php?route=checkout/cart/edit" method="post" enctype="multipart/form-data">
+                <form action="#" method="post" enctype="multipart/form-data">
                     <div class="table-responsive cart-info">
                         <table  v-show="!isCartEmpty" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <td class="text-center image"></td>
-                                    <td class="text-center image">Image</td>
-                                    <td class="text-left name">Product Name</td>
-                                    <td class="text-left model">QtyPerPack</td>
-                                    <td class="text-left model">PackQty</td>
-                                    <td class="text-left quantity">Quantity</td>
-                                    <td class="text-right price">Unit Price</td>
-                                    <td class="text-right total">Total</td>
+                                    <td class="text-center image">{{ trans('messages.Image') }}</td>
+                                    <td class="text-left name">{{ trans('messages.Product Name') }}</td>
+                                    <td class="text-left model">{{ trans('messages.QtyPerPack') }}</td>
+                                    <td class="text-left model">{{ trans('messages.PackQty') }}</td>
+                                    <td class="text-left quantity">{{ trans('messages.Quantity') }}</td>
+                                    <td class="text-right price">{{ trans('messages.Unit Price') }}</td>
+                                    <td class="text-right total">{{ trans('messages.Total') }}</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -31,7 +31,7 @@
                                        
                                         <a href="/product?id=@{{product.product.id}}"><img src="/catalog/@{{product.product.image}}" alt="@{{product.product.name}}" title="@{{product.product.name}}" class="img-thumbnail"></a>
                                     </td>
-                                    <td class="text-left name"><a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=57">@{{product.product.name}}</a>
+                                    <td class="text-left name"><a href="#">@{{product.product.name}}</a>
                                     </td>
                                     <td class="text-left model">@{{product.product.qtyPerPack}}</td>
                                     <td class="text-left model">
@@ -40,7 +40,7 @@
                                     <td class="text-left quantity">
                 @{{calculateQty(product.quantity,product.product.qtyPerPack)}}
                                     </td>
-                                     @if (Auth::user()->isCustomer)
+                                     @if (Auth::check() && Auth::user()->isCustomer)
                                     <td class="text-right price">@{{product.product.priceEach}}</td>
                                     <td class="text-right total">@{{calculatePrice(product.quantity,product.product.priceEach,product.product.qtyPerPack) }}</td>
                                     @endif
@@ -52,18 +52,18 @@
                 <div  v-show="!isCartEmpty" class="row">
                     <div class="col-sm-4 col-sm-offset-8 cart-total">
                         <table class="table table-bordered" id="total">
-                          @if (Auth::user()->isCustomer)
+                          @if (Auth::check() && Auth::user()->isCustomer)
                                                                    <tbody>
                                             <tr>
                                                 <td class="text-right right"><strong>Without Tax-Total</strong></td>
                                                 <td class="text-right right">@{{cart.products | total 'quantity' 'priceEach' 'qtyPerPack'}}</td>
                                             </tr>
                                              <tr>
-                                                <td class="text-right right"><strong>Tax Amount</strong></td>
+                                                <td class="text-right right"><strong>{{ trans('messages.Tax Amount') }}</strong></td>
                                                 <td class="text-right right">@{{cart.products | total 'quantity' 'taxAmount' 'qtyPerPack'}}</td>
                                             </tr>
                                             <tr>
-                                                <td class="text-right right"><strong>Total</strong></td>
+                                                <td class="text-right right"><strong>{{ trans('messages.Total') }}</strong></td>
                                                 <td class="text-right right">@{{cart.products | total 'quantity' 'taxedPrice' 'qtyPerPack'}}</td>
                                             </tr>
                                         </tbody>
@@ -72,8 +72,8 @@
                     </div>
                 </div>
                 <div class="buttons">
-                    <div class="pull-left"><a href="/webstore" class="btn btn-default button">Continue Shopping</a></div>
-                    <div class="pull-right"><a href="/webstore/checkout" class="btn btn-primary button">Checkout</a></div>
+                    <div class="pull-left"><a href="/" class="btn btn-default button">{{ trans('messages.Continue Shopping') }}</a></div>
+                    <div class="pull-right"><a href="/checkout" class="btn btn-primary button">{{ trans('messages.Checkout') }}</a></div>
                 </div>
             </div>
         </div>

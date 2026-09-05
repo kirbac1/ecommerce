@@ -2,9 +2,9 @@
 <div class="carta-container">
     <div id="container" class="container j-container">
         <ul class="breadcrumb">
-            <li><a href="http://journal.digital-atelier.com/3/index.php?route=common/home">Home</a></li>
-            <li><a href="http://journal.digital-atelier.com/3/index.php?route=checkout/cart">Shopping Cart</a></li>
-            <li><a href="http://journal.digital-atelier.com/3/index.php?route=checkout/checkout">Checkout</a></li>
+            <li><a href="/">{{ trans('messages.Home') }}</a></li>
+            <li><a href="/cart">{{ trans('messages.Shopping Cart') }}</a></li>
+            <li><a href="/checkout">{{ trans('messages.Checkout') }}</a></li>
         </ul>
         <div class="row">
             <div id="content" class="one-page-checkout col-sm-12">
@@ -55,7 +55,7 @@
                                 <div class="form-group">
                                     <label class="control-label" for="input-login_password">Password</label>
                                     <input type="password" name="login_password" value="" placeholder="Password" id="input-login_password" class="form-control">
-                                    <a href="http://journal.digital-atelier.com/3/index.php?route=account/forgotten">Forgotten Password</a>
+                                    <a href="/forgotten">Forgotten Password</a>
                                 </div>
                                 <div class="form-group">
                                     <input type="button" value="Login" id="button-login" data-loading-text="Loading..." class="btn-primary button">
@@ -987,24 +987,24 @@
                                 </div>
                             </div>
                             <div class="checkout-content checkout-cart">
-                                <h2 class="secondary-title">Shopping Cart</h2>
+                                <h2 class="secondary-title">{{ trans('messages.Shopping Cart') }}</h2>
                                 <div class="table-responsive checkout-product">
                            <table  v-show="!isCartEmpty" class="table table-bordered">
                             <thead>
                                 <tr>
                                          
-                                    <td class="text-left name">Product Name</td>
-                                    <td class="text-left model">QtyPerPack</td>
-                                    <td class="text-left model">PackQty</td>
-                                    <td class="text-left quantity">Quantity</td>
-                                    <td class="text-right price">Unit Price</td>
-                                    <td class="text-right total">Total</td>
+                                    <td class="text-left name">{{ trans('messages.Product Name') }}</td>
+                                    <td class="text-left model">{{ trans('messages.QtyPerPack') }}</td>
+                                    <td class="text-left model">{{ trans('messages.PackQty') }}</td>
+                                    <td class="text-left quantity">{{ trans('messages.Quantity') }}</td>
+                                    <td class="text-right price">{{ trans('messages.Unit Price') }}</td>
+                                    <td class="text-right total">{{ trans('messages.Total') }}</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr  v-for="product in cart.products">
                                     
-                                    <td class="text-left name"><a href="http://journal.digital-atelier.com/3/index.php?route=product/product&amp;product_id=57">@{{product.product.name}}</a>
+                                    <td class="text-left name"><a href="#">@{{product.product.name}}</a>
                                     </td>
                                     <td class="text-left model">@{{product.product.qtyPerPack}}</td>
                                     <td class="text-left model">
@@ -1013,7 +1013,7 @@
                                     <td class="text-left quantity">
                 @{{calculateQty(product.quantity,product.product.qtyPerPack)}}
                                     </td>
-                                      @if (Auth::user()->isCustomer)
+                                      @if (Auth::check() && Auth::user()->isCustomer)
                                     <td class="text-right price">@{{ unitPrice(product.product.priceEach) }}</td>
                                     <td class="text-right total">@{{calculatePrice(product.quantity,product.product.priceEach,product.product.qtyPerPack) }}</td>
                                     @endif
@@ -1027,12 +1027,12 @@
                                             </tr>
                                              <tr>
                                                   <td colspan="4" class="text-right "></td>
-                                                <td class="text-right "><strong>Tax Amount</strong></td>
+                                                <td class="text-right "><strong>{{ trans('messages.Tax Amount') }}</strong></td>
                                                 <td class="text-right ">@{{cart.products | total 'quantity' 'taxAmount' 'qtyPerPack'}}</td>
                                             </tr>
                                             <tr>
                                                  <td colspan="4" class="text-right "></td>
-                                                <td class="text-right "><strong>Total</strong></td>
+                                                <td class="text-right "><strong>{{ trans('messages.Total') }}</strong></td>
                                                 <td class="text-right ">@{{cart.products | total 'quantity' 'taxedPrice' 'qtyPerPack'}}</td>
                                             </tr>
                         </tfoot>
@@ -1054,11 +1054,11 @@
                                 </div>
                                 <div class="radio check-privacy">
                                     <label>
-                                        <input type="checkbox" name="privacy" value="1"> I have read and agree to the <a href="http://journal.digital-atelier.com/3/index.php?route=information/information/agree&amp;information_id=3" class="agree"><b>Privacy Policy</b></a> </label>
+                                        <input type="checkbox" name="privacy" value="1"> I have read and agree to the <a href="#" class="agree"><b>Privacy Policy</b></a> </label>
                                 </div>
                                 <div class="radio check-terms">
                                     <label>
-                                        <input type="checkbox" name="agree" value="1"> I have read and agree to the <a href="http://journal.digital-atelier.com/3/index.php?route=information/information/agree&amp;information_id=5" class="agree"><b>Terms &amp; Conditions</b></a> </label>
+                                        <input type="checkbox" name="agree" value="1"> I have read and agree to the <a href="#" class="agree"><b>Terms &amp; Conditions</b></a> </label>
                                 </div>
                                 <div class="confirm-order">
                                     <button id="journal-checkout-confirm-button" data-loading-text="Loading.." class="button confirm-button">Confirm Order</button>

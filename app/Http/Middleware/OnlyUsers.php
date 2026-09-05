@@ -22,8 +22,8 @@ class OnlyUsers
             if ($user->isUser) {
                 return $next($request);
             }  else {
-                App::abort(401, 'Unauthorized (not user).');
-                return false;
+                return redirect('/cashier/login')
+                    ->with('error', 'That account cannot use the register.');
             }
         } else {
             return redirect('/admin/login');

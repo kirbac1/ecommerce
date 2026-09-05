@@ -1,24 +1,18 @@
 
 
 @extends('layouts.cashier')
-<!--[if IE 9 ]><html class="ie9"><![endif]-->
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="_token" content="{{ csrf_token() }}" />
-    <title>Cashier Admin</title>
 
-    <!-- Vendor CSS -->
+@section('page.head')
+    {{-- This page is styled with the admin theme (.login-content, .lc-block),
+         so it needs those stylesheets; the register's materialize theme does
+         not define them. --}}
     <link href="/assets/vendors/animate.css/animate.min.css" rel="stylesheet">
     <link href="/assets/vendors/material-icons/material-design-iconic-font.min.css" rel="stylesheet">
     <link href="/assets/vendors/sweet-alert/sweet-alert.min.css" rel="stylesheet">
-
-    <!-- CSS -->
     <link href="/assets/css/app.min.1.css" rel="stylesheet">
     <link href="/assets/css/app.min.2.css" rel="stylesheet">
     <link href="/assets/css/app.css" rel="stylesheet">
-</head>
+@stop
  @section('content')
 <body class="login-content">
     <div class="lc-block toggled" id="l-login">

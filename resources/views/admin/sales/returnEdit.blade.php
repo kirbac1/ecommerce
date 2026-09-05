@@ -284,7 +284,7 @@
                 searchResults: [],
                 createbuttonEnabled: true,
                 orders: [],
-                order_id: {{ $order_id or 'null' }},
+                order_id: {{ $order_id ?? 'null' }},
                 orderFilter: '',
                 exists: false,
                 object: {}
@@ -322,7 +322,7 @@
             },
             methods: {
                 getReceipt: function getReceipt() {
-                    location.href="/api/v3/returns/{{ $return->id or '' }}/generatePDF";
+                    location.href="/api/v3/returns/{{ $return->id ?? '' }}/generatePDF";
                 },
                 checkMaxQuantities: function checkMaxQuantities(item) {
                     return item.quantity > item.maxQuantity;
@@ -331,7 +331,7 @@
                     location.href = '/admin/orders/' + this.returned.order_id + '/edit';
                 },
                 update: function(event) {
-                    Vue.http.put('/api/v3/returns/{{ $return->id or '' }}', this.compose).then(function success(response) {
+                    Vue.http.put('/api/v3/returns/{{ $return->id ?? '' }}', this.compose).then(function success(response) {
                         response.data.products.forEach(function(product) {
                             product.priceEach = product.details.priceEach;
                             product.taxPercent = product.details.taxPercent;
@@ -461,7 +461,7 @@
             ready: function ready() {
                 var that = this;
                 @if($return)
-                    Vue.http.get('/api/v3/returns/{{ $return->id or '' }}').then(function success(response) {
+                    Vue.http.get('/api/v3/returns/{{ $return->id ?? '' }}').then(function success(response) {
                     this.$set('returned', response.data);
                     this.$set('returnableProducts', response.data.products);
                     this.exists = true;

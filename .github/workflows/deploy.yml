@@ -22,11 +22,11 @@ name: Deploy to production
 #
 # Unverified server facts, marked because nobody has SSHed in to confirm them
 # for THIS subdomain yet. If the first deploy fails, check these first:
-#   - PHP_BIN defaults to Plesk's standard 7.4 path. Laravel 5.2 cannot run on
-#     PHP 8, so if 7.4 is not installed the deploy will fail — that is
-#     deliberate, better than a half-working site.
+#   - PHP_BIN defaults to Plesk's standard 8.3 path. Laravel 13 needs 8.3+,
+#     so if it is missing the deploy fails outright — deliberate, and better
+#     than a half-working site.
 #   - DOCROOT defaults to httpdocs, the Plesk default for a subdomain.
-#   - vendor/ is built here on PHP 7.4 and shipped, so the server needs no
+#   - vendor/ is built here on PHP 8.3 and shipped, so the server needs no
 #     Composer. Every dependency is pure PHP, so the runner's architecture
 #     does not matter.
 on:
@@ -60,10 +60,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up PHP 7.4
+      - name: Set up PHP 8.3
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "7.4"
+          php-version: "8.3"
           extensions: mbstring, pdo_mysql, gd, zip, dom, xml, bcmath
           coverage: none
 
@@ -120,7 +120,7 @@ jobs:
           SSH_USER: ${{ secrets.DEPLOY_USER }}
           DEPLOY_PATH: ${{ vars.DEPLOY_PATH || 'ecommerce' }}
           DOCROOT: ${{ vars.DOCROOT || 'httpdocs' }}
-          PHP_BIN: ${{ vars.PHP_BIN || '/opt/plesk/php/7.4/bin/php' }}
+          PHP_BIN: ${{ vars.PHP_BIN || '/opt/plesk/php/8.3/bin/php' }}
           APP_KEY: ${{ secrets.APP_KEY }}
           DB_DATABASE: ${{ secrets.DB_DATABASE }}
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
@@ -165,8 +165,8 @@ jobs:
           APP="$HOME/$DOCROOT"
 
           if [ ! -x "$PHP_BIN" ]; then
-            echo "PHP 7.4 not found at $PHP_BIN." >&2
-            echo "Laravel 5.2 cannot run on PHP 8. Install 7.4 or set the PHP_BIN variable." >&2
+            echo "PHP 8.3 not found at $PHP_BIN." >&2
+            echo "Laravel 13 needs PHP 8.3 or newer. Install it or set the PHP_BIN variable." >&2
             ls /opt/plesk/php/ 2>/dev/null && echo "(versions above are what Plesk has)" >&2
             exit 1
           fi
@@ -248,6 +248,22 @@ jobs:
           mkdir -p "$APP"
           ln -sfn "$REL" "$APP/current.tmp"
           mv -Tf "$APP/current.tmp" "$APP/current"
+
+          # The subdomain's document root in Plesk is <docroot>/public, not
+          # <docroot>/current/public, so point public/ at the live release.
+          # Doing it here rather than asking for a panel change keeps the
+          # release swap atomic: `current` moves, and public/ follows it.
+          #
+          # Anything already sitting at public/ is a real directory from
+          # whatever was deployed before; it is moved aside once, never
+          # deleted, so the previous site can be restored by moving it back.
+          if [ -e "$APP/public" ] && [ ! -L "$APP/public" ]; then
+            mv "$APP/public" "$APP/public.pre-deploy-$(date -u +%Y%m%d-%H%M%S)"
+            echo "moved the previous public/ aside"
+          fi
+
+          ln -sfn "$APP/current/public" "$APP/public.tmp"
+          mv -Tf "$APP/public.tmp" "$APP/public"
 
           # Prune by name, not mtime: release dirs are YYYYmmdd-HHMMSS-sha,
           # so reverse lexicographic order is reverse chronological, and two

@@ -647,7 +647,7 @@
                 },
                 goToProforma: function goToProforma() {
                     if (this.canBeSaved) {
-                        Vue.http.put('/api/v3/orders/{{ $order->id or '' }}', this.compose).then(function success(response) {
+                        Vue.http.put('/api/v3/orders/{{ $order->id ?? '' }}', this.compose).then(function success(response) {
                             this.$set('order', response.data);
                             location.href = '/admin/proformas/' + this.order.proforma_id + '/edit';
                         }.bind(this), function error(response) {
@@ -664,9 +664,9 @@
                     location.href = '/admin/receipts/' + this.order.receipt.id + '/edit';
                 },
                 convertToInvoice: function convertToInvoice() {
-                    Vue.http.put('/api/v3/orders/{{ $order->id or '' }}', this.compose).then(function success(response) {
+                    Vue.http.put('/api/v3/orders/{{ $order->id ?? '' }}', this.compose).then(function success(response) {
                         this.$set('order', response.data);
-                        Vue.http.get('/api/v3/orders/{{ $order->id or '' }}/convertToInvoice').then(function success(response) {
+                        Vue.http.get('/api/v3/orders/{{ $order->id ?? '' }}/convertToInvoice').then(function success(response) {
                             location.href = '/admin/invoices/' + response.data.id + '/edit';
                         });
                     }.bind(this), function error(response) {
@@ -674,9 +674,9 @@
                     });
                 },
                 convertToReceipt: function convertToReceipt() {
-                    Vue.http.put('/api/v3/orders/{{ $order->id or '' }}', this.compose).then(function success(response) {
+                    Vue.http.put('/api/v3/orders/{{ $order->id ?? '' }}', this.compose).then(function success(response) {
                         this.$set('order', response.data);
-                        Vue.http.get('/api/v3/orders/{{ $order->id or '' }}/convertToReceipt').then(function success(response) {
+                        Vue.http.get('/api/v3/orders/{{ $order->id ?? '' }}/convertToReceipt').then(function success(response) {
                             location.href = '/admin/receipts/' + response.data.id + '/edit';
                         });
                     }.bind(this), function error(response) {
@@ -687,7 +687,7 @@
                     this.order.products.splice(item, 1);
                 },
                 update: function(event) {
-                    Vue.http.put('/api/v3/orders/{{ $order->id or '' }}', this.compose).then(function success(response) {
+                    Vue.http.put('/api/v3/orders/{{ $order->id ?? '' }}', this.compose).then(function success(response) {
                         response.data.products.forEach(function(product) {
                             product.priceEach = product.details.priceEach;
                             product.taxPercent = product.details.taxPercent;
@@ -841,7 +841,7 @@
             },
             ready: function ready() {
                 @if($order)
-                    Vue.http.get('/api/v3/orders/{{ $order->id or '' }}').then(function success(response) {
+                    Vue.http.get('/api/v3/orders/{{ $order->id ?? '' }}').then(function success(response) {
                     if ((response.data.invoice) || (response.data.receipt)) this.canBeSaved = false;
                     response.data.products.forEach(function(product) {
                         product.priceEach = product.details.priceEach;

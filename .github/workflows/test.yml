@@ -11,12 +11,12 @@ permissions:
 
 jobs:
   test:
-    name: PHP 7.4 — Vitest + Playwright
+    name: PHP 8.3 — Vitest + Playwright
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
-    # Laravel 5.2's migrations are MySQL-flavoured, so the suite needs a real
-    # MySQL rather than SQLite.
+    # The migrations are MySQL-flavoured, so the suite needs a real MySQL
+    # rather than SQLite.
     services:
       mysql:
         image: mysql:8.0
@@ -34,12 +34,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # 7.4 is the newest PHP this codebase runs on: Laravel 5.2 uses
-      # constructs removed in PHP 8.
-      - name: Set up PHP 7.4
+      # Laravel 13 requires PHP 8.3+.
+      - name: Set up PHP 8.3
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "7.4"
+          php-version: "8.3"
           extensions: mbstring, pdo_mysql, gd, zip, dom, xml, bcmath
           coverage: none
 

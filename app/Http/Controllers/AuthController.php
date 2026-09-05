@@ -44,7 +44,9 @@ class AuthController extends Controller
 
     public function customerLogout(Request $request)
     {
-        Auth::logout();
+        // Customers sign in on the 'customers' guard, so clearing the default
+        // one left them signed in.
+        Auth::guard('customers')->logout();
         return [
             'success' => true,
         ];

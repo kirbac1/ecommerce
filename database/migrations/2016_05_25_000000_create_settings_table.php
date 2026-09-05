@@ -1,38 +1,30 @@
 <?php
 
-use Arcanedev\Support\Bases\Migration;
+use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 /**
- * Class     CreateSettingsTable
+ * Store settings as key/value rows.
  *
- * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
+ * Originally extended arcanedev/settings' migration base and took its table
+ * name from that package's config. The package has no PHP 8 release and was
+ * replaced by App\Support\Settings, so this is now a plain migration against
+ * the same table shape.
  */
-class CreateSettingsTable extends Migration
+return new class extends Migration
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Constructor
-     | ------------------------------------------------------------------------------------------------
-     */
-    public function __construct()
+    public function up(): void
     {
-        $this->connection = config('settings.stores.database.connection');
-        $this->table      = config('settings.stores.database.table');
-    }
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
-     */
-    /**
-     * Run the migrations.
-     */
-    public function up()
-    {
-        $this->createSchema(function(Blueprint $table) {
+        Schema::create('settings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('key')->index();
             $table->text('value');
         });
     }
-}
+
+    public function down(): void
+    {
+        Schema::dropIfExists('settings');
+    }
+};
