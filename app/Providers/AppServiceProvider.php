@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Arcanedev\Settings\Facades\Setting;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,6 +16,23 @@ class AppServiceProvider extends ServiceProvider
         // exception. On Laravel 12 that code is gone, so warnings are left
         // switched on and the few places that relied on the old leniency were
         // fixed instead.
+
+        // The storefront chrome needs the shop's own name for its <title> and
+        // share metadata. Read once here rather than in every view. Wrapped
+        // because the settings store is unavailable during early console
+        // commands (migrate on a fresh database, for one).
+        View::share('storeName', $this->storeName());
+    }
+
+    private function storeName(): string
+    {
+        try {
+            $name = Setting::get('store_name');
+        } catch (\Throwable $e) {
+            $name = null;
+        }
+
+        return $name ?: config('app.name');
     }
 
     public function register(): void

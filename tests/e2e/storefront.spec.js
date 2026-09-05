@@ -82,6 +82,35 @@ test.describe('home page', () => {
     });
 });
 
+test.describe('page metadata', () => {
+    // Regression: the head partial carried two <title> tags -- an empty @yield
+    // and a hardcoded "Carta Webstore" from the bought theme. Browsers honour
+    // the first, so every storefront page had a blank tab title.
+    test('the page has a non-empty title naming the shop', async ({ page }) => {
+        await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+        const title = await page.title();
+        expect(title.trim()).not.toBe('');
+        expect(title).not.toMatch(/Carta Webstore|Journal/);
+    });
+
+    test('there is exactly one title tag', async ({ page }) => {
+        await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+        expect(await page.locator('head title').count()).toBe(1);
+    });
+
+    test('share metadata does not advertise the original theme', async ({ page }) => {
+        await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+        for (const property of ['og:title', 'og:site_name']) {
+            const content = await page.locator(`meta[property="${property}"]`).getAttribute('content');
+            expect(content, property).not.toMatch(/Journal/);
+            expect(content, property).toBeTruthy();
+        }
+    });
+});
+
 test.describe('product detail', () => {
     test('shows the product and its catalog image', async ({ page }) => {
         await page.goto('/product?id=1', { waitUntil: 'domcontentloaded' });
